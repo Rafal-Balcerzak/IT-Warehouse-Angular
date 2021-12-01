@@ -10,6 +10,12 @@ import {Address} from "../models/address";
 export class AddressComponent implements OnInit {
 
   allAddresses: Array<Address> = [];
+  country: string;
+  region: string;
+  city: string;
+  street: string;
+  localNumber: string;
+  zipCode: string;
 
   constructor(private addressService: AddressService) {
   }
