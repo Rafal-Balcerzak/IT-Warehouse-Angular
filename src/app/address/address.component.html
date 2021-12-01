@@ -6,7 +6,7 @@
 <input type="text" [(ngModel)]="zipCode" placeholder="Zip Code"> <br>
 <button (click)="addAddress()">Dodaj adres</button>
 <button (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
-<ng-template [ngIf]="allAddresses.length>0">
+<ng-template [ngIf]="allAddresses.length > 0">
   <ul>
     <li *ngFor="let address of allAddresses">
       {{address.idAddress}}
@@ -16,7 +16,58 @@
       {{address.street}}
       {{address.localNumber}}
       {{address.zipCode}}
+
+      <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Edytuj adres</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <dl class="text-center">
+            <dt><span>Address</span></dt>
+            <dd>
+              <span><input  value="{{address.idAddress}}"></span>
+            </dd>
+            <dt><span>Country</span></dt>
+            <dd>
+              <span><input value="{{address.country}}"></span>
+            </dd>
+            <dt><span>Region</span></dt>
+            <dd>
+              <span><input value="{{address.region}}"></span>
+            </dd>
+            <dt><span>City</span></dt>
+            <dd>
+              <span><input value="{{address.city}}"></span>
+            </dd>
+            <dt><span>Street</span></dt>
+            <dd>
+              <span><input value="{{address.street}}"></span>
+            </dd>
+            <dt><span>Local Number</span></dt>
+            <dd>
+              <span><input value="{{address.localNumber}}"></span>
+            </dd>
+            <dt><span>Zip Code</span></dt>
+            <dd>
+              <span><input value="{{address.zipCode}}"></span>
+            </dd>
+          </dl>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="c('Save button')" (click)=editAddress(address)>Zapisz</button>
+        </div>
+      </ng-template>
+
+      <button (click)="deleteAddressById(address.idAddress)">Usuń</button>
+      <button (click)="open(content, address)">Edytuj</button>
+
     </li>
   </ul>
   <button (click)="clearAllAddresses()">Ukryj adresy</button>
 </ng-template>
+<br>
+
+

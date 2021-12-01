@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {Address} from "../models/address";
+import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-address',
@@ -10,6 +11,7 @@ import {Address} from "../models/address";
 export class AddressComponent implements OnInit {
 
   allAddresses: Array<Address> = [];
+  addressToEdit?: Address;
   country: string;
   region: string;
   city: string;
@@ -17,7 +19,13 @@ export class AddressComponent implements OnInit {
   localNumber: string;
   zipCode: string;
 
-  constructor(private addressService: AddressService) {
+  constructor(private addressService: AddressService, config: NgbModalConfig, private modalService: NgbModal) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
+
+  open(content, addres: Address) {
+    this.modalService.open(content);
   }
 
   ngOnInit(): void {
