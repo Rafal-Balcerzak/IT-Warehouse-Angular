@@ -1,1 +1,15 @@
-<button (click)="getAllAddresses()">Pobierz wszytskie adresy</button>
+<button (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
+<ng-template [ngIf]="allAddresses.length>0">
+  <ul>
+    <li *ngFor="let address of allAddresses">
+      {{address.idAddress}}
+      {{address.country}}
+      {{address.region}}
+      {{address.city}}
+      {{address.street}}
+      {{address.localNumber}}
+      {{address.zipCode}}
+    </li>
+  </ul>
+  <button (click)="clearAllAddresses()">Ukryj adresy</button>
+</ng-template>
