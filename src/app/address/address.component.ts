@@ -36,4 +36,27 @@ export class AddressComponent implements OnInit {
   clearAllAddresses() {
     this.allAddresses = [];
   }
+
+  /*** Sprawdza czy wypełniane pola formularza nie są puste albo czy nie są spacjami itp ***/
+  validateInput(): boolean {
+    let addressFieldsList = [];
+
+    addressFieldsList.push(this.country);
+    addressFieldsList.push(this.region);
+    addressFieldsList.push(this.city);
+    addressFieldsList.push(this.street);
+    addressFieldsList.push(this.localNumber);
+    addressFieldsList.push(this.zipCode);
+
+    for(let i = 0; i < addressFieldsList.length; i++){
+      let value = addressFieldsList[i];
+      if (value === '' || value === null || value === undefined || value.trim().length === 0) {
+        alert("Wypełnij wszystkie pola aby dodać adres");
+        console.log(value)
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
