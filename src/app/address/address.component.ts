@@ -46,10 +46,31 @@ export class AddressComponent implements OnInit {
       })
       this.addressService.addAddress(newAddress).subscribe(address => {
         console.log("Dodano nowy adres: " + address);
+        this.getAllAddresses();
       }, error => {
         console.log("Błąd dodawania adresu " + error);
       })
     }
+  }
+
+  /*** Usunięcie adresu po id ***/
+  deleteAddressById(id: number){
+    this.addressService.deleteAddressById(id).subscribe(address =>{
+      console.log("Usunięto adres: " + address);
+      this.getAllAddresses();
+    }, error => {
+      console.log("Błąd podczas usuwania adresu: " + error);
+    });
+  }
+
+  /*** Edytowanie adresu***/
+  editAddress(address: Address) {
+    this.addressService.editAddress(address).subscribe(address =>{
+      console.log("Edytowano adres: " + address.idAddress);
+      this.getAllAddresses();
+    }, error => {
+      console.log("Błąd podczas edytowania adresu: " + address.idAddress);
+    })
   }
 
   clearAllAddresses() {
