@@ -19,4 +19,15 @@ export class AddressService {
   addAddress(address: Address): Observable<Address>{
     return this.http.post<Address>('http://localhost:8080/api/address/', address);
   }
+
+  /*** Usunięcia adresu o danym ID ***/
+  deleteAddressById(id: number){
+    return this.http.delete('http://localhost:8080/api/address/' + id);
+  }
+
+  /*** Edytowanie adresu ***/
+  editAddress(address: Address): Observable<Address>{
+    return this.http.patch<Address>('http://localhost:8080/api/address/', address);
+  }
+
 }
