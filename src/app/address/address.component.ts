@@ -33,6 +33,25 @@ export class AddressComponent implements OnInit {
     })
   }
 
+  /*** Dodanie nowego adresu ***/
+  addAddress() {
+    if (this.validateInput()) {
+      const newAddress: Address = ({
+        country: this.country,
+        region: this.region,
+        city: this.city,
+        street: this.street,
+        localNumber: this.localNumber,
+        zipCode: this.zipCode
+      })
+      this.addressService.addAddress(newAddress).subscribe(address => {
+        console.log("Dodano nowy adres: " + address);
+      }, error => {
+        console.log("Błąd dodawania adresu " + error);
+      })
+    }
+  }
+
   clearAllAddresses() {
     this.allAddresses = [];
   }
