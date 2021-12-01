@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AddressService} from "../services/address.service";
 
 @Component({
   selector: 'app-address',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressComponent implements OnInit {
 
-  constructor() { }
+  constructor(private addressService: AddressService) { }
 
   ngOnInit(): void {
   }
 
+  getAllAddresses(){
+    this.addressService.getAllAddresses().subscribe(address =>{
+      console.log(address);
+    }, error => {
+      console.log("Błąd pobierania adresów " + error);
+    })
+  }
 }
