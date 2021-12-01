@@ -1,3 +1,10 @@
+<input type="text" [(ngModel)]="country" placeholder="Country"> <br>
+<input type="text" [(ngModel)]="region" placeholder="Region"> <br>
+<input type="text" [(ngModel)]="city" placeholder="City"> <br>
+<input type="text" [(ngModel)]="street" placeholder="Street"> <br>
+<input type="text" [(ngModel)]="localNumber" placeholder="Local Number"> <br>
+<input type="text" [(ngModel)]="zipCode" placeholder="Zip Code"> <br>
+<button (click)="addAddress()">Dodaj adres</button>
 <button (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
 <ng-template [ngIf]="allAddresses.length>0">
   <ul>
