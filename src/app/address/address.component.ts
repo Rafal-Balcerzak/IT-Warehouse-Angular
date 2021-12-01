@@ -17,6 +17,7 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*** Pobranie wszystkich adresów ***/
   getAllAddresses() {
     this.addressService.getAllAddresses().subscribe(address => {
       this.allAddresses = address;
