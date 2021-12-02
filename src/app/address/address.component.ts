@@ -11,7 +11,7 @@ import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 export class AddressComponent implements OnInit {
 
   allAddresses: Array<Address> = [];
-  addressToEdit?: Address;
+  addressToEdit: Address;
   country: string;
   region: string;
   city: string;
@@ -24,11 +24,16 @@ export class AddressComponent implements OnInit {
     config.keyboard = false;
   }
 
-  open(content, addres: Address) {
+  open(content, address: Address) {
     this.modalService.open(content);
+    this.setAddressToEdit(address);
   }
 
   ngOnInit(): void {
+  }
+
+  setAddressToEdit(address: Address){
+    this.addressToEdit = address;
   }
 
   /*** Pobranie wszystkich adresów ***/
