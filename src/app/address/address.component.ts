@@ -10,14 +10,9 @@ import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 })
 export class AddressComponent implements OnInit {
 
-  allAddresses: Array<Address> = [];
+  allAddresses: Array<Address>;
+  address: Address | null = null;
   addressToEdit: Address;
-  country: string;
-  region: string;
-  city: string;
-  street: string;
-  localNumber: string;
-  zipCode: string;
 
   constructor(private addressService: AddressService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
@@ -32,7 +27,19 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setAddressToEdit(address: Address){
+  setAndAddAddress(country: string, region: string, city: string, street: string, localNumber: string, zipCode: string) {
+    this.address = ({
+      country: country,
+      region: region,
+      city: city,
+      street: street,
+      localNumber: localNumber,
+      zipCode: zipCode
+    })
+    this.addAddress();
+  }
+
+  setAddressToEdit(address: Address) {
     this.addressToEdit = address;
   }
 
@@ -49,15 +56,7 @@ export class AddressComponent implements OnInit {
   /*** Dodanie nowego adresu ***/
   addAddress() {
     if (this.validateInput()) {
-      const newAddress: Address = ({
-        country: this.country,
-        region: this.region,
-        city: this.city,
-        street: this.street,
-        localNumber: this.localNumber,
-        zipCode: this.zipCode
-      })
-      this.addressService.addAddress(newAddress).subscribe(address => {
+      this.addressService.addAddress(this.address).subscribe(address => {
         console.log("Dodano nowy adres: " + address);
         this.getAllAddresses();
       }, error => {
@@ -67,8 +66,8 @@ export class AddressComponent implements OnInit {
   }
 
   /*** Usunięcie adresu po id ***/
-  deleteAddressById(id: number){
-    this.addressService.deleteAddressById(id).subscribe(address =>{
+  deleteAddressById(id: number) {
+    this.addressService.deleteAddressById(id).subscribe(address => {
       console.log("Usunięto adres: " + address);
       this.getAllAddresses();
     }, error => {
@@ -78,7 +77,7 @@ export class AddressComponent implements OnInit {
 
   /*** Edytowanie adresu***/
   editAddress(address: Address) {
-    this.addressService.editAddress(address).subscribe(address =>{
+    this.addressService.editAddress(address).subscribe(address => {
       console.log("Edytowano adres: " + address.idAddress);
       this.getAllAddresses();
     }, error => {
@@ -94,14 +93,14 @@ export class AddressComponent implements OnInit {
   validateInput(): boolean {
     let addressFieldsList = [];
 
-    addressFieldsList.push(this.country);
-    addressFieldsList.push(this.region);
-    addressFieldsList.push(this.city);
-    addressFieldsList.push(this.street);
-    addressFieldsList.push(this.localNumber);
-    addressFieldsList.push(this.zipCode);
+    addressFieldsList.push(this.address.country);
+    addressFieldsList.push(this.address.region);
+    addressFieldsList.push(this.address.city);
+    addressFieldsList.push(this.address.street);
+    addressFieldsList.push(this.address.localNumber);
+    addressFieldsList.push(this.address.zipCode);
 
-    for(let i = 0; i < addressFieldsList.length; i++){
+    for (let i = 0; i < addressFieldsList.length; i++) {
       let value = addressFieldsList[i];
       if (value === '' || value === null || value === undefined || value.trim().length === 0) {
         alert("Wypełnij wszystkie pola aby dodać adres");
