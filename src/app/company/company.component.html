@@ -1,0 +1,20 @@
+<div>
+  <button [routerLink]="['/home']"><-- Back To Home</button>
+</div>
+
+<ng-container [ngSwitch]="showCompaniesList">
+  <button *ngSwitchCase="false" (click)="getAllCompanies()">Pobierz wszystkie firmy</button>
+  <button *ngSwitchCase="true" (click)="clearAllCompanies()">Ukryj firmy</button>
+</ng-container>
+
+<ng-template [ngIf]="allCompanies.length>0">
+  <ul>
+    <li *ngFor="let companyFromList of allCompanies">
+      {{companyFromList.idCompany}}
+      {{companyFromList.name}}
+      {{companyFromList.address.idAddress}}
+      {{companyFromList.nip}}
+    </li>
+  </ul>
+</ng-template>
+
