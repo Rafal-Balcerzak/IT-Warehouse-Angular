@@ -7,11 +7,16 @@ import { AddressComponent } from './address/address.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {CompanyComponent} from "./company/company.component";
+import { HomeComponent } from './home/home.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddressComponent
+    AddressComponent,
+    CompanyComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
