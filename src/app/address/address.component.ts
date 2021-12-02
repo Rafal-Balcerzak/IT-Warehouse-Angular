@@ -28,6 +28,7 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*** Ustawianie adresu do edycji i zapisanie go ***/
   setAndAddAddress(country: string, region: string, city: string, street: string, localNumber: string, zipCode: string) {
     this.address = ({
       country: country,
