@@ -10,9 +10,10 @@ import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
 })
 export class AddressComponent implements OnInit {
 
-  allAddresses: Array<Address>;
+  allAddresses: Array<Address> = [];
   address: Address | null = null;
   addressToEdit: Address;
+  showAddressList: boolean = false;
 
   constructor(private addressService: AddressService, config: NgbModalConfig, private modalService: NgbModal) {
     config.backdrop = 'static';
@@ -36,17 +37,26 @@ export class AddressComponent implements OnInit {
       localNumber: localNumber,
       zipCode: zipCode
     })
-    this.addAddress();
+    this.addAddress(this.address);
   }
 
   setAddressToEdit(address: Address) {
-    this.addressToEdit = address;
+    this.addressToEdit = ({
+      idAddress: address.idAddress,
+      country: address.country,
+      region: address.region,
+      city: address.city,
+      street: address.street,
+      localNumber: address.localNumber,
+      zipCode: address.zipCode
+    })
   }
 
   /*** Pobranie wszystkich adresów ***/
   getAllAddresses() {
-    this.addressService.getAllAddresses().subscribe(address => {
+    this.addressService.getAllAddresses().subscribe((address: Array<Address>) => {
       this.allAddresses = address;
+      this.showAddressList = true;
       console.log(address);
     }, error => {
       console.log("Błąd pobierania adresów " + error);
@@ -54,9 +64,9 @@ export class AddressComponent implements OnInit {
   }
 
   /*** Dodanie nowego adresu ***/
-  addAddress() {
+  addAddress(address: Address) {
     if (this.validateInput()) {
-      this.addressService.addAddress(this.address).subscribe(address => {
+      this.addressService.addAddress(address).subscribe(address => {
         console.log("Dodano nowy adres: " + address);
         this.getAllAddresses();
       }, error => {
@@ -87,6 +97,7 @@ export class AddressComponent implements OnInit {
 
   clearAllAddresses() {
     this.allAddresses = [];
+    this.showAddressList = false;
   }
 
   /*** Sprawdza czy wypełniane pola formularza nie są puste albo czy nie są spacjami itp ***/

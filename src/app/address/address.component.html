@@ -5,8 +5,11 @@
 <input type="text" #localNumber placeholder="Local Number"> <br>
 <input type="text" #zipCode placeholder="Zip Code"> <br>
 <button (click)="setAndAddAddress(country.value, region.value, city.value, street.value, localNumber.value, zipCode.value)">Dodaj adres</button>
-<button (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
-<ng-template [ngIf]="allAddresses">
+<ng-container [ngSwitch]="showAddressList">
+  <button *ngSwitchCase="false" (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
+  <button *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj adresy</button>
+</ng-container>
+<ng-template [ngIf]="allAddresses.length>0">
   <ul>
     <li *ngFor="let addressFromList of allAddresses">
       {{addressFromList.idAddress}}
@@ -16,6 +19,10 @@
       {{addressFromList.street}}
       {{addressFromList.localNumber}}
       {{addressFromList.zipCode}}
+
+      <button (click)="deleteAddressById(addressFromList.idAddress)">Usuń</button>
+      <button (click)="open(content, addressFromList)">Edytuj</button>
+
       <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Edytuj adres</h4>
@@ -25,10 +32,6 @@
         </div>
         <div class="modal-body">
           <dl class="text-center">
-            <dt><span>Address</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.idAddress"></span>
-            </dd>
             <dt><span>Country</span></dt>
             <dd>
               <span><input [(ngModel)]="addressToEdit.country"></span>
@@ -56,15 +59,10 @@
           </dl>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="c(editAddress(address))">Zapisz</button>
+          <button type="button" class="btn btn-outline-dark" (click)="c(editAddress(addressToEdit))">Zapisz</button>
         </div>
       </ng-template>
-
-      <button (click)="deleteAddressById(addressFromList.idAddress)">Usuń</button>
-      <button (click)="open(content, addressFromList)">Edytuj</button>
-
     </li>
   </ul>
-  <button (click)="clearAllAddresses()">Ukryj adresy</button>
 </ng-template>
 <br>
