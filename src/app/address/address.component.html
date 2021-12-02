@@ -16,7 +16,6 @@
       {{address.street}}
       {{address.localNumber}}
       {{address.zipCode}}
-
       <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Edytuj adres</h4>
@@ -28,31 +27,31 @@
           <dl class="text-center">
             <dt><span>Address</span></dt>
             <dd>
-              <span><input  value="{{address.idAddress}}"></span>
+              <span><input [(ngModel)]="addressToEdit.idAddress"></span>
             </dd>
             <dt><span>Country</span></dt>
             <dd>
-              <span><input value="{{address.country}}"></span>
+              <span><input [(ngModel)]="addressToEdit.country"></span>
             </dd>
             <dt><span>Region</span></dt>
             <dd>
-              <span><input value="{{address.region}}"></span>
+              <span><input [(ngModel)]="addressToEdit.region"></span>
             </dd>
             <dt><span>City</span></dt>
             <dd>
-              <span><input value="{{address.city}}"></span>
+              <span><input [(ngModel)]="addressToEdit.city"></span>
             </dd>
             <dt><span>Street</span></dt>
             <dd>
-              <span><input value="{{address.street}}"></span>
+              <span><input [(ngModel)]="addressToEdit.street"></span>
             </dd>
             <dt><span>Local Number</span></dt>
             <dd>
-              <span><input value="{{address.localNumber}}"></span>
+              <span><input [(ngModel)]="addressToEdit.localNumber"></span>
             </dd>
             <dt><span>Zip Code</span></dt>
             <dd>
-              <span><input value="{{address.zipCode}}"></span>
+              <span><input [(ngModel)]="addressToEdit.zipCode"></span>
             </dd>
           </dl>
         </div>
