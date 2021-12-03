@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSelectModule} from "@angular/material/select";
 import { AddressUpdateComponent } from './address/address-update/address-update.component';
+import { ComapnyUpdateComponent } from './company/comapny-update/comapny-update.component';
+import { CompanyUpdateComponent } from './company/company-update/company-update.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { AddressUpdateComponent } from './address/address-update/address-update.
     AddressComponent,
     CompanyComponent,
     HomeComponent,
-    AddressUpdateComponent
+    AddressUpdateComponent,
+    ComapnyUpdateComponent,
+    CompanyUpdateComponent
   ],
   imports: [
     BrowserModule,
