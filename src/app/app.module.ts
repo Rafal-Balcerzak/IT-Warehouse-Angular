@@ -5,13 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddressComponent } from './address/address.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {CompanyComponent} from "./company/company.component";
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSelectModule} from "@angular/material/select";
+import { AddressUpdateComponent } from './address/address-update/address-update.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MatSelectModule} from "@angular/material/select";
     AppComponent,
     AddressComponent,
     CompanyComponent,
-    HomeComponent
+    HomeComponent,
+    AddressUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import {MatSelectModule} from "@angular/material/select";
     NgbAlertModule,
     BrowserAnimationsModule,
     MatSliderModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
