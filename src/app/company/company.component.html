@@ -2,6 +2,8 @@
   <button [routerLink]="['/home']"><-- Back To Home</button>
 </div>
 
+<button (click)="open(content)">Dodaj nową firmę</button>
+
 <ng-container [ngSwitch]="showCompaniesList">
   <button *ngSwitchCase="false" (click)="getAllCompanies()">Pobierz wszystkie firmy</button>
   <button *ngSwitchCase="true" (click)="clearAllCompanies()">Ukryj firmy</button>
@@ -17,4 +19,52 @@
     </li>
   </ul>
 </ng-template>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Dodaj nową firmę</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <dl class="text-center">
+      <dt><span>Name</span></dt>
+      <dd>
+        <span><input class="form-control" type="text" #name></span>
+      </dd>
+      <dt><span>Address</span></dt>
+      <dd>
+        <span>
+          <select class="custom-select w-75" [(ngModel)]="address">
+            <option *ngFor="let addressFromList of allAddresses"
+              [ngValue]="addressFromList" >
+              {{addressFromList.country}}
+              {{addressFromList.region}}
+              {{addressFromList.city}}
+              {{addressFromList.street}}
+              {{addressFromList.localNumber}}
+              {{addressFromList.zipCode}}
+            </option>
+          </select>
+          <button class="btn btn-secondary w-25">Dodaj adres</button>
+        </span>
+      </dd>
+      <dt><span>NIP</span></dt>
+      <dd>
+        <span><input class="form-control" type="text" #nip></span>
+      </dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c(setAndAddCompany(name.value, nip.value))">Zapisz
+    </button>
+  </div>
+</ng-template>
+
+
+
+
+
+
 
