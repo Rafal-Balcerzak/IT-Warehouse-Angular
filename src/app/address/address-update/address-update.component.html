@@ -1,0 +1,46 @@
+<button *ngIf="!addressToEdit" (click)="open(content)">Dodaj adres</button>
+<button *ngIf="addressToEdit" (click)="open(content)">Edytuj adres</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 *ngIf="!addressToEdit" class="modal-title">Dodaj adres</h4>
+    <h4 *ngIf="addressToEdit" class="modal-title">Edytuj adres</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save(refreshList)" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Country</span></dt>
+        <dd>
+          <span><input type="text" name="country" formControlName="country"/></span>
+        </dd>
+        <dt><span>Region</span></dt>
+        <dd>
+          <span><input type="text" name="region" formControlName="region"/></span>
+        </dd>
+        <dt><span>City</span></dt>
+        <dd>
+          <span><input type="text" name="city" formControlName="city"/></span>
+        </dd>
+        <dt><span>Street</span></dt>
+        <dd>
+          <span><input type="text" name="street" formControlName="street"/></span>
+        </dd>
+        <dt><span>Local Number</span></dt>
+        <dd>
+          <span><input type="text" name="localNumber" formControlName="localNumber"/></span>
+        </dd>
+        <dt><span>Zip Code</span></dt>
+        <dd>
+          <span><input type="text" name="zipCode" formControlName="zipCode"/></span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" (click)="c('Zapisz')">Zapisz</button>
+    </div>
+  </form>
+</ng-template>
+
