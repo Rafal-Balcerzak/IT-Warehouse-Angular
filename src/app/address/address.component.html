@@ -16,9 +16,9 @@
       {{addressFromList.localNumber}}
       {{addressFromList.zipCode}}
       <button (click)="deleteAddressById(addressFromList.idAddress)">Usuń</button>
-      <app-address-update [addressToEdit]="addressFromList" (refreshList)="refreshList()"></app-address-update>
+      <button (click)="openEditAddress(addressFromList)">Edytuj</button>
     </li>
   </ul>
 </ng-template>
 <br>
-<app-address-update (refreshList)="refreshList()"></app-address-update>
+<button (click)="openAddAddress()">Dodaj adres</button>

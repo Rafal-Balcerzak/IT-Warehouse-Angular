@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AddressService} from "../../services/address.service";
-import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Address, IAddress} from "../../models/address";
 import {FormBuilder} from "@angular/forms";
 
@@ -11,10 +11,10 @@ import {FormBuilder} from "@angular/forms";
 })
 export class AddressUpdateComponent implements OnInit {
 
-  @Input()
-  addressToEdit: Address;
+  addressToEdit?: Address;
   @Output()
   refreshList = new EventEmitter<boolean>();
+  showAddressUpdate?: boolean;
 
   editForm = this.fb.group({
     idAddress: [],
@@ -27,23 +27,18 @@ export class AddressUpdateComponent implements OnInit {
   });
 
   constructor(private addressService: AddressService,
-              config: NgbModalConfig,
-              private modalService: NgbModal,
-              protected fb: FormBuilder) {
-    config.backdrop = 'static';
-    config.keyboard = false;
+              protected fb: FormBuilder,
+              protected activeModal: NgbActiveModal) {
   }
 
-  /*** Otwiera okno zapisu/edycji i uzupełnia formularz w zależności od obecności adresu do edycji ***/
-  open(content) {
-    if (this.addressToEdit) {
-      this.updateForm();
-    }
-    this.modalService.open(content);
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 
   ngOnInit(): void {
-
+    if (this.addressToEdit) {
+      this.updateForm();
+    }
   }
 
   /*** Zwraca nowy adres na bazie pól z formularza ***/
@@ -92,6 +87,7 @@ export class AddressUpdateComponent implements OnInit {
         this.addressService.addAddress(address).subscribe(address => {
           console.log("Dodano nowy adres: " + address);
           this.refreshList.emit(refreshList);
+          this.cancel();
           this.clearForm();
         });
       } else {
@@ -99,6 +95,7 @@ export class AddressUpdateComponent implements OnInit {
         this.addressService.editAddress(address).subscribe(address => {
           console.log("Edytowano adres: " + address);
           this.refreshList.emit(refreshList);
+          this.cancel()
           this.clearForm();
         });
       }
@@ -119,7 +116,7 @@ export class AddressUpdateComponent implements OnInit {
     for (let i = 0; i < addressFieldsList.length; i++) {
       let value = addressFieldsList[i];
       if (value === '' || value === null || value === undefined || value.trim().length === 0) {
-        window.alert("Wypełnij wszystkie pola aby dodać adres");
+        window.alert("Wypełnij wszystkie pola.");
         console.log(value)
         return false;
       }

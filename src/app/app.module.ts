@@ -1,20 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AddressComponent } from './address/address.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AddressComponent} from './address/address.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbAlertModule, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {CompanyComponent} from "./company/company.component";
-import { HomeComponent } from './home/home.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HomeComponent} from './home/home.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatSelectModule} from "@angular/material/select";
-import { AddressUpdateComponent } from './address/address-update/address-update.component';
-import { ComapnyUpdateComponent } from './company/comapny-update/comapny-update.component';
-import { CompanyUpdateComponent } from './company/company-update/company-update.component';
+import {AddressUpdateComponent} from './address/address-update/address-update.component';
+import {CompanyUpdateComponent} from './company/company-update/company-update.component';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { CompanyUpdateComponent } from './company/company-update/company-update.
     CompanyComponent,
     HomeComponent,
     AddressUpdateComponent,
-    ComapnyUpdateComponent,
     CompanyUpdateComponent
   ],
   imports: [
@@ -40,7 +38,12 @@ import { CompanyUpdateComponent } from './company/company-update/company-update.
     MatSelectModule,
     ReactiveFormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [NgbActiveModal],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddressComponent,
+    AddressUpdateComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {
+}
