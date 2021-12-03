@@ -1,13 +1,6 @@
 <div>
   <button [routerLink]="['/home']"><-- Back To Home</button>
 </div>
-<input type="text" #country placeholder="Country"> <br>
-<input type="text" #region placeholder="Region"> <br>
-<input type="text" #city placeholder="City"> <br>
-<input type="text" #street placeholder="Street"> <br>
-<input type="text" #localNumber placeholder="Local Number"> <br>
-<input type="text" #zipCode placeholder="Zip Code"> <br>
-<button (click)="setAndAddAddress(country.value, region.value, city.value, street.value, localNumber.value, zipCode.value)">Dodaj adres</button>
 <ng-container [ngSwitch]="showAddressList">
   <button *ngSwitchCase="false" (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
   <button *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj adresy</button>
@@ -22,50 +15,10 @@
       {{addressFromList.street}}
       {{addressFromList.localNumber}}
       {{addressFromList.zipCode}}
-
       <button (click)="deleteAddressById(addressFromList.idAddress)">Usuń</button>
-      <button (click)="open(content, addressFromList)">Edytuj</button>
-
-      <ng-template #content let-c="close" let-d="dismiss">
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Edytuj adres</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <dl class="text-center">
-            <dt><span>Country</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.country"></span>
-            </dd>
-            <dt><span>Region</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.region"></span>
-            </dd>
-            <dt><span>City</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.city"></span>
-            </dd>
-            <dt><span>Street</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.street"></span>
-            </dd>
-            <dt><span>Local Number</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.localNumber"></span>
-            </dd>
-            <dt><span>Zip Code</span></dt>
-            <dd>
-              <span><input [(ngModel)]="addressToEdit.zipCode"></span>
-            </dd>
-          </dl>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="c(editAddress(addressToEdit))">Zapisz</button>
-        </div>
-      </ng-template>
+      <app-address-update [addressToEdit]="addressFromList" (refreshList)="refreshList()"></app-address-update>
     </li>
   </ul>
 </ng-template>
 <br>
+<app-address-update (refreshList)="refreshList()"></app-address-update>
