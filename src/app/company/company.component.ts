@@ -56,12 +56,23 @@ export class CompanyComponent implements OnInit {
   }
 
   /*** Usunięcie firmy po ID ***/
-  deleteCompanyById(id: number){
-    this.companyService.deleteCompanyById(id).subscribe(company =>{
+  deleteCompanyById(id: number) {
+    this.companyService.deleteCompanyById(id).subscribe(company => {
       console.log("Usunięto firmę: " + company);
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania firmy: " + error);
+    })
+  }
+
+  openEditCompany(companyToEdit: Company) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = this.showCompanyUpdate;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
     })
   }
 
