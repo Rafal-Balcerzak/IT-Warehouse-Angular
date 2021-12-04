@@ -16,9 +16,9 @@
       <dt><span>Address</span></dt>
       <dd>
         <span>
-          <select class="custom-select w-75" name="address" formControlName="address">
-            <option *ngFor="let addressFromList of allAddresses"
-                    [ngValue]="addressFromList">
+          <select class="form-control custom-select w-75" name="address" formControlName="address">
+            <option [ngValue]="addressFromList.idAddress === editForm.get('address')!.value?.idAddress ? editForm.get('address')!.value : addressFromList"
+                    *ngFor="let addressFromList of allAddresses">
                       {{addressFromList.country}}
                       {{addressFromList.region}}
                       {{addressFromList.city}}
