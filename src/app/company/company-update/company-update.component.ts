@@ -94,14 +94,15 @@ export class CompanyUpdateComponent implements OnInit {
           this.cancel();
           this.clearForm();
         });
-      } /*else {
+      } else {
         company.idCompany = this.companyToEdit.idCompany;
         this.companyService.editCompany(company).subscribe(company => {
           console.log("Edytowano firmę: " + company);
-          this.refreshList.emit(refreshList);
+          this.refreshListCompany();
+          this.cancel();
           this.clearForm();
         });
-      }*/
+      }
     }
   }
 
