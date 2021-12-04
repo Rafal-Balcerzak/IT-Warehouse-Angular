@@ -2,8 +2,6 @@
   <button [routerLink]="['/home']"><-- Back To Home</button>
 </div>
 
-<button (click)="open(content)">Dodaj nową firmę</button>
-
 <ng-container [ngSwitch]="showCompaniesList">
   <button *ngSwitchCase="false" (click)="getAllCompanies()">Pobierz wszystkie firmy</button>
   <button *ngSwitchCase="true" (click)="clearAllCompanies()">Ukryj firmy</button>
@@ -14,13 +12,13 @@
     <li *ngFor="let companyFromList of allCompanies">
       {{companyFromList.idCompany}}
       {{companyFromList.name}}
-      {{companyFromList.address.idAddress}}
+      {{companyFromList.address.region}}
       {{companyFromList.nip}}
     </li>
   </ul>
 </ng-template>
-
-<ng-template #content let-c="close" let-d="dismiss">
+<button (click)="openAddCompany()">Dodaj firmę</button>
+<!--<ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Dodaj nową firmę</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -60,7 +58,7 @@
     <button type="button" class="btn btn-outline-dark" (click)="c(setAndAddCompany(name.value, nip.value))">Zapisz
     </button>
   </div>
-</ng-template>
+</ng-template>-->
 
 
 

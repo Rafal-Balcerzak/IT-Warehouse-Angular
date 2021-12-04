@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../services/company.service";
 import {Company} from "../models/company";
-import {NgbModal, NgbModalConfig} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Address} from "../models/address";
-import {AddressService} from "../services/address.service";
+import {CompanyUpdateComponent} from "./company-update/company-update.component";
 
 @Component({
   selector: 'app-company',
@@ -15,34 +15,25 @@ export class CompanyComponent implements OnInit {
   allCompanies: Array<Company> = [];
   company: Company | null;
   showCompaniesList: boolean = false;
-  allAddresses: Array<Address> = [];
   address: Address | null;
+  showCompanyUpdate = true;
 
-  constructor(private companyService: CompanyService, config: NgbModalConfig, private modalService: NgbModal, private addressService: AddressService) {
-    config.backdrop = 'static';
-    config.keyboard = false;
-  }
-
-  open(content) {
-    if (this.allAddresses.length > 0) {
-      this.modalService.open(content);
-    }
+  constructor(private companyService: CompanyService,
+              private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    this.getAllAddresses();
   }
 
-  setAndAddCompany(name: string, nip: string) {
-    this.company = ({
-      name: name,
-      address: this.address,
-      nip: nip
+  openAddCompany() {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = this.showCompanyUpdate;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
     })
-    this.addCompany(this.company);
-    this.address = null;
   }
-
 
   /*** Pobranie wszystkich adresów ***/
   getAllCompanies() {
@@ -64,19 +55,15 @@ export class CompanyComponent implements OnInit {
     })
   }
 
-  /*** Pobranie wszystkich adresów ***/
-  getAllAddresses() {
-    this.addressService.getAllAddresses().subscribe((address: Array<Address>) => {
-      this.allAddresses = address;
-      console.log(address);
-    }, error => {
-      console.log("Błąd pobierania adresów " + error);
-    })
-  }
-
   /*** Wyczyszczenie tablicy ***/
   clearAllCompanies() {
     this.allCompanies = [];
     this.showCompaniesList = false;
   }
+
+  refreshList() {
+    this.getAllCompanies();
+  }
+
+
 }

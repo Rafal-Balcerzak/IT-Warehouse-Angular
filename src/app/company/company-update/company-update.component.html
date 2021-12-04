@@ -1,1 +1,43 @@
-<p>company-update works!</p>
+<ng-template [ngIf]="showCompanyUpdate">
+  <div class="modal-header">
+    <h4 *ngIf="!companyToEdit" class="modal-title">Dodaj nową firmę</h4>
+    <h4 *ngIf="companyToEdit" class="modal-title">Edytuj firmę</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="modal-body">
+    <dl class="text-center">
+      <dt><span>Name</span></dt>
+      <dd>
+        <span><input class="form-control" type="text" name="name" formControlName="name"></span>
+      </dd>
+      <dt><span>Address</span></dt>
+      <dd>
+        <span>
+          <select class="custom-select w-75" name="address" formControlName="address">
+            <option *ngFor="let addressFromList of allAddresses"
+                    [ngValue]="addressFromList" >
+                      {{addressFromList.country}}
+                      {{addressFromList.region}}
+                      {{addressFromList.city}}
+                      {{addressFromList.street}}
+                      {{addressFromList.localNumber}}
+                      {{addressFromList.zipCode}}
+            </option>
+          </select>
+          <button class="btn btn-secondary w-25">Dodaj adres</button>
+        </span>
+      </dd>
+      <dt><span>NIP</span></dt>
+      <dd>
+        <span><input class="form-control" type="text" name="nip" formControlName="nip"></span>
+      </dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+  </div>
+  </form>
+</ng-template>
