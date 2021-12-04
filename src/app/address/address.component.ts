@@ -16,7 +16,8 @@ export class AddressComponent implements OnInit {
   showAddressList: boolean = false;
   showAddressUpdate = true;
 
-  constructor(private addressService: AddressService, private modalService: NgbModal) {
+  constructor(private addressService: AddressService,
+              private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
