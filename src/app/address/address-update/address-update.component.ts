@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AddressService} from "../../services/address.service";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Address, IAddress} from "../../models/address";
@@ -12,8 +12,6 @@ import {FormBuilder} from "@angular/forms";
 export class AddressUpdateComponent implements OnInit {
 
   addressToEdit?: Address;
-  @Output()
-  refreshList = new EventEmitter<boolean>();
   showAddressUpdate?: boolean;
 
   editForm = this.fb.group({
@@ -80,13 +78,13 @@ export class AddressUpdateComponent implements OnInit {
   }
 
   /*** Zapisuje lub edytuje adres, w zalezności od tego czy adreś do edycji został przekazany ***/
-  save(refreshList): void {
+  save(): void {
     const address = this.createFromForm();
     if (this.validateInput(address)) {
       if (this.addressToEdit === null || this.addressToEdit === undefined) {
         this.addressService.addAddress(address).subscribe(address => {
           console.log("Dodano nowy adres: " + address);
-          this.refreshList.emit(refreshList);
+          this.refreshListAddress();
           this.cancel();
           this.clearForm();
         });
@@ -94,12 +92,17 @@ export class AddressUpdateComponent implements OnInit {
         address.idAddress = this.addressToEdit.idAddress;
         this.addressService.editAddress(address).subscribe(address => {
           console.log("Edytowano adres: " + address);
-          this.refreshList.emit(refreshList);
+          this.refreshListAddress();
           this.cancel()
           this.clearForm();
         });
       }
     }
+  }
+
+  /*** Odsieża listę adresów ***/
+  refreshListAddress() {
+    this.activeModal.close('save');
   }
 
   /*** Sprawdza czy wypełniane pola formularza nie są puste albo czy nie są spacjami itp ***/

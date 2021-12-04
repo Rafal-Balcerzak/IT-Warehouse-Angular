@@ -25,12 +25,22 @@ export class AddressComponent implements OnInit {
   openAddAddress() {
     const modalRef = this.modalService.open(AddressUpdateComponent);
     modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 
   openEditAddress(addressToEdit: Address) {
     const modalRef = this.modalService.open(AddressUpdateComponent);
     modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
     modalRef.componentInstance.addressToEdit = addressToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 
   /*** Pobranie wszystkich adresów ***/

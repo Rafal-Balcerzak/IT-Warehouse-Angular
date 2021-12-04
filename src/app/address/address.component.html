@@ -5,7 +5,7 @@
   <button *ngSwitchCase="false" (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
   <button *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj adresy</button>
 </ng-container>
-<ng-template [ngIf]="allAddresses.length>0">
+<ng-template [ngIf]="showAddressList">
   <ul>
     <li *ngFor="let addressFromList of allAddresses">
       {{addressFromList.idAddress}}
