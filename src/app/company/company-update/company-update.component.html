@@ -18,7 +18,7 @@
         <span>
           <select class="custom-select w-75" name="address" formControlName="address">
             <option *ngFor="let addressFromList of allAddresses"
-                    [ngValue]="addressFromList" >
+                    [ngValue]="addressFromList">
                       {{addressFromList.country}}
                       {{addressFromList.region}}
                       {{addressFromList.city}}
@@ -27,7 +27,7 @@
                       {{addressFromList.zipCode}}
             </option>
           </select>
-          <button class="btn btn-secondary w-25">Dodaj adres</button>
+          <button type="button" class="btn btn-secondary w-25" (click)="openAddAddress()">Dodaj adres</button>
         </span>
       </dd>
       <dt><span>NIP</span></dt>

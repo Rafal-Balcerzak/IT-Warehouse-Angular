@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Company, ICompany} from "../../models/company";
 import {CompanyService} from "../../services/company.service";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddressService} from "../../services/address.service";
 import {Address} from "../../models/address";
 import {FormBuilder} from "@angular/forms";
+import {AddressUpdateComponent} from "../../address/address-update/address-update.component";
 
 @Component({
   selector: 'app-company-update',
@@ -16,6 +17,7 @@ export class CompanyUpdateComponent implements OnInit {
   companyToEdit?: Company;
   allAddresses?: Array<Address> = [];
   showCompanyUpdate?: boolean;
+  showAddressUpdate = true;
 
   editForm = this.fb.group({
     idCompany: [],
@@ -27,6 +29,7 @@ export class CompanyUpdateComponent implements OnInit {
   constructor(private companyService: CompanyService,
               private addressService: AddressService,
               protected activeModal: NgbActiveModal,
+              private modalService: NgbModal,
               protected fb: FormBuilder) {
   }
 
@@ -39,6 +42,17 @@ export class CompanyUpdateComponent implements OnInit {
       this.updateForm();
     }
     this.getAllAddresses();
+  }
+
+  /*** Otwarcie komponentu do dodania adresu ***/
+  openAddAddress(){
+    const modalRef = this.modalService.open(AddressUpdateComponent);
+    modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.getAllAddresses();
+      }
+    })
   }
 
   /*** Zwraca nowy adres na bazie pól z formularza ***/
