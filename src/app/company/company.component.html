@@ -14,6 +14,7 @@
       {{companyFromList.name}}
       {{companyFromList.address.region}}
       {{companyFromList.nip}}
+      <button (click)="deleteCompanyById(companyFromList.idCompany)">Usuń</button>
     </li>
   </ul>
 </ng-template>

@@ -55,6 +55,16 @@ export class CompanyComponent implements OnInit {
     })
   }
 
+  /*** Usunięcie firmy po ID ***/
+  deleteCompanyById(id: number){
+    this.companyService.deleteCompanyById(id).subscribe(company =>{
+      console.log("Usunięto firmę: " + company);
+      this.refreshList();
+    }, error => {
+      console.log("Błąd podczas usuwania firmy: " + error);
+    })
+  }
+
   /*** Wyczyszczenie tablicy ***/
   clearAllCompanies() {
     this.allCompanies = [];
