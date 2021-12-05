@@ -1,0 +1,25 @@
+<div>
+  <button [routerLink]="['/home']"><-- Back To Home</button>
+</div>
+
+<ng-container [ngSwitch]="showDemandsList">
+  <button *ngSwitchCase="false" (click)="getAllDemands()">Pobierz wszystkie zapotrzebowania</button>
+  <button *ngSwitchCase="true" (click)="clearAllDemands()">Ukryj zapotrzebowania</button>
+</ng-container>
+
+<ng-template [ngIf]="allDemands.length>0">
+  <ul>
+    <li *ngFor="let demandFromList of allDemands">
+      {{demandFromList.idDemand}}
+      {{demandFromList.productType}}
+      {{demandFromList.model}}
+      {{demandFromList.issueDate | date: 'dd-MM-yyyy'}}
+      {{demandFromList.budget }}
+      {{demandFromList.quantity}}
+      {{demandFromList.company.name}}
+      <button (click)="deleteDemandById(demandFromList.idDemand)">Usuń</button>
+<!--      <button (click)="openEditDemand(demandFromList)">Edytuj</button>-->
+    </li>
+  </ul>
+</ng-template>
+<!--<button (click)="openAddDemand()">Dodaj zapotrzebowanie</button>-->

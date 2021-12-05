@@ -14,6 +14,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatSelectModule} from "@angular/material/select";
 import {AddressUpdateComponent} from './address/address-update/address-update.component';
 import {CompanyUpdateComponent} from './company/company-update/company-update.component';
+import { DemandComponent } from './demand/demand.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {CompanyUpdateComponent} from './company/company-update/company-update.co
     CompanyComponent,
     HomeComponent,
     AddressUpdateComponent,
-    CompanyUpdateComponent
+    CompanyUpdateComponent,
+    DemandComponent
   ],
   imports: [
     BrowserModule,
