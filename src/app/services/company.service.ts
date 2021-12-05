@@ -21,7 +21,7 @@ export class CompanyService {
     return this.http.post<ICompany>('http://localhost:8080/api/company/', company);
   }
 
-  /*** Usunięcie firmy o danycm ID ***/
+  /*** Usunięcie firmy o danym ID ***/
   deleteCompanyById(id: number) {
     return this.http.delete('http://localhost:8080/api/company/' + id);
   }
