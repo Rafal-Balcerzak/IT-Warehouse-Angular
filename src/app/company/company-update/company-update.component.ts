@@ -3,7 +3,7 @@ import {Company, ICompany} from "../../models/company";
 import {CompanyService} from "../../services/company.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddressService} from "../../services/address.service";
-import {Address} from "../../models/address";
+import {IAddress} from "../../models/address";
 import {FormBuilder} from "@angular/forms";
 import {AddressUpdateComponent} from "../../address/address-update/address-update.component";
 
@@ -14,8 +14,8 @@ import {AddressUpdateComponent} from "../../address/address-update/address-updat
 })
 export class CompanyUpdateComponent implements OnInit {
 
-  companyToEdit?: Company;
-  allAddresses?: Array<Address> = [];
+  companyToEdit?: ICompany;
+  allAddresses?: Array<IAddress> = [];
   showCompanyUpdate?: boolean;
   showAddressUpdate = true;
 
@@ -45,7 +45,7 @@ export class CompanyUpdateComponent implements OnInit {
   }
 
   /*** Otwarcie komponentu do dodania adresu ***/
-  openAddAddress(){
+  openAddAddress() {
     const modalRef = this.modalService.open(AddressUpdateComponent);
     modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
     modalRef.closed.subscribe(reason => {
@@ -113,7 +113,7 @@ export class CompanyUpdateComponent implements OnInit {
 
   /*** Pobranie wszystkich adresów ***/
   getAllAddresses() {
-    this.addressService.getAllAddresses().subscribe((address: Array<Address>) => {
+    this.addressService.getAllAddresses().subscribe((address: Array<IAddress>) => {
       this.allAddresses = address;
       console.log(address);
     }, error => {

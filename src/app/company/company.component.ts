@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../services/company.service";
-import {Company} from "../models/company";
+import {ICompany} from "../models/company";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Address} from "../models/address";
+import {IAddress} from "../models/address";
 import {CompanyUpdateComponent} from "./company-update/company-update.component";
 
 @Component({
@@ -12,10 +12,10 @@ import {CompanyUpdateComponent} from "./company-update/company-update.component"
 })
 export class CompanyComponent implements OnInit {
 
-  allCompanies: Array<Company> = [];
-  company: Company | null;
+  allCompanies: Array<ICompany> = [];
+  company: ICompany | null;
   showCompaniesList: boolean = false;
-  address: Address | null;
+  address: IAddress | null;
   showCompanyUpdate = true;
 
   constructor(private companyService: CompanyService,
@@ -47,7 +47,7 @@ export class CompanyComponent implements OnInit {
   }
 
   /*** Dodanie nowej firmy ***/
-  addCompany(company: Company) {
+  addCompany(company: ICompany) {
     this.companyService.addCompany(company).subscribe(company => {
       console.log("Dodano nową firme: " + company);
     }, error => {
@@ -65,7 +65,7 @@ export class CompanyComponent implements OnInit {
     })
   }
 
-  openEditCompany(companyToEdit: Company) {
+  openEditCompany(companyToEdit: ICompany) {
     const modalRef = this.modalService.open(CompanyUpdateComponent);
     modalRef.componentInstance.showCompanyUpdate = this.showCompanyUpdate;
     modalRef.componentInstance.companyToEdit = companyToEdit;

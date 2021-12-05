@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AddressService} from "../services/address.service";
-import {Address} from "../models/address";
+import {IAddress} from "../models/address";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddressUpdateComponent} from "./address-update/address-update.component";
 
@@ -11,8 +11,8 @@ import {AddressUpdateComponent} from "./address-update/address-update.component"
 })
 export class AddressComponent implements OnInit {
 
-  allAddresses: Array<Address> = [];
-  address: Address | null = null;
+  allAddresses: Array<IAddress> = [];
+  address: IAddress | null = null;
   showAddressList: boolean = false;
   showAddressUpdate = true;
 
@@ -33,7 +33,7 @@ export class AddressComponent implements OnInit {
     })
   }
 
-  openEditAddress(addressToEdit: Address) {
+  openEditAddress(addressToEdit: IAddress) {
     const modalRef = this.modalService.open(AddressUpdateComponent);
     modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
     modalRef.componentInstance.addressToEdit = addressToEdit;
@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit {
 
   /*** Pobranie wszystkich adresów ***/
   getAllAddresses() {
-    this.addressService.getAllAddresses().subscribe((address: Array<Address>) => {
+    this.addressService.getAllAddresses().subscribe((address: Array<IAddress>) => {
       this.allAddresses = address;
       this.showAddressList = true;
       console.log(address);

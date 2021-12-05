@@ -11,7 +11,7 @@ import {FormBuilder} from "@angular/forms";
 })
 export class AddressUpdateComponent implements OnInit {
 
-  addressToEdit?: Address;
+  addressToEdit?: IAddress | null = null;
   showAddressUpdate?: boolean;
 
   editForm = this.fb.group({
