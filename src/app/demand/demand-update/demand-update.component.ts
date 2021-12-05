@@ -3,9 +3,10 @@ import {Demand, IDemand} from "../../models/demand";
 import {ICompany} from "../../models/company";
 import {DemandService} from "../../services/demand.service";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {CompanyUpdateComponent} from "../../company/company-update/company-update.component";
 import {CompanyService} from "../../services/company.service";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-demand-update',
@@ -73,10 +74,10 @@ export class DemandUpdateComponent implements OnInit {
 
   /*** Uzupełnienie formularza jesli ktoś edytuje ***/
   protected updateForm(): void {
-    this.editForm.patchValue({
+    this.editForm = this.fb.group({
       productType: this.demandToEdit.productType,
       model: this.demandToEdit.model,
-      issueDate: this.demandToEdit.issueDate,
+      issueDate: [formatDate(this.demandToEdit.issueDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       budget: this.demandToEdit.budget,
       quantity: this.demandToEdit.quantity,
       company: this.demandToEdit.company
@@ -102,7 +103,7 @@ export class DemandUpdateComponent implements OnInit {
     if (this.validateInput(demand)) {
       if (this.demandToEdit === null || this.demandToEdit === undefined) {
         this.demandService.addDemand(demand).subscribe(demand => {
-          console.log("Dodano nowe zapotrzebowanie: " + demand);
+          console.log("Dodano nowe zapotrzebowanie: " + demand.issueDate);
           this.refreshListDemand();
           this.cancel();
           this.clearForm();

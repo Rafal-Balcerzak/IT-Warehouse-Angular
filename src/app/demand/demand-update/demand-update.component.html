@@ -36,7 +36,6 @@
               [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
               *ngFor="let companyFromList of allCompanies">
                       {{companyFromList.name}}
-                      {{companyFromList.address}}
                       {{companyFromList.nip}}
             </option>
           </select>
