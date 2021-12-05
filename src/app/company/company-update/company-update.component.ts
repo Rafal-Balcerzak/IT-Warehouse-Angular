@@ -55,7 +55,7 @@ export class CompanyUpdateComponent implements OnInit {
     })
   }
 
-  /*** Zwraca nowy adres na bazie pól z formularza ***/
+  /*** Zwraca nową firmę na bazie pól z formularza ***/
   protected createFromForm(): ICompany {
     return {
       ...new Company(),
