@@ -10,7 +10,7 @@ export interface IDemand {
   company?: ICompany | null;
 }
 
-export class Demand {
+export class Demand implements IDemand{
   constructor(
     public idDemand?: number,
     public productType?: string | null,
