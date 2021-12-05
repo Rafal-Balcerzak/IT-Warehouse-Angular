@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {IDemand} from "../models/demand";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DemandService} from "../services/demand.service";
+import {DemandUpdateComponent} from "./demand-update/demand-update.component";
 
 @Component({
   selector: 'app-demand',
@@ -12,11 +13,22 @@ export class DemandComponent implements OnInit {
 
   allDemands: Array<IDemand> = [];
   showDemandsList: boolean = false;
+  showDemandUpdate = true;
 
   constructor(private demandService: DemandService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
+  }
+
+  openAddDemand(){
+    const modalRef = this.modalService.open(DemandUpdateComponent);
+    modalRef.componentInstance.showDemandUpdate = this.showDemandUpdate;
+    modalRef.closed.subscribe( reason =>{
+      if(reason === 'save'){
+        this.refreshList();
+      }
+    })
   }
 
   /*** Pobranie wszytskich zapotrzebowań ***/
@@ -46,6 +58,17 @@ export class DemandComponent implements OnInit {
       this.refreshList();
     }, error =>{
       console.log("Błąd podczas usuwania zapotrzebowania: " + error);
+    })
+  }
+
+  openEditDemand(demandToEdit: IDemand){
+    const modalRef = this.modalService.open(DemandUpdateComponent);
+    modalRef.componentInstance.showDemandUpdate = this.showDemandUpdate;
+    modalRef.componentInstance.demandToEdit = demandToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
     })
   }
 

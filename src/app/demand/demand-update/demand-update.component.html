@@ -1,0 +1,52 @@
+<ng-template [ngIf]="showDemandUpdate">
+  <div class="modal-header">
+    <h4 *ngIf="!demandToEdit" class="modal-title">Dodaj nowe zapotrzebowanie</h4>
+    <h4 *ngIf="demandToEdit" class="modal-title">Edytuj zapotrzebowanie</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Product Type</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="productType" formControlName="productType"></span>
+        </dd>
+        <dt><span>Model</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="model" formControlName="model"></span>
+        </dd>
+        <dt><span>Issue Date</span></dt>
+        <dd>
+          <span><input class="form-control" type="date" name="issueDate" formControlName="issueDate"></span>
+        </dd>
+        <dt><span>Budget</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="budget" formControlName="budget"></span>
+        </dd>
+        <dt><span>Quantity</span></dt>
+        <dd>
+          <span><input class="form-control" type="number" name="quantity" formControlName="quantity"></span>
+        </dd>
+        <dd>
+        <span>
+          <select class="form-control custom-select w-75" name="company" formControlName="company">
+            <option
+              [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
+              *ngFor="let companyFromList of allCompanies">
+                      {{companyFromList.name}}
+                      {{companyFromList.address}}
+                      {{companyFromList.nip}}
+            </option>
+          </select>
+          <button type="button" class="btn btn-secondary w-25" (click)="openAddCompany()">Dodaj firmę</button>
+        </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-template>
