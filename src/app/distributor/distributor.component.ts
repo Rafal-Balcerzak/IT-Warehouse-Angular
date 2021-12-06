@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Distributor, IDistributor} from "../models/distributor";
+import {Component, OnInit} from '@angular/core';
+import {IDistributor} from "../models/distributor";
 import {DistributorService} from "../services/distributor.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
@@ -14,14 +14,15 @@ export class DistributorComponent implements OnInit {
   showDistributorList: boolean = false;
 
   constructor(private distributorService: DistributorService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal) {
+  }
 
   ngOnInit(): void {
   }
 
   /*** Pobranie wszystkich dostawców ***/
-  getAllDistributors(){
-    this.distributorService.getAllDistributors().subscribe(distributor =>{
+  getAllDistributors() {
+    this.distributorService.getAllDistributors().subscribe(distributor => {
       this.allDistributors = distributor;
       this.showDistributorList = true;
       console.log(distributor);
@@ -31,8 +32,8 @@ export class DistributorComponent implements OnInit {
   }
 
   /*** Usunięcie dostawcy po ID ***/
-  deleteDistributorById(id: number){
-    this.distributorService.deleteDistributorById(id).subscribe(distributor =>{
+  deleteDistributorById(id: number) {
+    this.distributorService.deleteDistributorById(id).subscribe(distributor => {
       console.log("Usunięto dostawcę: " + distributor);
       this.refreshList();
     }, error => {
@@ -46,7 +47,7 @@ export class DistributorComponent implements OnInit {
     this.showDistributorList = false;
   }
 
-  refreshList(){
+  refreshList() {
     this.getAllDistributors();
   }
 }

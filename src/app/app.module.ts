@@ -17,6 +17,7 @@ import {CompanyUpdateComponent} from './company/company-update/company-update.co
 import { DemandComponent } from './demand/demand.component';
 import { DemandUpdateComponent } from './demand/demand-update/demand-update.component';
 import { DistributorComponent } from './distributor/distributor.component';
+import { DistributorUpdateComponent } from './distributor/distributor-update/distributor-update.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DistributorComponent } from './distributor/distributor.component';
     CompanyUpdateComponent,
     DemandComponent,
     DemandUpdateComponent,
-    DistributorComponent
+    DistributorComponent,
+    DistributorUpdateComponent
   ],
   imports: [
     BrowserModule,
