@@ -1,0 +1,56 @@
+<ng-template [ngIf]="showEmployeeUpdate">
+  <div class="modal-header">
+    <h4 *ngIf="!employeeToEdit" class="modal-title">Dodaj pracownika</h4>
+    <h4 *ngIf="employeeToEdit" class="modal-title">Edytuj pracownika</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Name</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="name" formControlName="name"></span>
+        </dd>
+        <dt><span>Last name</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="lastName" formControlName="lastName"></span>
+        </dd>
+        <dt><span>Department</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="department" formControlName="department"></span>
+        </dd>
+        <dt><span>Position</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="position" formControlName="position"></span>
+        </dd>
+        <dt><span>Phone Number</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber"></span>
+        </dd>
+        <dt><span>Email</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="email" formControlName="email"></span>
+        </dd>
+        <dt><span>Company</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select w-75" name="company" formControlName="company">
+            <option
+              [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
+              *ngFor="let companyFromList of allCompanies">
+                      {{companyFromList.name}}
+              {{companyFromList.nip}}
+            </option>
+          </select>
+          <button type="button" class="btn btn-secondary w-25" (click)="openAddCompany()">Dodaj firmę</button>
+        </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-template>

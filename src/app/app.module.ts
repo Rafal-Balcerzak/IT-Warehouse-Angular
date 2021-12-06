@@ -19,6 +19,7 @@ import { DemandUpdateComponent } from './demand/demand-update/demand-update.comp
 import { DistributorComponent } from './distributor/distributor.component';
 import { DistributorUpdateComponent } from './distributor/distributor-update/distributor-update.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { EmployeeComponent } from './employee/employee.component';
     DemandUpdateComponent,
     DistributorComponent,
     DistributorUpdateComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    EmployeeUpdateComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IEmployee} from "../models/employee";
 import {EmployeeService} from "../services/employee.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
 
 @Component({
   selector: 'app-employee',
@@ -21,23 +22,41 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //TODO dodać metody do otwierania okna edycji i dodawania nowych pracowników
+  openAddEmployee() {
+    const modalRef = this.modalService.open(EmployeeUpdateComponent);
+    modalRef.componentInstance.showEmployeeUpdate = this.showEmployeeUpdate;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
 
+  openEditEmployee(employeeToEdit: IEmployee) {
+    const modalRef = this.modalService.open(EmployeeUpdateComponent);
+    modalRef.componentInstance.showEmployeeUpdate = this.showEmployeeUpdate;
+    modalRef.componentInstance.employeeToEdit = employeeToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
 
   /*** Pobranie wszystkich pracowników ***/
-  getAllEmployees(){
-    this.employeeService.getAllEmployees().subscribe(employee =>{
+  getAllEmployees() {
+    this.employeeService.getAllEmployees().subscribe(employee => {
       this.allEmployees = employee;
       this.showEmployeeList = true;
       console.log(employee);
-    }, error =>{
+    }, error => {
       console.log("Błąd pobierania pracowników " + error);
     })
   }
 
   /*** Usunięcie pracownika o danym ID ***/
-  deleteEmployeeById(id: number){
-    this.employeeService.deleteEmployeeById(id).subscribe(employee =>{
+  deleteEmployeeById(id: number) {
+    this.employeeService.deleteEmployeeById(id).subscribe(employee => {
       console.log("Usunięto pracownika: " + employee);
       this.refreshList();
     }, error => {
@@ -46,12 +65,12 @@ export class EmployeeComponent implements OnInit {
   }
 
   /*** Wyczyszczenie tablicy ***/
-  clearAllEmployees(){
+  clearAllEmployees() {
     this.allEmployees = [];
     this.showEmployeeList = false;
   }
 
-  refreshList(){
+  refreshList() {
     this.getAllEmployees();
   }
 

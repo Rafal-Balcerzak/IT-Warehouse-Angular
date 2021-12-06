@@ -13,14 +13,14 @@
       {{employeeFromList.idEmployee}}
       {{employeeFromList.name}}
       {{employeeFromList.lastName}}
-<!--      {{employeeFromList.department}}-->
+      <!--      {{employeeFromList.department}}-->
       {{employeeFromList.position }}
-<!--      {{employeeFromList.phoneNumber}}-->
-<!--      {{employeeFromList.email}}-->
+      <!--      {{employeeFromList.phoneNumber}}-->
+      <!--      {{employeeFromList.email}}-->
       {{employeeFromList.company.name}}
       <button (click)="deleteEmployeeById(employeeFromList.idEmployee)">Usuń</button>
-<!--      <button (click)="openEditDemand(employeeFromList)">Edytuj</button>-->
+      <button (click)="openEditEmployee(employeeFromList)">Edytuj</button>
     </li>
   </ul>
 </ng-template>
-<!--<button (click)="openAddDemand()">Dodaj zapotrzebowanie</button>-->
+<button (click)="openAddEmployee()">Dodaj pracownika</button>
