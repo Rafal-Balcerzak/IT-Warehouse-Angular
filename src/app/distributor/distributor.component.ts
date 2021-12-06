@@ -31,5 +31,8 @@ export class DistributorComponent implements OnInit {
   }
 
 
-
+  clearAllDistributors() {
+    this.allDistributors = [];
+    this.showDistributorList = false;
+  }
 }

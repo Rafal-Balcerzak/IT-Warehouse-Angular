@@ -3,7 +3,7 @@
 </div>
 <ng-container [ngSwitch]="showDistributorList">
   <button *ngSwitchCase="false" (click)="getAllDistributors()">Pobierz wszystkich dostawców</button>
-<!--  <button *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj adresy</button>-->
+  <button *ngSwitchCase="true" (click)="clearAllDistributors()">Ukryj dostawców</button>
 </ng-container>
 <ng-template [ngIf]="showDistributorList">
   <ul>
