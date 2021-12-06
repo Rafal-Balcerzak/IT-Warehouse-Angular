@@ -1,11 +1,11 @@
 export interface IAddress {
   idAddress?: number;
-  country?: string | null,
-  region?: string | null,
-  city?: string | null,
-  street?: string | null,
-  localNumber?: string | null,
-  zipCode?: string | null
+  country?: string | null;
+  region?: string | null;
+  city?: string | null;
+  street?: string | null;
+  localNumber?: string | null;
+  zipCode?: string | null;
 }
 
 export class Address implements IAddress {
