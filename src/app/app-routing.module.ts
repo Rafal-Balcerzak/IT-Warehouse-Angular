@@ -5,6 +5,7 @@ import {CompanyComponent} from "./company/company.component";
 import {HomeComponent} from "./home/home.component";
 import {DemandComponent} from "./demand/demand.component";
 import {DistributorComponent} from "./distributor/distributor.component";
+import {EmployeeComponent} from "./employee/employee.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'company', component: CompanyComponent},
   {path: 'demand', component: DemandComponent},
   {path: 'distributor', component: DistributorComponent},
+  {path: 'employee', component: EmployeeComponent},
 ];
 
 @NgModule({
