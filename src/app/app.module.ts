@@ -16,6 +16,7 @@ import {AddressUpdateComponent} from './address/address-update/address-update.co
 import {CompanyUpdateComponent} from './company/company-update/company-update.component';
 import { DemandComponent } from './demand/demand.component';
 import { DemandUpdateComponent } from './demand/demand-update/demand-update.component';
+import { DistributorComponent } from './distributor/distributor.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { DemandUpdateComponent } from './demand/demand-update/demand-update.comp
     AddressUpdateComponent,
     CompanyUpdateComponent,
     DemandComponent,
-    DemandUpdateComponent
+    DemandUpdateComponent,
+    DistributorComponent
   ],
   imports: [
     BrowserModule,
