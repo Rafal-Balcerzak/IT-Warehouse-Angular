@@ -1,1 +1,39 @@
-<p>distributor-update works!</p>
+<ng-template [ngIf]="showCompanyUpdate">
+  <div class="modal-header">
+    <h4 *ngIf="!distributorToEdit" class="modal-title">Dodaj nowego dostawcę</h4>
+    <h4 *ngIf="distributorToEdit" class="modal-title">Edytuj dostawcę</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Phone number</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber"></span>
+        </dd>
+        <dt><span>Email</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="email" formControlName="email"></span>
+        </dd>
+        <dt><span>Company</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select w-75" name="company" formControlName="company">
+            <option
+              [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
+              *ngFor="let companyFromList of allCompanies">
+                      {{companyFromList.name}}
+            </option>
+          </select>
+          <button type="button" class="btn btn-secondary w-25" (click)="openAddCompany()">Dodaj firmę</button>
+        </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-template>

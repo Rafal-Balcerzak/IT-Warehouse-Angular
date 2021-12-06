@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IDistributor} from "../models/distributor";
 import {DistributorService} from "../services/distributor.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DistributorUpdateComponent} from "./distributor-update/distributor-update.component";
 
 @Component({
   selector: 'app-distributor',
@@ -12,12 +13,34 @@ export class DistributorComponent implements OnInit {
 
   allDistributors: Array<IDistributor> = [];
   showDistributorList: boolean = false;
+  showDistributorUpdate = true;
 
   constructor(private distributorService: DistributorService,
               private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
+  }
+
+  openAddDistributor() {
+    const modalRef = this.modalService.open(DistributorUpdateComponent);
+    modalRef.componentInstance.showDistributorUpdate = this.showDistributorUpdate;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
+
+  openEditDistributor(distributorToEdit: IDistributor) {
+    const modalRef = this.modalService.open(DistributorUpdateComponent);
+    modalRef.componentInstance.showDistributorUpdate = this.showDistributorUpdate;
+    modalRef.componentInstance.distributorToEdit = distributorToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 
   /*** Pobranie wszystkich dostawców ***/
