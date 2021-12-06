@@ -30,9 +30,23 @@ export class DistributorComponent implements OnInit {
     })
   }
 
+  /*** Usunięcie dostawcy po ID ***/
+  deleteDistributorById(id: number){
+    this.distributorService.deleteDistributorById(id).subscribe(distributor =>{
+      console.log("Usunięto dostawcę: " + distributor);
+      this.refreshList();
+    }, error => {
+      console.log("Błąd podczas usuwania dostawcy: " + error);
+    })
+  }
 
+  /*** Wyczyszczenie tablicy ***/
   clearAllDistributors() {
     this.allDistributors = [];
     this.showDistributorList = false;
+  }
+
+  refreshList(){
+    this.getAllDistributors();
   }
 }
