@@ -1,1 +1,24 @@
-<p>handover works!</p>
+<div>
+  <button [routerLink]="['/home']"><-- Back To Home</button>
+</div>
+
+<ng-container [ngSwitch]="showHandoverList">
+  <button *ngSwitchCase="false" (click)="getAllHandovers()">Pobierz wszystkie przekazania</button>
+  <button *ngSwitchCase="true" (click)="clearAllHandovers()">Ukryj przekazania</button>
+</ng-container>
+
+<ng-template [ngIf]="allHandovers.length>0">
+  <ul>
+    <li *ngFor="let handoverFromList of allHandovers">
+      {{handoverFromList.idHandover}}
+      {{handoverFromList.product.productType}}
+      {{handoverFromList.employee.name}}
+      {{handoverFromList.employee.lastName}}
+      {{handoverFromList.handoverDate | date: 'dd.MM.yyy'}}
+      <button (click)="deleteHandoverById(handoverFromList.idHandover)">Usuń</button>
+      <button (click)="openEditHandover(handoverFromList)">Edytuj</button>
+    </li>
+  </ul>
+</ng-template>
+<button (click)="openAddHandover()">Dodaj przekazanie</button>
+
