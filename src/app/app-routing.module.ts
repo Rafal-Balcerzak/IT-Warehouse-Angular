@@ -6,6 +6,7 @@ import {HomeComponent} from "./home/home.component";
 import {DemandComponent} from "./demand/demand.component";
 import {DistributorComponent} from "./distributor/distributor.component";
 import {EmployeeComponent} from "./employee/employee.component";
+import {TransactionComponent} from "./transaction/transaction.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'demand', component: DemandComponent},
   {path: 'distributor', component: DistributorComponent},
   {path: 'employee', component: EmployeeComponent},
+  {path: 'transaction', component: TransactionComponent},
 ];
 
 @NgModule({
