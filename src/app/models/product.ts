@@ -17,7 +17,7 @@ export interface IProduct {
 export class Product implements IProduct {
   constructor(
     public idProduct?: number,
-    public product_type?: string | null,
+    public productType?: string | null,
     public producer?: string | null,
     public model?: string | null,
     public inventoryNumber?: string | null,

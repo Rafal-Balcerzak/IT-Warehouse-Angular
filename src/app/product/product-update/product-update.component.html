@@ -1,0 +1,66 @@
+<ng-container>
+  <div class="modal-header">
+    <h4 *ngIf="!productToEdit" class="modal-title">Dodaj nowy produkt</h4>
+    <h4 *ngIf="productToEdit" class="modal-title">Edytuj produkt</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Product Type</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="productType" formControlName="productType"></span>
+        </dd>
+        <dt><span>Producer</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="producer" formControlName="producer"></span>
+        </dd>
+        <dt><span>Model</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="model" formControlName="model"></span>
+        </dd>
+        <dt><span>Inventory Number</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="inventoryNumber" formControlName="inventoryNumber"></span>
+        </dd>
+        <dt><span>Price</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="price" formControlName="price"></span>
+        </dd>
+        <dt><span>Production Date</span></dt>
+        <dd>
+          <span><input class="form-control" type="date" name="productionDate" formControlName="productionDate"></span>
+        </dd>
+        <dt><span>Warranty End Date</span></dt>
+        <dd>
+          <span><input class="form-control" type="date" name="warrantyEndDate" formControlName="warrantyEndDate"></span>
+        </dd>
+        <dt><span>Warranty Type</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="warrantyType" formControlName="warrantyType"></span>
+        </dd>
+        <dt><span>In Stock</span></dt>
+        <dd>
+          <span><input class="form-control" type="checkbox" name="inStock" formControlName="inStock"></span>
+        </dd>
+        <dt><span>Transaction</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select" name="transaction" formControlName="transaction">
+            <option
+              [ngValue]="transactionFromList.idTransaction === editForm.get('transaction')!.value?.idTransaction ? editForm.get('transaction')!.value : transactionFromList"
+              *ngFor="let transactionFromList of allTransactions">
+                      {{transactionFromList.idTransaction}}
+            </option>
+          </select>
+        </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-container>
