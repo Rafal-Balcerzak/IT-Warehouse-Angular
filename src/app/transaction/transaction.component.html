@@ -4,7 +4,7 @@
 
 <ng-container [ngSwitch]="showTransactionList">
   <button *ngSwitchCase="false" (click)="getAllTransactions()">Pobierz wszystkie transakcje</button>
-  <button *ngSwitchCase="true" (click)="getAllTransactions()">Ukryj transakcje</button>
+  <button *ngSwitchCase="true" (click)="clearAllTransactions()">Ukryj transakcje</button>
 </ng-container>
 
 <ng-template [ngIf]="allTransactions.length>0">
@@ -17,8 +17,8 @@
       {{transactionFromList.price }}
       {{transactionFromList.description}}
       <button (click)="deleteTransactionById(transactionFromList.idTransaction)">Usuń</button>
-<!--      <button (click)="openEditTransaction(transactionFromList)">Edytuj</button>-->
+      <button (click)="openEditTransaction(transactionFromList)">Edytuj</button>
     </li>
   </ul>
 </ng-template>
-<!--<button (click)="openAddTransaction()">Dodaj transakcje</button>-->
+<button (click)="openAddTransaction()">Dodaj transakcje</button>
