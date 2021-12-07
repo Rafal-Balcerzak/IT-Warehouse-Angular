@@ -14,14 +14,15 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatSelectModule} from "@angular/material/select";
 import {AddressUpdateComponent} from './address/address-update/address-update.component';
 import {CompanyUpdateComponent} from './company/company-update/company-update.component';
-import { DemandComponent } from './demand/demand.component';
-import { DemandUpdateComponent } from './demand/demand-update/demand-update.component';
-import { DistributorComponent } from './distributor/distributor.component';
-import { DistributorUpdateComponent } from './distributor/distributor-update/distributor-update.component';
-import { EmployeeComponent } from './employee/employee.component';
-import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import { TransactionUpdateComponent } from './transaction/transaction-update/transaction-update.component';
+import {DemandComponent} from './demand/demand.component';
+import {DemandUpdateComponent} from './demand/demand-update/demand-update.component';
+import {DistributorComponent} from './distributor/distributor.component';
+import {DistributorUpdateComponent} from './distributor/distributor-update/distributor-update.component';
+import {EmployeeComponent} from './employee/employee.component';
+import {EmployeeUpdateComponent} from './employee/employee-update/employee-update.component';
+import {TransactionComponent} from './transaction/transaction.component';
+import {TransactionUpdateComponent} from './transaction/transaction-update/transaction-update.component';
+import { ProductComponent } from './product/product.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { TransactionUpdateComponent } from './transaction/transaction-update/tra
     EmployeeComponent,
     EmployeeUpdateComponent,
     TransactionComponent,
-    TransactionUpdateComponent
+    TransactionUpdateComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
