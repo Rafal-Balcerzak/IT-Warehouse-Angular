@@ -1,0 +1,25 @@
+<p>transaction works!</p>
+<div>
+  <button [routerLink]="['/home']"><-- Back To Home</button>
+</div>
+
+<ng-container [ngSwitch]="showTransactionList">
+  <button *ngSwitchCase="false" (click)="getAllTransactions()">Pobierz wszystkie transakcje</button>
+  <button *ngSwitchCase="true" (click)="getAllTransactions()">Ukryj transakcje</button>
+</ng-container>
+
+<ng-template [ngIf]="allTransactions.length>0">
+  <ul>
+    <li *ngFor="let transactionFromList of allTransactions">
+      {{transactionFromList.idTransaction}}
+      {{transactionFromList.demand.idDemand}}
+      {{transactionFromList.distributor.name}}
+      {{transactionFromList.transactionDate | date: 'dd.MM.yyy'}}
+      {{transactionFromList.price }}
+      {{transactionFromList.description}}
+      <button (click)="deleteTransactionById(transactionFromList.idTransaction)">Usuń</button>
+<!--      <button (click)="openEditTransaction(transactionFromList)">Edytuj</button>-->
+    </li>
+  </ul>
+</ng-template>
+<!--<button (click)="openAddTransaction()">Dodaj transakcje</button>-->
