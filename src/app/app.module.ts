@@ -21,6 +21,7 @@ import { DistributorUpdateComponent } from './distributor/distributor-update/dis
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { TransactionUpdateComponent } from './transaction/transaction-update/transaction-update.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { TransactionComponent } from './transaction/transaction.component';
     DistributorUpdateComponent,
     EmployeeComponent,
     EmployeeUpdateComponent,
-    TransactionComponent
+    TransactionComponent,
+    TransactionUpdateComponent
   ],
   imports: [
     BrowserModule,
