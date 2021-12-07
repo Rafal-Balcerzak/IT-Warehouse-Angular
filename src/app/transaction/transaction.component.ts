@@ -13,7 +13,7 @@ export class TransactionComponent implements OnInit {
 
   allTransactions: Array<ITransaction> = [];
   showTransactionList: boolean = false;
-  showTransactionUpdate: true;
+  showTransactionUpdate = true;
 
   constructor(private transactionService: TransactionService,
               private modalService: NgbModal) {

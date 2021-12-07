@@ -1,1 +1,57 @@
-<p>transaction-update works!</p>
+<ng-template [ngIf]="showTransactionUpdate">
+  <div class="modal-header">
+    <h4 *ngIf="!transactionToEdit" class="modal-title">Dodaj nową transakcje</h4>
+    <h4 *ngIf="transactionToEdit" class="modal-title">Edytuj transakcje</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Description</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="description" formControlName="description"></span>
+        </dd>
+        <dt><span>Price</span></dt>
+        <dd>
+          <span><input class="form-control" type="text" name="price" formControlName="price"></span>
+        </dd>
+        <dt><span>Transaction Date</span></dt>
+        <dd>
+          <span><input class="form-control" type="date" name="transactionDate" formControlName="transactionDate"></span>
+        </dd>
+        <dt><span>Demand</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select w-50" name="demand" formControlName="demand">
+            <option
+              [ngValue]="demandFromList.idDemand === editForm.get('demand')!.value?.idDemand ? editForm.get('demand')!.value : demandFromList"
+              *ngFor="let demandFromList of allDemands">
+                      {{demandFromList.productType}}
+                      {{demandFromList.model}}
+            </option>
+          </select>
+          <button type="button" class="btn btn-secondary w-50" (click)="openAddDemand()">Dodaj zapotrzebowanie</button>
+        </span>
+        </dd>
+        <dt><span>Distributor</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select w-50" name="distributor" formControlName="distributor">
+            <option
+              [ngValue]="distributorFromList.idDistributor === editForm.get('distributor')!.value?.idDistributor ? editForm.get('distributor')!.value : distributorFromList"
+              *ngFor="let distributorFromList of allDistributors">
+                      {{distributorFromList.company.name}}
+            </option>
+          </select>
+          <button type="button" class="btn btn-secondary w-50" (click)="openAddDistributor()">Dodaj dostawcę</button>
+        </span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-template>
