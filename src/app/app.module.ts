@@ -23,6 +23,7 @@ import {EmployeeUpdateComponent} from './employee/employee-update/employee-updat
 import {TransactionComponent} from './transaction/transaction.component';
 import {TransactionUpdateComponent} from './transaction/transaction-update/transaction-update.component';
 import { ProductComponent } from './product/product.component';
+import { ProductUpdateComponent } from './product/product-update/product-update.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ProductComponent } from './product/product.component';
     EmployeeUpdateComponent,
     TransactionComponent,
     TransactionUpdateComponent,
-    ProductComponent
+    ProductComponent,
+    ProductUpdateComponent
   ],
   imports: [
     BrowserModule,

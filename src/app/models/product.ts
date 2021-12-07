@@ -2,7 +2,7 @@ import {ITransaction} from "./transaction";
 
 export interface IProduct {
   idProduct?: number;
-  product_type?: string | null;
+  productType?: string | null;
   producer?: string | null;
   model?: string | null;
   inventoryNumber?: string | null;

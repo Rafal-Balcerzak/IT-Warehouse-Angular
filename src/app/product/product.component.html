@@ -1,1 +1,29 @@
-<p>product works!</p>
+<div>
+  <button [routerLink]="['/home']"><-- Back To Home</button>
+</div>
+
+<ng-container [ngSwitch]="showProductList">
+  <button *ngSwitchCase="false" (click)="getAllProducts()">Pobierz wszystkie produkty</button>
+  <button *ngSwitchCase="true" (click)="clearAllProducts()">Ukryj produkty</button>
+</ng-container>
+
+<ng-template [ngIf]="allProducts.length>0">
+  <ul>
+    <li *ngFor="let productFromList of allProducts">
+      {{productFromList.idProduct}}
+      {{productFromList.productType}}
+      {{productFromList.producer}}
+      {{productFromList.model}}
+      {{productFromList.inventoryNumber}}
+      {{productFromList.price }}
+      {{productFromList.productionDate | date: 'dd.MM.yyy'}}
+      {{productFromList.warrantyEndDate | date: 'dd.MM.yyy'}}
+      {{productFromList.warrantyType}}
+      {{productFromList.inStock}}
+      {{productFromList.transaction.description}}
+      <button (click)="deleteProductById(productFromList.idProduct)">Usuń</button>
+      <button (click)="openEditProduct(productFromList)">Edytuj</button>
+    </li>
+  </ul>
+</ng-template>
+<button (click)="openAddProduct()">Dodaj produkt</button>
