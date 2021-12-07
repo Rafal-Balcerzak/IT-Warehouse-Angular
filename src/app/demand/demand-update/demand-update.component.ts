@@ -152,6 +152,7 @@ export class DemandUpdateComponent implements OnInit {
         || value.trim().length === 0
         || demand.issueDate === null
         || demand.issueDate === undefined
+        || demand.issueDate.toLocaleString().trim().length < 10
         || demand.quantity < 1
         || demand.company === null
         || demand.company === undefined) {
