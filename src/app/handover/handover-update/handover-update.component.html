@@ -1,0 +1,49 @@
+<ng-container>
+  <div class="modal-header">
+    <h4 *ngIf="!handoverToEdit" class="modal-title">Dodaj nowe przekazanie</h4>
+    <h4 *ngIf="handoverToEdit" class="modal-title">Edytuj przekazania</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="modal-body">
+      <dl class="text-center">
+        <dt><span>Product</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select" name="product" formControlName="product">
+            <option
+              [ngValue]="productFromList.idProduct === editForm.get('product')!.value?.idProduct ? editForm.get('product')!.value : productFromList"
+              *ngFor="let productFromList of allProducts">
+                      {{productFromList.productType}}
+                      {{productFromList.model}}
+                      {{productFromList.inventoryNumber}}
+            </option>
+          </select>
+        </span>
+        </dd>
+        <dt><span>Employee</span></dt>
+        <dd>
+        <span>
+          <select class="form-control custom-select" name="employee" formControlName="employee">
+            <option
+              [ngValue]="employeeFromList.idEmployee === editForm.get('employee')!.value?.idEmployee ? editForm.get('employee')!.value : employeeFromList"
+              *ngFor="let employeeFromList of allEmployees">
+                      {{employeeFromList.name}}
+                      {{employeeFromList.lastName}}
+            </option>
+          </select>
+        </span>
+        </dd>
+        <dt><span>Handover Date</span></dt>
+        <dd>
+          <span><input class="form-control" type="date" name="handoverDate" formControlName="handoverDate"></span>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    </div>
+  </form>
+</ng-container>

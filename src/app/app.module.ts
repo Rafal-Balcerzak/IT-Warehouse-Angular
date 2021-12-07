@@ -25,6 +25,7 @@ import {TransactionUpdateComponent} from './transaction/transaction-update/trans
 import { ProductComponent } from './product/product.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { HandoverComponent } from './handover/handover.component';
+import { HandoverUpdateComponent } from './handover/handover-update/handover-update.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { HandoverComponent } from './handover/handover.component';
     TransactionUpdateComponent,
     ProductComponent,
     ProductUpdateComponent,
-    HandoverComponent
+    HandoverComponent,
+    HandoverUpdateComponent
   ],
   imports: [
     BrowserModule,
