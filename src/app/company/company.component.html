@@ -1,6 +1,4 @@
-<div>
-  <button [routerLink]="['/home']"><-- Back To Home</button>
-</div>
+<app-navbar></app-navbar>
 
 <ng-container [ngSwitch]="showCompaniesList">
   <button *ngSwitchCase="false" (click)="getAllCompanies()">Pobierz wszystkie firmy</button>
@@ -12,7 +10,9 @@
     <li *ngFor="let companyFromList of allCompanies">
       {{companyFromList.idCompany}}
       {{companyFromList.name}}
-      {{companyFromList.address.region}}
+      {{companyFromList.address.city}}
+      {{companyFromList.address.street}}
+      {{companyFromList.address.localNumber}}
       {{companyFromList.nip}}
       <button (click)="deleteCompanyById(companyFromList.idCompany)">Usuń</button>
       <button (click)="openEditCompany(companyFromList)">Edytuj</button>

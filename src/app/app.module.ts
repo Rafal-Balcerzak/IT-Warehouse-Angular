@@ -26,6 +26,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
 import { HandoverComponent } from './handover/handover.component';
 import { HandoverUpdateComponent } from './handover/handover-update/handover-update.component';
+import { NavbarComponent } from './home/navbar/navbar.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { HandoverUpdateComponent } from './handover/handover-update/handover-upd
     ProductComponent,
     ProductUpdateComponent,
     HandoverComponent,
-    HandoverUpdateComponent
+    HandoverUpdateComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

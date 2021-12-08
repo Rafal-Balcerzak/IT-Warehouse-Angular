@@ -1,6 +1,4 @@
-<div>
-  <button [routerLink]="['/home']"><-- Back To Home</button>
-</div>
+<app-navbar></app-navbar>
 
 <ng-container [ngSwitch]="showProductList">
   <button *ngSwitchCase="false" (click)="getAllProducts()">Pobierz wszystkie produkty</button>
