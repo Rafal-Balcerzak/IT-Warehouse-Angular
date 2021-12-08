@@ -1,24 +1,44 @@
-<div>
-  <button [routerLink]="['/home']"><-- Back To Home</button>
-</div>
-<ng-container [ngSwitch]="showAddressList">
-  <button *ngSwitchCase="false" (click)="getAllAddresses()">Pobierz wszystkie adresy</button>
-  <button *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj adresy</button>
-</ng-container>
+<app-navbar></app-navbar>
+
 <ng-template [ngIf]="showAddressList">
-  <ul>
-    <li *ngFor="let addressFromList of allAddresses">
-      {{addressFromList.idAddress}}
-      {{addressFromList.country}}
-      {{addressFromList.region}}
-      {{addressFromList.city}}
-      {{addressFromList.street}}
-      {{addressFromList.localNumber}}
-      {{addressFromList.zipCode}}
-      <button (click)="deleteAddressById(addressFromList.idAddress)">Usuń</button>
-      <button (click)="openEditAddress(addressFromList)">Edytuj</button>
-    </li>
-  </ul>
+  <div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th class="text-right" scope="col">ID</th>
+      <th class="text-right" scope="col">Kraj</th>
+      <th class="text-right" scope="col">Województwo</th>
+      <th class="text-right" scope="col">Miasto</th>
+      <th class="text-right" scope="col">Ulica</th>
+      <th class="text-right" scope="col">Numer lokalu</th>
+      <th class="text-right" scope="col">Kod pocztowy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let addressFromList of allAddresses">
+      <th class="text-right">{{addressFromList.idAddress}}</th>
+      <td class="text-right">{{addressFromList.country}}</td>
+      <td class="text-right">{{addressFromList.region}}</td>
+      <td class="text-right">{{addressFromList.city}}</td>
+      <td class="text-right">{{addressFromList.street}}</td>
+      <td class="text-right">{{addressFromList.localNumber}}</td>
+      <td class="text-right">{{addressFromList.zipCode}}</td>
+      <td class="text-right">
+        <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditAddress(addressFromList)">Edytuj</button>
+        <button class="btn btn-outline-secondary btn-sm" (click)="deleteAddressById(addressFromList.idAddress)">Usuń
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
 </ng-template>
-<br>
-<button (click)="openAddAddress()">Dodaj adres</button>
+<ng-container [ngSwitch]="showAddressList">
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllAddresses()">Pokaż adresy
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllAddresses()">Ukryj
+    adresy
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddAddress()">Dodaj adres</button>
+</ng-container>
+

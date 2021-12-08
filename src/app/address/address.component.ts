@@ -21,6 +21,7 @@ export class AddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAllAddresses();
   }
 
   openAddAddress() {
@@ -62,6 +63,7 @@ export class AddressComponent implements OnInit {
       this.getAllAddresses();
     }, error => {
       console.log("Błąd podczas usuwania adresu: " + error);
+      window.alert("Nie można usunąć powiązanego adresu.")
     });
   }
 
