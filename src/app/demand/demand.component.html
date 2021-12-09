@@ -1,23 +1,63 @@
 <app-navbar></app-navbar>
 
-<ng-container [ngSwitch]="showDemandsList">
-  <button *ngSwitchCase="false" (click)="getAllDemands()">Pobierz wszystkie zapotrzebowania</button>
-  <button *ngSwitchCase="true" (click)="clearAllDemands()">Ukryj zapotrzebowania</button>
-</ng-container>
+<ng-template [ngIf]="showDemandsList">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">Typ produktu</th>
+        <th class="text-right col-md-auto" scope="col">Model</th>
+        <th class="text-right col-md-auto" scope="col">Data wydania</th>
+        <th class="text-right col-md-auto" scope="col">Budżet</th>
+        <th class="text-right col-md-auto" scope="col">Ilość</th>
+        <th class="text-right col-md-auto" scope="col">Firma</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let demandFromList of demandsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{demandFromList.idDemand}}</th>
+        <td class="text-right col-md-auto">{{demandFromList.productType}}</td>
+        <td class="text-right col-md-auto">{{demandFromList.model}}</td>
+        <td class="text-right col-md-auto">{{demandFromList.issueDate | date: 'dd.MM.yyy'}}</td>
+        <td class="text-right col-md-auto">{{demandFromList.budget}}</td>
+        <td class="text-right col-md-auto">{{demandFromList.quantity}}</td>
+        <td class="text-right col-md-auto">{{demandFromList.company.name}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditDemand(demandFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteDemandById(demandFromList.idDemand)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="demandsToShow.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
 
-<ng-template [ngIf]="allDemands.length>0">
-  <ul>
-    <li *ngFor="let demandFromList of allDemands">
-      {{demandFromList.idDemand}}
-      {{demandFromList.productType}}
-      {{demandFromList.model}}
-      {{demandFromList.issueDate | date: 'dd.MM.yyy'}}
-      {{demandFromList.budget }}
-      {{demandFromList.quantity}}
-      {{demandFromList.company.name}}
-      <button (click)="deleteDemandById(demandFromList.idDemand)">Usuń</button>
-      <button (click)="openEditDemand(demandFromList)">Edytuj</button>
-    </li>
-  </ul>
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>
-<button (click)="openAddDemand()">Dodaj zapotrzebowanie</button>
+<ng-container [ngSwitch]="showDemandsList">
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllDemands()">Pokaż zapotrzebowania
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllDemands()">Ukryj
+    zapotrzebowania
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddDemand()">Dodaj zapotrzebowanie</button>
+</ng-container>
