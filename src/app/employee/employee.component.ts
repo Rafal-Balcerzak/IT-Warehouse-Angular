@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IEmployee} from "../models/employee";
 import {EmployeeService} from "../services/employee.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
 
 @Component({
@@ -14,12 +14,19 @@ export class EmployeeComponent implements OnInit {
   allEmployees: Array<IEmployee> = []
   showEmployeeList: boolean = false;
   showEmployeeUpdate = true;
+  page = 1;
+  pageSize = 5;
+  pageSizeList = [5, 10, 25, 50];
+  employeesToShow: Array<IEmployee> = [];
 
   constructor(private employeeService: EmployeeService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              config: NgbPaginationConfig) {
+    config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
+    this.getAllEmployees();
   }
 
   openAddEmployee() {
@@ -43,10 +50,31 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
+  /*** Wyszukiwanie po wpisanej frazie ***/
+  search(searchTerm: any) {
+    if (searchTerm !== null || true || searchTerm !== '') {
+      searchTerm = searchTerm.toLowerCase();
+    }
+    this.employeesToShow = this.allEmployees.filter(employee => {
+      if (employee.idEmployee.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || employee.name.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.lastName.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.department.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.position.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.phoneNumber.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.email.toLowerCase().indexOf(searchTerm) !== -1
+        || employee.company.name.toLowerCase().indexOf(searchTerm) !== -1
+      ) {
+        return employee;
+      }
+    })
+  }
+
   /*** Pobranie wszystkich pracowników ***/
   getAllEmployees() {
     this.employeeService.getAllEmployees().subscribe(employee => {
       this.allEmployees = employee;
+      this.employeesToShow = employee;
       this.showEmployeeList = true;
       console.log(employee);
     }, error => {

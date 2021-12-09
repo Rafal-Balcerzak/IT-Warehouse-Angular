@@ -1,24 +1,67 @@
 <app-navbar></app-navbar>
 
+<ng-template [ngIf]="showEmployeeList">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">Imię</th>
+        <th class="text-right col-md-auto" scope="col">Nazwisko</th>
+        <th class="text-right col-md-auto" scope="col">Firma</th>
+        <th class="text-right col-md-auto" scope="col">Dział</th>
+        <th class="text-right col-md-auto" scope="col">Stanowisko</th>
+        <th class="text-right col-md-auto" scope="col">Email</th>
+        <th class="text-right col-md-auto" scope="col">Numer kontaktowy</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let employeeFromList of employeesToShow | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{employeeFromList.idEmployee}}</th>
+        <td class="text-right col-md-auto">{{employeeFromList.name}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.lastName}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.company.name}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.department}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.position}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.email}}</td>
+        <td class="text-right col-md-auto">{{employeeFromList.phoneNumber}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditEmployee(employeeFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteEmployeeById(employeeFromList.idEmployee)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="employeesToShow.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
+
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 <ng-container [ngSwitch]="showEmployeeList">
-  <button *ngSwitchCase="false" (click)="getAllEmployees()">Pobierz wszystkich pracowników</button>
-  <button *ngSwitchCase="true" (click)="clearAllEmployees()">Ukryj pracowników</button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllEmployees()">Pokaż pracowników
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllEmployees()">Ukryj
+    pracowników
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddEmployee()">Dodaj pracownika</button>
 </ng-container>
 
-<ng-template [ngIf]="allEmployees.length>0">
-  <ul>
-    <li *ngFor="let employeeFromList of allEmployees">
-      {{employeeFromList.idEmployee}}
-      {{employeeFromList.name}}
-      {{employeeFromList.lastName}}
-      <!--      {{employeeFromList.department}}-->
-      {{employeeFromList.position }}
-      <!--      {{employeeFromList.phoneNumber}}-->
-      <!--      {{employeeFromList.email}}-->
-      {{employeeFromList.company.name}}
-      <button (click)="deleteEmployeeById(employeeFromList.idEmployee)">Usuń</button>
-      <button (click)="openEditEmployee(employeeFromList)">Edytuj</button>
-    </li>
-  </ul>
-</ng-template>
-<button (click)="openAddEmployee()">Dodaj pracownika</button>
+
