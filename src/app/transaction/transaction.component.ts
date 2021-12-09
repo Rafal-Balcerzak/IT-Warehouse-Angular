@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ITransaction} from "../models/transaction";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {TransactionService} from "../services/transaction.service";
 import {TransactionUpdateComponent} from "./transaction-update/transaction-update.component";
+import {formatDate} from "@angular/common";
+import {Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-transaction',
@@ -14,12 +16,19 @@ export class TransactionComponent implements OnInit {
   allTransactions: Array<ITransaction> = [];
   showTransactionList: boolean = false;
   showTransactionUpdate = true;
+  page = 1;
+  pageSize = 5;
+  pageSizeList = [5, 10, 25, 50];
+  transactionsToShow: Array<ITransaction> = [];
 
   constructor(private transactionService: TransactionService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              config: NgbPaginationConfig) {
+    config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
+    this.getAllTransactions();
   }
 
   openAddTransaction() {
@@ -43,10 +52,29 @@ export class TransactionComponent implements OnInit {
     })
   }
 
+  /*** Wyszukiwanie po wpisanej frazie ***/
+  search(searchTerm: any) {
+    if (searchTerm !== null || true || searchTerm !== '') {
+      searchTerm = searchTerm.toLowerCase();
+    }
+    this.transactionsToShow = this.allTransactions.filter(transaction => {
+      if (transaction.idTransaction.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || transaction.demand.idDemand.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || transaction.distributor.company.name.toLowerCase().indexOf(searchTerm) !== -1
+        || [formatDate(transaction.transactionDate,'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
+        || transaction.price.toLowerCase().indexOf(searchTerm) !== -1
+        || transaction.description.toLowerCase().indexOf(searchTerm) !== -1
+      ) {
+        return transaction;
+      }
+    })
+  }
+
   /*** Pobranie wszystkich transakcji ***/
   getAllTransactions() {
     this.transactionService.getAllTransactions().subscribe(transaction => {
       this.allTransactions = transaction;
+      this.transactionsToShow = transaction;
       this.showTransactionList = true;
       console.log(transaction);
     }, error => {

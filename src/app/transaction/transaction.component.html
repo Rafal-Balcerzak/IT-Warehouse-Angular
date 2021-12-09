@@ -1,22 +1,64 @@
 <app-navbar></app-navbar>
 
+<ng-template [ngIf]="showTransactionList">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">ID zapotrzebowania</th>
+        <th class="text-right col-md-auto" scope="col">Dostawca</th>
+        <th class="text-right col-md-auto" scope="col">Data transakcji</th>
+        <th class="text-right col-md-auto" scope="col">Cena</th>
+        <th class="text-right col-md-auto" scope="col">Opis</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transactionFromList of transactionsToShow | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{transactionFromList.idTransaction}}</th>
+        <td class="text-right col-md-auto">{{transactionFromList.demand.idDemand}}</td>
+        <td class="text-right col-md-auto">{{transactionFromList.distributor.company.name}}</td>
+        <td class="text-right col-md-auto">{{transactionFromList.transactionDate | date: 'dd.MM.yyy'}}</td>
+        <td class="text-right col-md-auto">{{transactionFromList.price}}</td>
+        <td class="text-right col-md-auto">{{transactionFromList.description}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditTransaction(transactionFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteTransactionById(transactionFromList.idTransaction)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="transactionsToShow.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
+
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 <ng-container [ngSwitch]="showTransactionList">
-  <button *ngSwitchCase="false" (click)="getAllTransactions()">Pobierz wszystkie transakcje</button>
-  <button *ngSwitchCase="true" (click)="clearAllTransactions()">Ukryj transakcje</button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllTransactions()">Pokaż transakcje
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllTransactions()">Ukryj
+    transakcje
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddTransaction()">Dodaj transakcje</button>
 </ng-container>
 
-<ng-template [ngIf]="allTransactions.length>0">
-  <ul>
-    <li *ngFor="let transactionFromList of allTransactions">
-      {{transactionFromList.idTransaction}}
-      {{transactionFromList.demand.idDemand}}
-      {{transactionFromList.distributor.name}}
-      {{transactionFromList.transactionDate | date: 'dd.MM.yyy'}}
-      {{transactionFromList.price }}
-      {{transactionFromList.description}}
-      <button (click)="deleteTransactionById(transactionFromList.idTransaction)">Usuń</button>
-      <button (click)="openEditTransaction(transactionFromList)">Edytuj</button>
-    </li>
-  </ul>
-</ng-template>
-<button (click)="openAddTransaction()">Dodaj transakcje</button>
+
+
