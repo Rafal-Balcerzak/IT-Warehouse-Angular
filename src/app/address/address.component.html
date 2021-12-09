@@ -12,10 +12,11 @@
         <th class="text-right col-md-auto" scope="col">Ulica</th>
         <th class="text-right col-md-auto" scope="col">Numer lokalu</th>
         <th class="text-right col-md-auto" scope="col">Kod pocztowy</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let addressFromList of allAddresses | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let addressFromList of showAddressesList | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{addressFromList.idAddress}}</th>
         <td class="text-right col-md-auto">{{addressFromList.country}}</td>
         <td class="text-right col-md-auto">{{addressFromList.region}}</td>
@@ -38,7 +39,7 @@
           <ngb-pagination
             [(page)]="page"
             [pageSize]="pageSize"
-            [collectionSize]="allAddresses.length"></ngb-pagination>
+            [collectionSize]="showAddressesList.length"></ngb-pagination>
         </div>
         <div class="col-sm">
           <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
