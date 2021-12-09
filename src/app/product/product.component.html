@@ -1,27 +1,72 @@
 <app-navbar></app-navbar>
 
+<ng-template [ngIf]="showProductList">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">Producent</th>
+        <th class="text-right col-md-auto" scope="col">Typ</th>
+        <th class="text-right col-md-auto" scope="col">Model</th>
+        <th class="text-right col-md-auto" scope="col">Numer inwantarzowy</th>
+        <th class="text-right col-md-auto" scope="col">Cena</th>
+        <th class="text-right col-md-auto" scope="col">Data produkcji</th>
+        <th class="text-right col-md-auto" scope="col">Koniec gwarancji</th>
+        <th class="text-right col-md-auto" scope="col">Gwarancja</th>
+        <th class="text-right col-md-auto" scope="col">Na stanie</th>
+        <th class="text-right col-md-auto" scope="col">Transakcja</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let productFromList of productsToShow | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{productFromList.idProduct}}</th>
+        <td class="text-right col-md-auto">{{productFromList.producer}}</td>
+        <td class="text-right col-md-auto">{{productFromList.productType}}</td>
+        <td class="text-right col-md-auto">{{productFromList.model}}</td>
+        <td class="text-right col-md-auto">{{productFromList.inventoryNumber}}</td>
+        <td class="text-right col-md-auto">{{productFromList.price}}</td>
+        <td class="text-right col-md-auto">{{productFromList.productionDate | date: 'dd.MM.yyy'}}</td>
+        <td class="text-right col-md-auto">{{productFromList.warrantyEndDate | date: 'dd.MM.yyy'}}</td>
+        <td class="text-right col-md-auto">{{productFromList.warrantyType}}</td>
+        <td class="text-right col-md-auto">{{productFromList.warrantyType}}</td>
+        <td class="text-right col-md-auto">{{productFromList.transaction.description}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditProduct(productFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteProductById(productFromList.idProduct)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="productsToShow.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
+
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
 <ng-container [ngSwitch]="showProductList">
-  <button *ngSwitchCase="false" (click)="getAllProducts()">Pobierz wszystkie produkty</button>
-  <button *ngSwitchCase="true" (click)="clearAllProducts()">Ukryj produkty</button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllProducts()">Pokaż produkty
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllProducts()">Ukryj
+    produkty
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddProduct()">Dodaj produkt</button>
 </ng-container>
 
-<ng-template [ngIf]="allProducts.length>0">
-  <ul>
-    <li *ngFor="let productFromList of allProducts">
-      {{productFromList.idProduct}}
-      {{productFromList.productType}}
-      {{productFromList.producer}}
-      {{productFromList.model}}
-      {{productFromList.inventoryNumber}}
-      {{productFromList.price }}
-      {{productFromList.productionDate | date: 'dd.MM.yyy'}}
-      {{productFromList.warrantyEndDate | date: 'dd.MM.yyy'}}
-      {{productFromList.warrantyType}}
-      {{productFromList.inStock}}
-      {{productFromList.transaction.description}}
-      <button (click)="deleteProductById(productFromList.idProduct)">Usuń</button>
-      <button (click)="openEditProduct(productFromList)">Edytuj</button>
-    </li>
-  </ul>
-</ng-template>
-<button (click)="openAddProduct()">Dodaj produkt</button>

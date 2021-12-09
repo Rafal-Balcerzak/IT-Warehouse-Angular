@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {IProduct} from "../models/product";
 import {ProductService} from "../services/product.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ProductUpdateComponent} from "./product-update/product-update.component";
+import {formatDate} from "@angular/common";
+import {Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-product',
@@ -14,12 +16,19 @@ export class ProductComponent implements OnInit {
   allProducts: Array<IProduct> = [];
   showProductList: boolean = false;
   showProductUpdate = true;
+  page = 1;
+  pageSize = 5;
+  pageSizeList = [5, 10, 25, 50];
+  productsToShow: Array<IProduct> = [];
 
   constructor(private productService: ProductService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              config: NgbPaginationConfig) {
+    config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
+    this.getAllProducts();
   }
 
   openAddProduct() {
@@ -43,10 +52,33 @@ export class ProductComponent implements OnInit {
     })
   }
 
+  /*** Wyszukiwanie po wpisanej frazie ***/
+  search(searchTerm: any) {
+    if (searchTerm !== null || true || searchTerm !== '') {
+      searchTerm = searchTerm.toLowerCase();
+    }
+    this.productsToShow = this.allProducts.filter(product => {
+      if (product.idProduct.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || product.productType.toLowerCase().indexOf(searchTerm) !== -1
+        || product.producer.toLowerCase().indexOf(searchTerm) !== -1
+        || product.model.toLowerCase().indexOf(searchTerm) !== -1
+        || product.inventoryNumber.toLowerCase().indexOf(searchTerm) !== -1
+        || product.price.toLowerCase().indexOf(searchTerm) !== -1
+        || [formatDate(product.productionDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
+        || [formatDate(product.warrantyEndDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
+        || product.warrantyType.toLowerCase().indexOf(searchTerm) !== -1
+        || product.inStock.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || product.transaction.description.toLowerCase().indexOf(searchTerm) !== -1) {
+        return product;
+      }
+    })
+  }
+
   /*** Pobranie wszytstkich product ***/
   getAllProducts() {
     this.productService.getAllProducts().subscribe(product => {
       this.allProducts = product;
+      this.productsToShow = product;
       this.showProductList = true;
       console.log(product);
     }, error => {
