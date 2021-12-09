@@ -5,13 +5,13 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('idDemand',startSort)" >ID</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('productType',startSort)" >Typ produktu</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('model',startSort)" >Model</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('issueDate',startSort)" >Data wydania</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('budget',startSort)" >Budżet</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('quantity',startSort)" >Ilość</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('company.name',startSort)" >Firma</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idDemand')" >ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('productType')" >Typ produktu</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('model')" >Model</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('issueDate')" >Data wydania</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('budget')" >Budżet</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('quantity')" >Ilość</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('company.name')" >Firma</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>

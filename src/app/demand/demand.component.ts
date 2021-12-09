@@ -104,8 +104,8 @@ export class DemandComponent implements OnInit {
   }
 
   /*** Sortowanie ***/
-  sort(colName: string, booleanValue: boolean) {
-    if (booleanValue == true) {
+  sort(colName: string) {
+    if (this.startSort == true) {
       this.demandsToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
     } else {
       this.demandsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
@@ -114,7 +114,7 @@ export class DemandComponent implements OnInit {
     /*** Sortowanie po firmie ***/
     if(colName.startsWith('company')){
       let companyName = colName.substring(8);
-      if(booleanValue == true){
+      if(this.startSort == true){
         this.demandsToShow.sort((a, b) => a.company[companyName] < b.company[companyName] ? 1 : a.company[companyName] > b.company[companyName] ? -1 : 0)
       }else {
         this.demandsToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)

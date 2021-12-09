@@ -117,8 +117,8 @@ export class CompanyComponent implements OnInit {
   }
 
   /*** Sortowanie ***/
-  sort(colName: string, booleanValue: boolean) {
-    if (booleanValue == true) {
+  sort(colName: string) {
+    if (this.startSort == true) {
       this.companiesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
     } else {
       this.companiesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
@@ -127,7 +127,7 @@ export class CompanyComponent implements OnInit {
     /*** Sortowanie po adresie ***/
     if (colName.startsWith('address')) {
       let addressStreet = colName.substring(8);
-      if (booleanValue == true) {
+      if (this.startSort == true) {
         this.companiesToShow.sort((a, b) => a.address[addressStreet] < b.address[addressStreet] ? 1 : a.address[addressStreet] > b.address[addressStreet] ? -1 : 0)
       } else {
         this.companiesToShow.sort((a, b) => a.address[addressStreet] > b.address[addressStreet] ? 1 : a.address[addressStreet] < b.address[addressStreet] ? -1 : 0)

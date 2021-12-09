@@ -105,8 +105,8 @@ export class AddressComponent implements OnInit {
   }
 
   /*** Sortowanie ***/
-  sort(colName: string, booleanValue: boolean) {
-    if (booleanValue == true){
+  sort(colName: string) {
+    if (this.startSort == true){
       this.addressesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
       this.startSort = !this.startSort
     }
