@@ -18,31 +18,12 @@ export class AddressComponent implements OnInit {
   page = 1;
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
-  showAddressesList: Array<IAddress> = [];
+  addressesToShow: Array<IAddress> = [];
 
   constructor(private addressService: AddressService,
               private modalService: NgbModal,
               config: NgbPaginationConfig) {
     config.boundaryLinks = true;
-  }
-
-  /*** Wyszukiwanie po wpisanej frazie ***/
-  search(searchTerm: any) {
-    if(searchTerm !== null || true || searchTerm !== '') {
-      searchTerm = searchTerm.toLowerCase();
-    }
-      this.showAddressesList = this.allAddresses.filter(address => {
-        if (address.idAddress.toString().toLowerCase().indexOf(searchTerm) !== -1
-        ||address.country.toLowerCase().indexOf(searchTerm) !== -1
-        || address.region.toLowerCase().indexOf(searchTerm) !== -1
-        || address.city.toLowerCase().indexOf(searchTerm) !== -1
-        || address.street.toLowerCase().indexOf(searchTerm) !== -1
-        || address.localNumber.toLowerCase().indexOf(searchTerm) !== -1
-        || address.zipCode.toLowerCase().indexOf(searchTerm) !== -1) {
-          return address;
-        }
-      })
-
   }
 
   ngOnInit(): void {
@@ -70,11 +51,29 @@ export class AddressComponent implements OnInit {
     })
   }
 
+  /*** Wyszukiwanie po wpisanej frazie ***/
+  search(searchTerm: any) {
+    if (searchTerm !== null || true || searchTerm !== '') {
+      searchTerm = searchTerm.toLowerCase();
+    }
+    this.addressesToShow = this.allAddresses.filter(address => {
+      if (address.idAddress.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || address.country.toLowerCase().indexOf(searchTerm) !== -1
+        || address.region.toLowerCase().indexOf(searchTerm) !== -1
+        || address.city.toLowerCase().indexOf(searchTerm) !== -1
+        || address.street.toLowerCase().indexOf(searchTerm) !== -1
+        || address.localNumber.toLowerCase().indexOf(searchTerm) !== -1
+        || address.zipCode.toLowerCase().indexOf(searchTerm) !== -1) {
+        return address;
+      }
+    })
+  }
+
   /*** Pobranie wszystkich adresów ***/
   getAllAddresses() {
     this.addressService.getAllAddresses().subscribe((address: Array<IAddress>) => {
       this.allAddresses = address;
-      this.showAddressesList = address
+      this.addressesToShow = address
       this.showAddressList = true;
       console.log(address);
     }, error => {
