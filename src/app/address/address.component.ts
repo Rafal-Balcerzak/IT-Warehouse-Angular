@@ -19,7 +19,7 @@ export class AddressComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   addressesToShow: Array<IAddress> = [];
-  booleanValue: boolean = false;
+  startSort: boolean = false;
 
   constructor(private addressService: AddressService,
               private modalService: NgbModal,
@@ -108,11 +108,11 @@ export class AddressComponent implements OnInit {
   sort(colName: string, booleanValue: boolean) {
     if (booleanValue == true){
       this.addressesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
-      this.booleanValue = !this.booleanValue
+      this.startSort = !this.startSort
     }
     else{
       this.addressesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
-      this.booleanValue = !this.booleanValue
+      this.startSort = !this.startSort
     }
   }
 }

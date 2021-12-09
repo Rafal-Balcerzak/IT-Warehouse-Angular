@@ -20,7 +20,7 @@ export class DemandComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   demandsToShow: Array<IDemand> = [];
-  booleanValue: boolean = false;
+  startSort: boolean = false;
 
   constructor(private demandService: DemandService,
               private modalService: NgbModal,
@@ -120,6 +120,6 @@ export class DemandComponent implements OnInit {
         this.demandsToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)
       }
     }
-    this.booleanValue = !this.booleanValue
+    this.startSort = !this.startSort
   }
 }

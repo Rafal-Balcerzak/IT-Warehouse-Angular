@@ -5,10 +5,10 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('idCompany', booleanValue)" >ID</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('name', booleanValue)" >Nazwa Firmy</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('address.street', booleanValue)" >Adres</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('nip', booleanValue)" >NIP</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idCompany', startSort)" >ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('name', startSort)" >Nazwa Firmy</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('address.street', startSort)" >Adres</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('nip', startSort)" >NIP</th>
         <th class="header text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>

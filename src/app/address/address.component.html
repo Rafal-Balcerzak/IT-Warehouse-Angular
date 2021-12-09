@@ -5,13 +5,13 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('idAddress', booleanValue)" >ID</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('country', booleanValue)" >Kraj</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('region', booleanValue)" >Województwo</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('city', booleanValue)" >Miasto</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('street', booleanValue)" >Ulica</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('localNumber', booleanValue)" >Numer lokalu</th>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('zipCode', booleanValue)" >Kod pocztowy</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idAddress', startSort)" >ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('country', startSort)" >Kraj</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('region', startSort)" >Województwo</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('city', startSort)" >Miasto</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('street', startSort)" >Ulica</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('localNumber', startSort)" >Numer lokalu</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('zipCode', startSort)" >Kod pocztowy</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>

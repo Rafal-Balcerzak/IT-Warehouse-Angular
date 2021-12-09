@@ -22,7 +22,7 @@ export class CompanyComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   companiesToShow: Array<ICompany> = [];
 
-  booleanValue: boolean = false;
+  startSort: boolean = false;
 
   constructor(private companyService: CompanyService,
               private modalService: NgbModal,
@@ -133,6 +133,6 @@ export class CompanyComponent implements OnInit {
         this.companiesToShow.sort((a, b) => a.address[addressStreet] > b.address[addressStreet] ? 1 : a.address[addressStreet] < b.address[addressStreet] ? -1 : 0)
       }
     }
-    this.booleanValue = !this.booleanValue
+    this.startSort = !this.startSort
   }
 }
