@@ -22,10 +22,12 @@ export class CompanyComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   companiesToShow: Array<ICompany> = [];
 
+  booleanValue: boolean = false;
+
   constructor(private companyService: CompanyService,
               private modalService: NgbModal,
               config: NgbPaginationConfig) {
-  config.boundaryLinks = true;
+    config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class CompanyComponent implements OnInit {
 
   /*** Wyszukiwanie po wpisanej frazie ***/
   search(searchTerm: any) {
-    if(searchTerm !== null || true || searchTerm !== '') {
+    if (searchTerm !== null || true || searchTerm !== '') {
       searchTerm = searchTerm.toLowerCase();
     }
     this.companiesToShow = this.allCompanies.filter(company => {
@@ -114,5 +116,23 @@ export class CompanyComponent implements OnInit {
     this.getAllCompanies();
   }
 
+  /*** Sortowanie ***/
+  sort(colName: string, booleanValue: boolean) {
+    if (booleanValue == true) {
+      this.companiesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.companiesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
 
+    /*** Sortowanie po adresie ***/
+    if (colName.startsWith('address')) {
+      let addressStreet = colName.substring(8);
+      if (booleanValue == true) {
+        this.companiesToShow.sort((a, b) => a.address[addressStreet] < b.address[addressStreet] ? 1 : a.address[addressStreet] > b.address[addressStreet] ? -1 : 0)
+      } else {
+        this.companiesToShow.sort((a, b) => a.address[addressStreet] > b.address[addressStreet] ? 1 : a.address[addressStreet] < b.address[addressStreet] ? -1 : 0)
+      }
+    }
+    this.booleanValue = !this.booleanValue
+  }
 }
