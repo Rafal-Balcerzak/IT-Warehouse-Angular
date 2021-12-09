@@ -2,35 +2,54 @@
 
 <ng-template [ngIf]="showAddressList">
   <div class="table-responsive">
-  <table class="table table-striped table-hover">
-    <thead>
-    <tr>
-      <th class="text-right" scope="col">ID</th>
-      <th class="text-right" scope="col">Kraj</th>
-      <th class="text-right" scope="col">Województwo</th>
-      <th class="text-right" scope="col">Miasto</th>
-      <th class="text-right" scope="col">Ulica</th>
-      <th class="text-right" scope="col">Numer lokalu</th>
-      <th class="text-right" scope="col">Kod pocztowy</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let addressFromList of allAddresses">
-      <th class="text-right">{{addressFromList.idAddress}}</th>
-      <td class="text-right">{{addressFromList.country}}</td>
-      <td class="text-right">{{addressFromList.region}}</td>
-      <td class="text-right">{{addressFromList.city}}</td>
-      <td class="text-right">{{addressFromList.street}}</td>
-      <td class="text-right">{{addressFromList.localNumber}}</td>
-      <td class="text-right">{{addressFromList.zipCode}}</td>
-      <td class="text-right">
-        <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditAddress(addressFromList)">Edytuj</button>
-        <button class="btn btn-outline-secondary btn-sm" (click)="deleteAddressById(addressFromList.idAddress)">Usuń
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">Kraj</th>
+        <th class="text-right col-md-auto" scope="col">Województwo</th>
+        <th class="text-right col-md-auto" scope="col">Miasto</th>
+        <th class="text-right col-md-auto" scope="col">Ulica</th>
+        <th class="text-right col-md-auto" scope="col">Numer lokalu</th>
+        <th class="text-right col-md-auto" scope="col">Kod pocztowy</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let addressFromList of allAddresses | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{addressFromList.idAddress}}</th>
+        <td class="text-right col-md-auto">{{addressFromList.country}}</td>
+        <td class="text-right col-md-auto">{{addressFromList.region}}</td>
+        <td class="text-right col-md-auto">{{addressFromList.city}}</td>
+        <td class="text-right col-md-auto">{{addressFromList.street}}</td>
+        <td class="text-right col-md-auto">{{addressFromList.localNumber}}</td>
+        <td class="text-right col-md-auto">{{addressFromList.zipCode}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditAddress(addressFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteAddressById(addressFromList.idAddress)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="allAddresses.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
+
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
 <ng-container [ngSwitch]="showAddressList">

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {IAddress} from "../models/address";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {AddressUpdateComponent} from "./address-update/address-update.component";
 
 @Component({
@@ -15,9 +15,15 @@ export class AddressComponent implements OnInit {
   address: IAddress | null = null;
   showAddressList: boolean = false;
   showAddressUpdate = true;
+  page = 1;
+  pageSize = 5;
+  pageSizeList = [5, 10, 25, 50];
+
 
   constructor(private addressService: AddressService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              config: NgbPaginationConfig) {
+    config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
