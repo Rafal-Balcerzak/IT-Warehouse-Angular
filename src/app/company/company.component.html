@@ -1,70 +1,64 @@
 <app-navbar></app-navbar>
 
-<ng-container [ngSwitch]="showCompaniesList">
-  <button *ngSwitchCase="false" (click)="getAllCompanies()">Pobierz wszystkie firmy</button>
-  <button *ngSwitchCase="true" (click)="clearAllCompanies()">Ukryj firmy</button>
-</ng-container>
+<ng-template [ngIf]="showCompaniesList">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-right col-md-auto" scope="col">ID</th>
+        <th class="text-right col-md-auto" scope="col">Nazwa Firmy</th>
+        <th class="text-right col-md-auto" scope="col">Adres</th>
+        <th class="text-right col-md-auto" scope="col">NIP</th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let companyFromList of companiesToShow | slice: (page-1) * pageSize : page * pageSize">
+        <th class="text-right col-md-auto">{{companyFromList.idCompany}}</th>
+        <td class="text-right col-md-auto">{{companyFromList.name}}</td>
+        <td class="text-right col-md-auto">
+          {{companyFromList.address.street}}
+          {{companyFromList.address.localnumber}}
+          <a>,</a>
+          {{companyFromList.address.zipCode}}
+          {{companyFromList.address.city}}
+        </td>
+        <td class="text-right col-md-auto">{{companyFromList.nip}}</td>
+        <td class="text-right col-md-auto">
+          <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditCompany(companyFromList)">Edytuj
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="deleteCompanyById(companyFromList.idCompany)">Usuń
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container d-flex justify-content-center">
+      <div class="row">
+        <div class="col-sm">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="companiesToShow.length"></ngb-pagination>
+        </div>
+        <div class="col-sm">
+          <select class="form-control custom-select w-auto" [(ngModel)]="pageSize">
 
-<ng-template [ngIf]="allCompanies.length>0">
-  <ul>
-    <li *ngFor="let companyFromList of allCompanies">
-      {{companyFromList.idCompany}}
-      {{companyFromList.name}}
-      {{companyFromList.address.city}}
-      {{companyFromList.address.street}}
-      {{companyFromList.address.localNumber}}
-      {{companyFromList.nip}}
-      <button (click)="deleteCompanyById(companyFromList.idCompany)">Usuń</button>
-      <button (click)="openEditCompany(companyFromList)">Edytuj</button>
-    </li>
-  </ul>
-</ng-template>
-<button (click)="openAddCompany()">Dodaj firmę</button>
-<!--<ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Dodaj nową firmę</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <dl class="text-center">
-      <dt><span>Name</span></dt>
-      <dd>
-        <span><input class="form-control" type="text" #name></span>
-      </dd>
-      <dt><span>Address</span></dt>
-      <dd>
-        <span>
-          <select class="custom-select w-75" [(ngModel)]="address">
-            <option *ngFor="let addressFromList of allAddresses"
-              [ngValue]="addressFromList" >
-              {{addressFromList.country}}
-              {{addressFromList.region}}
-              {{addressFromList.city}}
-              {{addressFromList.street}}
-              {{addressFromList.localNumber}}
-              {{addressFromList.zipCode}}
+            <option *ngFor="let pageSizeFromList of pageSizeList">
+              {{pageSizeFromList}}
             </option>
           </select>
-          <button class="btn btn-secondary w-25">Dodaj adres</button>
-        </span>
-      </dd>
-      <dt><span>NIP</span></dt>
-      <dd>
-        <span><input class="form-control" type="text" #nip></span>
-      </dd>
-    </dl>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="c(setAndAddCompany(name.value, nip.value))">Zapisz
-    </button>
-  </div>
-</ng-template>-->
-
-
-
-
-
-
+</ng-template>
+<ng-container [ngSwitch]="showCompaniesList">
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="false" (click)="getAllCompanies()">Pokaż firmy
+  </button>
+  <button class="float-right btn btn-outline-secondary" *ngSwitchCase="true" (click)="clearAllCompanies()">Ukryj
+    adresy
+  </button>
+  <button class="float-right mr-1 btn btn-outline-secondary" (click)="openAddCompany()">Dodaj firmę</button>
+</ng-container>
 

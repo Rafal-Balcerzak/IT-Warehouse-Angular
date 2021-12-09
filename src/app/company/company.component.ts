@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CompanyService} from "../services/company.service";
 import {ICompany} from "../models/company";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {IAddress} from "../models/address";
 import {CompanyUpdateComponent} from "./company-update/company-update.component";
 
@@ -17,12 +17,19 @@ export class CompanyComponent implements OnInit {
   showCompaniesList: boolean = false;
   address: IAddress | null;
   showCompanyUpdate = true;
+  page = 1;
+  pageSize = 5;
+  pageSizeList = [5, 10, 25, 50];
+  companiesToShow: Array<ICompany> = [];
 
   constructor(private companyService: CompanyService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              config: NgbPaginationConfig) {
+  config.boundaryLinks = true;
   }
 
   ngOnInit(): void {
+    this.getAllCompanies();
   }
 
   openAddCompany() {
@@ -35,10 +42,31 @@ export class CompanyComponent implements OnInit {
     })
   }
 
+
+  /*** Wyszukiwanie po wpisanej frazie ***/
+  search(searchTerm: any) {
+    if(searchTerm !== null || true || searchTerm !== '') {
+      searchTerm = searchTerm.toLowerCase();
+    }
+    this.companiesToShow = this.allCompanies.filter(company => {
+      if (company.idCompany.toString().toLowerCase().indexOf(searchTerm) !== -1
+        || company.name.toLowerCase().indexOf(searchTerm) !== -1
+        || company.nip.toLowerCase().indexOf(searchTerm) != -1
+        || company.address.city.toLowerCase().indexOf(searchTerm) !== -1
+        || company.address.street.toLowerCase().indexOf(searchTerm) !== -1
+        || company.address.localNumber.toLowerCase().indexOf(searchTerm) !== -1
+        || company.address.zipCode.toLowerCase().indexOf(searchTerm) !== -1) {
+        return company;
+      }
+    })
+
+  }
+
   /*** Pobranie wszystkich adresów ***/
   getAllCompanies() {
     this.companyService.getAllCompanies().subscribe(comapny => {
       this.allCompanies = comapny;
+      this.companiesToShow = comapny;
       this.showCompaniesList = true;
       console.log(comapny);
     }, error => {
