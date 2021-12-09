@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IDemand} from "../models/demand";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {DemandService} from "../services/demand.service";
@@ -20,6 +20,7 @@ export class DemandComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   demandsToShow: Array<IDemand> = [];
+  booleanValue: boolean = false;
 
   constructor(private demandService: DemandService,
               private modalService: NgbModal,
@@ -31,11 +32,11 @@ export class DemandComponent implements OnInit {
     this.getAllDemands();
   }
 
-  openAddDemand(){
+  openAddDemand() {
     const modalRef = this.modalService.open(DemandUpdateComponent);
     modalRef.componentInstance.showDemandUpdate = this.showDemandUpdate;
-    modalRef.closed.subscribe( reason =>{
-      if(reason === 'save'){
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
         this.refreshList();
       }
     })
@@ -50,7 +51,7 @@ export class DemandComponent implements OnInit {
       if (demand.idDemand.toString().toLowerCase().indexOf(searchTerm) !== -1
         || demand.productType.toLowerCase().indexOf(searchTerm) !== -1
         || demand.model.toLowerCase().indexOf(searchTerm) !== -1
-        || [formatDate(demand.issueDate, 'dd.MM.yyyy', 'en'),[Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
+        || [formatDate(demand.issueDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
         || demand.budget.toLowerCase().indexOf(searchTerm) !== -1
         || demand.quantity.toString().toLowerCase().indexOf(searchTerm) !== -1
         || demand.company.name.toLowerCase().indexOf(searchTerm) !== -1) {
@@ -60,8 +61,8 @@ export class DemandComponent implements OnInit {
   }
 
   /*** Pobranie wszytskich zapotrzebowań ***/
-  getAllDemands(){
-    this.demandService.getAllDemands().subscribe(demand =>{
+  getAllDemands() {
+    this.demandService.getAllDemands().subscribe(demand => {
       this.allDemands = demand;
       this.demandsToShow = demand;
       this.showDemandsList = true;
@@ -72,16 +73,16 @@ export class DemandComponent implements OnInit {
   }
 
   /*** Usunięcie zapotrzebowania po ID ***/
-  deleteDemandById(id: number){
+  deleteDemandById(id: number) {
     this.demandService.deleteDemandById(id).subscribe(demand => {
       console.log("Usunięto zapotrzebowanie: " + demand);
       this.refreshList();
-    }, error =>{
+    }, error => {
       console.log("Błąd podczas usuwania zapotrzebowania: " + error);
     })
   }
 
-  openEditDemand(demandToEdit: IDemand){
+  openEditDemand(demandToEdit: IDemand) {
     const modalRef = this.modalService.open(DemandUpdateComponent);
     modalRef.componentInstance.showDemandUpdate = this.showDemandUpdate;
     modalRef.componentInstance.demandToEdit = demandToEdit;
@@ -93,12 +94,32 @@ export class DemandComponent implements OnInit {
   }
 
   /*** Wyczyszczenie tablicy ***/
-  clearAllDemands(){
+  clearAllDemands() {
     this.allDemands = [];
     this.showDemandsList = false;
   }
 
-  refreshList(){
+  refreshList() {
     this.getAllDemands();
+  }
+
+  /*** Sortowanie ***/
+  sort(colName: string, booleanValue: boolean) {
+    if (booleanValue == true) {
+      this.demandsToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.demandsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po firmie ***/
+    if(colName.startsWith('company')){
+      let companyName = colName.substring(8);
+      if(booleanValue == true){
+        this.demandsToShow.sort((a, b) => a.company[companyName] < b.company[companyName] ? 1 : a.company[companyName] > b.company[companyName] ? -1 : 0)
+      }else {
+        this.demandsToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)
+      }
+    }
+    this.booleanValue = !this.booleanValue
   }
 }

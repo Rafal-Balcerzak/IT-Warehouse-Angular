@@ -5,13 +5,13 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="text-right col-md-auto" scope="col">ID</th>
-        <th class="text-right col-md-auto" scope="col">Typ produktu</th>
-        <th class="text-right col-md-auto" scope="col">Model</th>
-        <th class="text-right col-md-auto" scope="col">Data wydania</th>
-        <th class="text-right col-md-auto" scope="col">Budżet</th>
-        <th class="text-right col-md-auto" scope="col">Ilość</th>
-        <th class="text-right col-md-auto" scope="col">Firma</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idDemand',booleanValue)" >ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('productType',booleanValue)" >Typ produktu</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('model',booleanValue)" >Model</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('issueDate',booleanValue)" >Data wydania</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('budget',booleanValue)" >Budżet</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('quantity',booleanValue)" >Ilość</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('company.name',booleanValue)" >Firma</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>
