@@ -5,13 +5,13 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="text-right col-md-auto" scope="col">ID</th>
-        <th class="text-right col-md-auto" scope="col">Typ produktu</th>
-        <th class="text-right col-md-auto" scope="col">Model</th>
-        <th class="text-right col-md-auto" scope="col">Numer inwentarzowy</th>
-        <th class="text-right col-md-auto" scope="col">Data przekazania</th>
-        <th class="text-right col-md-auto" scope="col">Pracownik</th>
-        <th class="text-right col-md-auto" scope="col">Firma</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idHandover')">ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('product.productType')">Typ produktu</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('product.model')">Model</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('product.inventoryNumber')">Numer inwentarzowy</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('handoverDate')">Data przekazania</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('employee.name')">Pracownik</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('employee.company.name')">Firma</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>

@@ -20,6 +20,7 @@ export class ProductComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   productsToShow: Array<IProduct> = [];
+  startSort: boolean = false;
 
   constructor(private productService: ProductService,
               private modalService: NgbModal,
@@ -104,5 +105,35 @@ export class ProductComponent implements OnInit {
 
   refreshList() {
     this.getAllProducts();
+  }
+
+  /*** Sortowanie ***/
+  sort(colName: string) {
+    if (this.startSort == true) {
+      this.productsToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.productsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idProduct') || colName.startsWith('price')){
+      if (this.startSort == true) {
+        this.productsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.productsToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po transakcji ***/
+    if(colName.startsWith('transaction')){
+      let transactionCol = colName.substring(12);
+      if(this.startSort == true){
+        this.productsToShow.sort((a, b) => a.transaction[transactionCol] < b.transaction[transactionCol] ? 1 : a.transaction[transactionCol] > b.transaction[transactionCol] ? -1 : 0)
+      }else {
+        this.productsToShow.sort((a, b) => a.transaction[transactionCol] > b.transaction[transactionCol] ? 1 : a.transaction[transactionCol] < b.transaction[transactionCol] ? -1 : 0)
+      }
+    }
+
+    this.startSort = !this.startSort
   }
 }

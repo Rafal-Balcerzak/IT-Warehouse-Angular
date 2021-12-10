@@ -111,6 +111,15 @@ export class DemandComponent implements OnInit {
       this.demandsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
     }
 
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idDemand') || colName.startsWith('budget') || colName.startsWith('quantity')){
+      if (this.startSort == true) {
+        this.demandsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.demandsToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
     /*** Sortowanie po firmie ***/
     if(colName.startsWith('company')){
       let companyName = colName.substring(8);

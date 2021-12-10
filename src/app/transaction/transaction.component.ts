@@ -20,6 +20,7 @@ export class TransactionComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   transactionsToShow: Array<ITransaction> = [];
+  startSort: boolean = false;
 
   constructor(private transactionService: TransactionService,
               private modalService: NgbModal,
@@ -102,4 +103,42 @@ export class TransactionComponent implements OnInit {
     this.getAllTransactions();
   }
 
+  /*** Sortowanie ***/
+  sort(colName: string) {
+    if (this.startSort == true) {
+      this.transactionsToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.transactionsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idTransaction') || colName.startsWith('price')){
+      if (this.startSort == true) {
+        this.transactionsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.transactionsToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po zapotrzebowaniu ***/
+    if(colName.startsWith('demand')){
+      let demandCol = colName.substring(7);
+      if(this.startSort == true){
+        this.transactionsToShow.sort((a, b) => Number(a.demand[demandCol]) < Number(b.demand[demandCol]) ? 1 : Number(a.demand[demandCol]) > Number(b.demand[demandCol]) ? -1 : 0)
+      }else {
+        this.transactionsToShow.sort((a, b) => Number(a.demand[demandCol]) > Number(b.demand[demandCol]) ? 1 : Number(a.demand[demandCol]) < Number(b.demand[demandCol]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po firmie dostawcy ***/
+    if(colName.startsWith('distributor.company')){
+      let distributorCompanyName = colName.substring(20);
+      if(this.startSort == true){
+        this.transactionsToShow.sort((a, b) => a.distributor.company[distributorCompanyName] < b.distributor.company[distributorCompanyName] ? 1 : a.distributor.company[distributorCompanyName] > b.distributor.company[distributorCompanyName] ? -1 : 0)
+      }else {
+        this.transactionsToShow.sort((a, b) => a.distributor.company[distributorCompanyName] > b.distributor.company[distributorCompanyName] ? 1 : a.distributor.company[distributorCompanyName] < b.distributor.company[distributorCompanyName] ? -1 : 0)
+      }
+    }
+    this.startSort = !this.startSort
+  }
 }

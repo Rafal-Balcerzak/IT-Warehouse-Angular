@@ -114,5 +114,14 @@ export class AddressComponent implements OnInit {
       this.addressesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
       this.startSort = !this.startSort
     }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idAddress')){
+      if (this.startSort == true) {
+        this.addressesToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.addressesToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
   }
 }

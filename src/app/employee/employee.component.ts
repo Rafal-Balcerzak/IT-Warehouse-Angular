@@ -18,6 +18,7 @@ export class EmployeeComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   employeesToShow: Array<IEmployee> = [];
+  startSort: boolean = false;
 
   constructor(private employeeService: EmployeeService,
               private modalService: NgbModal,
@@ -102,4 +103,32 @@ export class EmployeeComponent implements OnInit {
     this.getAllEmployees();
   }
 
+  /*** Sortowanie ***/
+  sort(colName: string) {
+    if (this.startSort == true) {
+      this.employeesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.employeesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idEmployee')){
+      if (this.startSort == true) {
+        this.employeesToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.employeesToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po firmie ***/
+    if(colName.startsWith('company')){
+      let companyName = colName.substring(8);
+      if(this.startSort == true){
+        this.employeesToShow.sort((a, b) => a.company[companyName] < b.company[companyName] ? 1 : a.company[companyName] > b.company[companyName] ? -1 : 0)
+      }else {
+        this.employeesToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)
+      }
+    }
+    this.startSort = !this.startSort
+  }
 }

@@ -19,6 +19,7 @@ export class HandoverComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   handoversToShow: Array<IHandover> = [];
+  startSort: boolean = false;
 
   constructor(private handoverService: HandoverService,
               private modalService: NgbModal,
@@ -101,4 +102,52 @@ export class HandoverComponent implements OnInit {
     this.getAllHandovers()
   }
 
+  /*** Sortowanie ***/
+  sort(colName: string) {
+    if (this.startSort == true) {
+      this.handoversToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.handoversToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idHandover')){
+      if (this.startSort == true) {
+        this.handoversToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.handoversToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po produkcie ***/
+    if(colName.startsWith('product')){
+      let productCol = colName.substring(8);
+      if(this.startSort == true){
+        this.handoversToShow.sort((a, b) => a.product[productCol] < b.product[productCol] ? 1 : a.product[productCol] > b.product[productCol] ? -1 : 0)
+      }else {
+        this.handoversToShow.sort((a, b) => a.product[productCol] > b.product[productCol] ? 1 : a.product[productCol] < b.product[productCol] ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po pracowniku ***/
+    if(colName.startsWith('employee')){
+      let employeeCol = colName.substring(9);
+      if(this.startSort == true){
+        this.handoversToShow.sort((a, b) => a.employee[employeeCol] < b.employee[employeeCol] ? 1 : a.employee[employeeCol] > b.employee[employeeCol] ? -1 : 0)
+      }else {
+        this.handoversToShow.sort((a, b) => a.employee[employeeCol] > b.employee[employeeCol] ? 1 : a.employee[employeeCol] < b.employee[employeeCol] ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po firmie pracowniku ***/
+    if(colName.startsWith('employee.company')){
+      let employeeCompanyName = colName.substring(17);
+      if(this.startSort == true){
+        this.handoversToShow.sort((a, b) => a.employee.company[employeeCompanyName] < b.employee.company[employeeCompanyName] ? 1 : a.employee.company[employeeCompanyName] > b.employee.company[employeeCompanyName] ? -1 : 0)
+      }else {
+        this.handoversToShow.sort((a, b) => a.employee.company[employeeCompanyName] > b.employee.company[employeeCompanyName] ? 1 : a.employee.company[employeeCompanyName] < b.employee.company[employeeCompanyName] ? -1 : 0)
+      }
+    }
+    this.startSort = !this.startSort
+  }
 }

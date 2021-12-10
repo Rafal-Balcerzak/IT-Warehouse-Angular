@@ -5,14 +5,14 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="text-right col-md-auto" scope="col">ID</th>
-        <th class="text-right col-md-auto" scope="col">Imię</th>
-        <th class="text-right col-md-auto" scope="col">Nazwisko</th>
-        <th class="text-right col-md-auto" scope="col">Firma</th>
-        <th class="text-right col-md-auto" scope="col">Dział</th>
-        <th class="text-right col-md-auto" scope="col">Stanowisko</th>
-        <th class="text-right col-md-auto" scope="col">Email</th>
-        <th class="text-right col-md-auto" scope="col">Numer kontaktowy</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('idEmployee')">ID</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('name')">Imię</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('lastName')">Nazwisko</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('company.name')">Firma</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('department')">Dział</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('position')">Stanowisko</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('email')">Email</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('phoneNumber')">Numer kontaktowy</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>

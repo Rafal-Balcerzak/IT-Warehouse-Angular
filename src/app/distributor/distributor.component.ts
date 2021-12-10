@@ -18,6 +18,7 @@ export class DistributorComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   distributorsToShow: Array<IDistributor> = [];
+  startSort: boolean = false;
 
   constructor(private distributorService: DistributorService,
               private modalService: NgbModal,
@@ -95,5 +96,34 @@ export class DistributorComponent implements OnInit {
 
   refreshList() {
     this.getAllDistributors();
+  }
+
+  /*** Sortowanie ***/
+  sort(colName: string) {
+    if (this.startSort == true) {
+      this.distributorsToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+    } else {
+      this.distributorsToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idDistributor')){
+      if (this.startSort == true) {
+        this.distributorsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.distributorsToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
+    /*** Sortowanie po firmie ***/
+    if(colName.startsWith('company')){
+      let companyName = colName.substring(8);
+      if(this.startSort == true){
+        this.distributorsToShow.sort((a, b) => a.company[companyName] < b.company[companyName] ? 1 : a.company[companyName] > b.company[companyName] ? -1 : 0)
+      }else {
+        this.distributorsToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)
+      }
+    }
+    this.startSort = !this.startSort
   }
 }

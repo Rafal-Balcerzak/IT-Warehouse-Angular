@@ -124,6 +124,15 @@ export class CompanyComponent implements OnInit {
       this.companiesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
     }
 
+    /*** Sortowanie po liczbach ***/
+    if(colName.startsWith('idCompany') || colName.startsWith('nip')){
+      if (this.startSort == true) {
+        this.companiesToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
+      } else {
+        this.companiesToShow.sort((a, b) => Number(a[colName]) > Number(b[colName]) ? 1 : Number(a[colName]) < Number(b[colName]) ? -1 : 0)
+      }
+    }
+
     /*** Sortowanie po adresie ***/
     if (colName.startsWith('address')) {
       let addressStreet = colName.substring(8);
