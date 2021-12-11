@@ -13,6 +13,7 @@ export class AddressUpdateComponent implements OnInit {
 
   addressToEdit?: IAddress | null = null;
   showAddressUpdate?: boolean;
+  showDetails = false;
 
   editForm = this.fb.group({
     idAddress: [],

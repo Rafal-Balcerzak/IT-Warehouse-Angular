@@ -1,7 +1,8 @@
 <ng-template [ngIf]="showCompanyUpdate">
   <div class="modal-header">
     <h4 *ngIf="!companyToEdit" class="modal-title">Dodaj nową firmę</h4>
-    <h4 *ngIf="companyToEdit" class="modal-title">Edytuj firmę</h4>
+    <h4 *ngIf="companyToEdit&&!showCompanyDetails" class="modal-title">Edytuj firmę</h4>
+    <h4 *ngIf="companyToEdit&&showCompanyDetails" class="modal-title">Szczegóły firmy</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -37,7 +38,7 @@
     </dl>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+    <button *ngIf="!showCompanyDetails" type="submit" class="btn btn-outline-dark">Zapisz</button>
   </div>
   </form>
 </ng-template>

@@ -1,7 +1,8 @@
 <ng-template [ngIf]="showDemandUpdate">
   <div class="modal-header">
     <h4 *ngIf="!demandToEdit" class="modal-title">Dodaj nowe zapotrzebowanie</h4>
-    <h4 *ngIf="demandToEdit" class="modal-title">Edytuj zapotrzebowanie</h4>
+    <h4 *ngIf="demandToEdit&&!showDemandDetails" class="modal-title">Edytuj zapotrzebowanie</h4>
+    <h4 *ngIf="demandToEdit&&showDemandDetails" class="modal-title">Szczegóły zapotrzebowania</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -46,7 +47,7 @@
       </dl>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+      <button *ngIf="!showDemandDetails" type="submit" class="btn btn-outline-dark">Zapisz</button>
     </div>
   </form>
 </ng-template>

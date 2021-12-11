@@ -3,6 +3,8 @@ import {IDistributor} from "../models/distributor";
 import {DistributorService} from "../services/distributor.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {DistributorUpdateComponent} from "./distributor-update/distributor-update.component";
+import {ICompany} from "../models/company";
+import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
 
 @Component({
   selector: 'app-distributor',
@@ -125,5 +127,17 @@ export class DistributorComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openCompanyDetails(companyToEdit: ICompany) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = true;
+    modalRef.componentInstance.showCompanyDetails = true;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

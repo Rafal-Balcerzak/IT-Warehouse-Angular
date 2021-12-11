@@ -16,7 +16,7 @@
       <tr *ngFor="let companyFromList of companiesToShow | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{companyFromList.idCompany}}</th>
         <td class="text-right col-md-auto">{{companyFromList.name}}</td>
-        <td class="text-right col-md-auto">
+        <td class="header text-right col-md-auto" (click)="openAddressDetails(companyFromList.address)">
           {{companyFromList.address.street}}
           {{companyFromList.address.localnumber}}
           <a>,</a>

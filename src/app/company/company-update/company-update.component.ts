@@ -18,6 +18,7 @@ export class CompanyUpdateComponent implements OnInit {
   allAddresses?: Array<IAddress> = [];
   showCompanyUpdate?: boolean;
   showAddressUpdate = true;
+  showCompanyDetails = false;
 
   editForm = this.fb.group({
     idCompany: [],

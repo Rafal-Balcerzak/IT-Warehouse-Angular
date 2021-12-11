@@ -1,7 +1,8 @@
 <ng-template [ngIf]="showTransactionUpdate">
   <div class="modal-header">
     <h4 *ngIf="!transactionToEdit" class="modal-title">Dodaj nową transakcje</h4>
-    <h4 *ngIf="transactionToEdit" class="modal-title">Edytuj transakcje</h4>
+    <h4 *ngIf="transactionToEdit&&!showTransactionDetails" class="modal-title">Edytuj transakcje</h4>
+    <h4 *ngIf="transactionToEdit&&showTransactionDetails" class="modal-title">Szczegóły transakcji</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -51,7 +52,7 @@
       </dl>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+      <button *ngIf="!showTransactionDetails" type="submit" class="btn btn-outline-dark">Zapisz</button>
     </div>
   </form>
 </ng-template>

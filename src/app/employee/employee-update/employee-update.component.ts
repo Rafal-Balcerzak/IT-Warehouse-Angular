@@ -18,6 +18,7 @@ export class EmployeeUpdateComponent implements OnInit {
   allCompanies?: Array<ICompany> = [];
   showEmployeeUpdate?: boolean;
   showCompanyUpdate = true;
+  showEmployeeDetails = false;
 
   editForm = this.fb.group({
     idEmployee: [],

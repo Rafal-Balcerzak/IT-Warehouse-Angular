@@ -24,6 +24,7 @@ export class TransactionUpdateComponent implements OnInit {
   allDistributors?: Array<IDistributor> = [];
   showDemandUpdate = true;
   showDistributorUpdate = true;
+  showTransactionDetails = false;
 
   editForm = this.fb.group({
     idTransaction: [],

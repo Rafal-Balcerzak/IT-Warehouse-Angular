@@ -21,7 +21,7 @@
         <th class="text-right col-md-auto">{{employeeFromList.idEmployee}}</th>
         <td class="text-right col-md-auto">{{employeeFromList.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.lastName}}</td>
-        <td class="text-right col-md-auto">{{employeeFromList.company.name}}</td>
+        <td class="header text-right col-md-auto" (click)="openEditCompany(employeeFromList.company)">{{employeeFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.department}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.position}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.email}}</td>

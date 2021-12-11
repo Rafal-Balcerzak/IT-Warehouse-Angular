@@ -5,6 +5,10 @@ import {TransactionService} from "../services/transaction.service";
 import {TransactionUpdateComponent} from "./transaction-update/transaction-update.component";
 import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
+import {IDemand} from "../models/demand";
+import {DemandUpdateComponent} from "../demand/demand-update/demand-update.component";
+import {IDistributor} from "../models/distributor";
+import {DistributorUpdateComponent} from "../distributor/distributor-update/distributor-update.component";
 
 @Component({
   selector: 'app-transaction',
@@ -140,5 +144,29 @@ export class TransactionComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openDemandDetails(demandToEdit: IDemand) {
+    const modalRef = this.modalService.open(DemandUpdateComponent);
+    modalRef.componentInstance.showDemandUpdate = true;
+    modalRef.componentInstance.showDemandDetails = true;
+    modalRef.componentInstance.demandToEdit = demandToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
+
+  openDistributorDetails(distributorToEdit: IDistributor) {
+    const modalRef = this.modalService.open(DistributorUpdateComponent);
+    modalRef.componentInstance.showDistributorUpdate = true;
+    modalRef.componentInstance.showDistributorDetails = true;
+    modalRef.componentInstance.distributorToEdit = distributorToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

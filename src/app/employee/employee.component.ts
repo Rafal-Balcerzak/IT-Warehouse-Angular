@@ -3,6 +3,8 @@ import {IEmployee} from "../models/employee";
 import {EmployeeService} from "../services/employee.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
+import {ICompany} from "../models/company";
+import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
 
 @Component({
   selector: 'app-employee',
@@ -130,5 +132,17 @@ export class EmployeeComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openEditCompany(companyToEdit: ICompany) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = true;
+    modalRef.componentInstance.showCompanyDetails = true;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

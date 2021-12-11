@@ -5,6 +5,8 @@ import {DemandService} from "../services/demand.service";
 import {DemandUpdateComponent} from "./demand-update/demand-update.component";
 import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
+import {ICompany} from "../models/company";
+import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
 
 @Component({
   selector: 'app-demand',
@@ -130,5 +132,17 @@ export class DemandComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openCompanyDetails(companyToEdit: ICompany) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = true;
+    modalRef.componentInstance.showCompanyDetails = true;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

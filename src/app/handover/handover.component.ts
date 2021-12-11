@@ -5,6 +5,10 @@ import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {HandoverUpdateComponent} from "./handover-update/handover-update.component";
 import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
+import {ICompany} from "../models/company";
+import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
+import {IEmployee} from "../models/employee";
+import {EmployeeUpdateComponent} from "../employee/employee-update/employee-update.component";
 
 @Component({
   selector: 'app-handover',
@@ -149,5 +153,29 @@ export class HandoverComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openCompanyDetails(companyToEdit: ICompany) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = true;
+    modalRef.componentInstance.showCompanyDetails = true;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
+
+  openEmployeeDetails(employeeToEdit: IEmployee) {
+    const modalRef = this.modalService.open(EmployeeUpdateComponent);
+    modalRef.componentInstance.showEmployeeUpdate = true;
+    modalRef.componentInstance.showEmployeeDetails = true;
+    modalRef.componentInstance.employeeToEdit = employeeToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

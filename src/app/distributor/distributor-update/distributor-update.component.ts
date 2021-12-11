@@ -17,6 +17,7 @@ export class DistributorUpdateComponent implements OnInit {
   distributorToEdit?: IDistributor;
   allCompanies?: Array<ICompany> = [];
   showCompanyUpdate = true;
+  showDistributorDetails = false;
 
   editForm = this.fb.group({
     idDistributor: [],

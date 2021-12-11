@@ -19,6 +19,7 @@ export class DemandUpdateComponent implements OnInit {
   allCompanies?: Array<ICompany> = [];
   showDemandUpdate?: boolean;
   showCompanyUpdate = true;
+  showDemandDetails = false;
 
   editForm = this.fb.group({
     idDemand: [],

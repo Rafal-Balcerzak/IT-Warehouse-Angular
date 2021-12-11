@@ -5,6 +5,8 @@ import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ProductUpdateComponent} from "./product-update/product-update.component";
 import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
+import {ITransaction} from "../models/transaction";
+import {TransactionUpdateComponent} from "../transaction/transaction-update/transaction-update.component";
 
 @Component({
   selector: 'app-product',
@@ -135,5 +137,17 @@ export class ProductComponent implements OnInit {
     }
 
     this.startSort = !this.startSort
+  }
+
+  openTransactionDetails(transactionToEdit: ITransaction) {
+    const modalRef = this.modalService.open(TransactionUpdateComponent);
+    modalRef.componentInstance.showTransactionUpdate = true;
+    modalRef.componentInstance.showTransactionDetails = true;
+    modalRef.componentInstance.transactionToEdit = transactionToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

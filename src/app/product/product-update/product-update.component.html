@@ -52,7 +52,7 @@
             <option
               [ngValue]="transactionFromList.idTransaction === editForm.get('transaction')!.value?.idTransaction ? editForm.get('transaction')!.value : transactionFromList"
               *ngFor="let transactionFromList of allTransactions">
-                      {{transactionFromList.idTransaction}}
+                      {{transactionFromList.description}}
             </option>
           </select>
         </span>

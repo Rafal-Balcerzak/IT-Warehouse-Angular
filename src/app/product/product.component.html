@@ -31,7 +31,7 @@
         <td class="text-right col-md-auto">{{productFromList.warrantyEndDate | date: 'dd.MM.yyy'}}</td>
         <td class="text-right col-md-auto">{{productFromList.warrantyType}}</td>
         <td class="text-right col-md-auto"><input type="checkbox" disabled [checked]="productFromList.inStock"></td>
-        <td class="text-right col-md-auto">{{productFromList.transaction.description}}</td>
+        <td class="header text-right col-md-auto" (click)="openTransactionDetails(productFromList.transaction)">{{productFromList.transaction.description}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditProduct(productFromList)">Edytuj
           </button>

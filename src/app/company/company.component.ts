@@ -4,6 +4,7 @@ import {ICompany} from "../models/company";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {IAddress} from "../models/address";
 import {CompanyUpdateComponent} from "./company-update/company-update.component";
+import {AddressUpdateComponent} from "../address/address-update/address-update.component";
 
 @Component({
   selector: 'app-company',
@@ -143,5 +144,17 @@ export class CompanyComponent implements OnInit {
       }
     }
     this.startSort = !this.startSort
+  }
+
+  openAddressDetails(addressToEdit: IAddress) {
+    const modalRef = this.modalService.open(AddressUpdateComponent);
+    modalRef.componentInstance.showAddressUpdate = true;
+    modalRef.componentInstance.showDetails = true;
+    modalRef.componentInstance.addressToEdit = addressToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
   }
 }

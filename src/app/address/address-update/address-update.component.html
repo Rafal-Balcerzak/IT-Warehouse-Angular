@@ -1,7 +1,8 @@
 <ng-template [ngIf]="showAddressUpdate">
   <div class="modal-header">
     <h4 *ngIf="!addressToEdit" class="modal-title">Dodaj adres</h4>
-    <h4 *ngIf="addressToEdit" class="modal-title">Edytuj adres</h4>
+    <h4 *ngIf="addressToEdit&&!showDetails" class="modal-title">Edytuj adres</h4>
+    <h4 *ngIf="showDetails&&showDetails" class="modal-title">Szczegóły adresu</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -36,7 +37,7 @@
       </dl>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+      <button *ngIf="!showDetails" type="submit" class="btn btn-outline-dark">Zapisz</button>
     </div>
   </form>
 </ng-template>

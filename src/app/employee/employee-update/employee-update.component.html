@@ -1,7 +1,8 @@
 <ng-template [ngIf]="showEmployeeUpdate">
   <div class="modal-header">
     <h4 *ngIf="!employeeToEdit" class="modal-title">Dodaj pracownika</h4>
-    <h4 *ngIf="employeeToEdit" class="modal-title">Edytuj pracownika</h4>
+    <h4 *ngIf="employeeToEdit&&!showEmployeeDetails" class="modal-title">Edytuj pracownika</h4>
+    <h4 *ngIf="employeeToEdit&&showEmployeeDetails" class="modal-title">Szczegóły pracownika</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -50,7 +51,7 @@
       </dl>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark">Zapisz</button>
+      <button *ngIf="!showEmployeeDetails" type="submit" class="btn btn-outline-dark">Zapisz</button>
     </div>
   </form>
 </ng-template>
