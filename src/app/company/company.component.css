@@ -17,7 +17,3 @@ ngb-pagination ::ng-deep .page-item.active .page-link:focus, .page-link:not(:dis
 ngb-pagination ::ng-deep .page-link:not(:disabled):not(.disabled):active:focus {
   box-shadow:  0 0 0 0.1rem dimgrey;
 }
-
-.header{
-  cursor: pointer;
-}
