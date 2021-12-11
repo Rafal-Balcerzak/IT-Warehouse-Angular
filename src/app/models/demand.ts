@@ -8,6 +8,7 @@ export interface IDemand {
   budget?: string | null;
   quantity?: number | null;
   company?: ICompany | null;
+  done?: boolean | null;
 }
 
 export class Demand implements IDemand{
@@ -18,7 +19,8 @@ export class Demand implements IDemand{
     public issueDate?: Date | null,
     public budget?: string | null,
     public quantity?: number | null,
-    public company?: ICompany | null
+    public company?: ICompany | null,
+    public done?: boolean | null
   ) {
   }
 

@@ -12,6 +12,7 @@
         <th class="header text-right col-md-auto" scope="col" (click)="sort('budget')" >Budżet</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('quantity')" >Ilość</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('company.name')" >Firma</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('done')" >Zakończono</th>
         <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>
@@ -24,6 +25,7 @@
         <td class="text-right col-md-auto">{{demandFromList.budget}}</td>
         <td class="text-right col-md-auto">{{demandFromList.quantity}}</td>
         <td class="header text-right col-md-auto" (click)="openCompanyDetails(demandFromList.company)">{{demandFromList.company.name}}</td>
+        <td class="text-right col-md-auto"><input type="checkbox" disabled [checked]="demandFromList.done"></td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditDemand(demandFromList)">Edytuj
           </button>

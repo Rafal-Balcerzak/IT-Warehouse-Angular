@@ -56,7 +56,8 @@ export class DemandComponent implements OnInit {
         || [formatDate(demand.issueDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
         || demand.budget.toLowerCase().indexOf(searchTerm) !== -1
         || demand.quantity.toString().toLowerCase().indexOf(searchTerm) !== -1
-        || demand.company.name.toLowerCase().indexOf(searchTerm) !== -1) {
+        || demand.company.name.toLowerCase().indexOf(searchTerm) !== -1
+        || demand.done.toString().toLowerCase().indexOf(searchTerm) !== -1) {
         return demand;
       }
     })

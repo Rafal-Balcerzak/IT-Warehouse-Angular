@@ -28,7 +28,8 @@ export class DemandUpdateComponent implements OnInit {
     issueDate: [],
     budget: [],
     quantity: [],
-    company: []
+    company: [],
+    done: []
   });
 
   constructor(private demandService: DemandService,
@@ -69,7 +70,8 @@ export class DemandUpdateComponent implements OnInit {
       issueDate: this.editForm.get('issueDate')!.value,
       budget: this.editForm.get('budget')!.value,
       quantity: this.editForm.get('quantity')!.value,
-      company: this.editForm.get('company')!.value
+      company: this.editForm.get('company')!.value,
+      done: this.editForm.get('done')!.value
     }
   }
 
@@ -81,7 +83,8 @@ export class DemandUpdateComponent implements OnInit {
       issueDate: [formatDate(this.demandToEdit.issueDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       budget: this.demandToEdit.budget,
       quantity: this.demandToEdit.quantity,
-      company: this.demandToEdit.company
+      company: this.demandToEdit.company,
+      done: this.demandToEdit.done
     })
   }
 
@@ -94,7 +97,8 @@ export class DemandUpdateComponent implements OnInit {
       issueDate: null,
       budget: null,
       quantity: null,
-      company: null
+      company: null,
+      done: null
     })
   }
 
