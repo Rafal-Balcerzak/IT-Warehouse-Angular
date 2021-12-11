@@ -17,7 +17,7 @@
         <th class="text-right col-md-auto">{{distributorFromList.idDistributor}}</th>
         <td class="header text-right col-md-auto" (click)="openCompanyDetails(distributorFromList.company)">{{distributorFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{distributorFromList.phoneNumber}}</td>
-        <td class="text-right col-md-auto">{{distributorFromList.email}}</td>
+        <td class="header text-right col-md-auto"><a href="mailto: {{distributorFromList.email}}">{{distributorFromList.email}}</a></td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditDistributor(distributorFromList)">Edytuj
           </button>

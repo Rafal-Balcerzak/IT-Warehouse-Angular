@@ -24,7 +24,7 @@
         <td class="header text-right col-md-auto" (click)="openEditCompany(employeeFromList.company)">{{employeeFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.department}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.position}}</td>
-        <td class="text-right col-md-auto">{{employeeFromList.email}}</td>
+        <td class="header text-right col-md-auto"><a href="mailto: {{employeeFromList.email}}">{{employeeFromList.email}}</a></td>
         <td class="text-right col-md-auto">{{employeeFromList.phoneNumber}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditEmployee(employeeFromList)">Edytuj
