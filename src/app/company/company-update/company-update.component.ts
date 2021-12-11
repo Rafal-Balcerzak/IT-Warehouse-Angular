@@ -127,7 +127,7 @@ export class CompanyUpdateComponent implements OnInit {
     let companyFieldsList = [];
 
     companyFieldsList.push(company.name);
-    companyFieldsList.push(company.nip);
+    companyFieldsList.push(company.nip)
 
     for (let i = 0; i < companyFieldsList.length; i++) {
       let value = companyFieldsList[i];
@@ -135,6 +135,8 @@ export class CompanyUpdateComponent implements OnInit {
         || value === null
         || value === undefined
         || value.trim().length === 0
+        || company.nip.trim().length !== 10
+        || isNaN(Number(company.nip))
         || company.address === null
         || company.address === undefined) {
         window.alert("Wypełnij wszystkie pola.");
