@@ -134,7 +134,7 @@ export class EmployeeComponent implements OnInit {
     this.startSort = !this.startSort
   }
 
-  openEditCompany(companyToEdit: ICompany) {
+  openCompanyDetails(companyToEdit: ICompany) {
     const modalRef = this.modalService.open(CompanyUpdateComponent);
     modalRef.componentInstance.showCompanyUpdate = true;
     modalRef.componentInstance.showCompanyDetails = true;
