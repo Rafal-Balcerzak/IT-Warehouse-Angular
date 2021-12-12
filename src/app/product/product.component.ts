@@ -7,6 +7,8 @@ import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
 import {ITransaction} from "../models/transaction";
 import {TransactionUpdateComponent} from "../transaction/transaction-update/transaction-update.component";
+import {ICompany} from "../models/company";
+import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
 
 @Component({
   selector: 'app-product',
@@ -71,7 +73,8 @@ export class ProductComponent implements OnInit {
         || [formatDate(product.warrantyEndDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
         || product.warrantyType.toLowerCase().indexOf(searchTerm) !== -1
         || product.inStock.toString().toLowerCase().indexOf(searchTerm) !== -1
-        || product.transaction.description.toLowerCase().indexOf(searchTerm) !== -1) {
+        || product.transaction.description.toLowerCase().indexOf(searchTerm) !== -1
+        || product.transaction.demand.company.name.toLowerCase().indexOf(searchTerm) !== -1) {
         return product;
       }
     })
@@ -134,6 +137,16 @@ export class ProductComponent implements OnInit {
       }else {
         this.productsToShow.sort((a, b) => a.transaction[transactionCol] > b.transaction[transactionCol] ? 1 : a.transaction[transactionCol] < b.transaction[transactionCol] ? -1 : 0)
       }
+
+      /*** Sortowanie po firmie ***/
+      if(colName.startsWith('transaction.demand.company')){
+        let companyName = colName.substring(27);
+        if(this.startSort == true){
+          this.productsToShow.sort((a, b) => a.transaction.demand.company[companyName] < b.transaction.demand.company[companyName] ? 1 : a.transaction.demand.company[companyName] > b.transaction.demand.company[companyName] ? -1 : 0)
+        }else {
+          this.productsToShow.sort((a, b) => a.transaction.demand.company[companyName] > b.transaction.demand.company[companyName] ? 1 : a.transaction.demand.company[companyName] < b.transaction.demand.company[companyName] ? -1 : 0)
+        }
+      }
     }
 
     this.startSort = !this.startSort
@@ -144,6 +157,18 @@ export class ProductComponent implements OnInit {
     modalRef.componentInstance.showTransactionUpdate = true;
     modalRef.componentInstance.showTransactionDetails = true;
     modalRef.componentInstance.transactionToEdit = transactionToEdit;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'save') {
+        this.refreshList();
+      }
+    })
+  }
+
+  openCompanyDetails(companyToEdit: ICompany) {
+    const modalRef = this.modalService.open(CompanyUpdateComponent);
+    modalRef.componentInstance.showCompanyUpdate = true;
+    modalRef.componentInstance.showCompanyDetails = true;
+    modalRef.componentInstance.companyToEdit = companyToEdit;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();

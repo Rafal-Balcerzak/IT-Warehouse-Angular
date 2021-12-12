@@ -16,6 +16,7 @@
         <th class="header text-right col-md-auto" scope="col" (click)="sort('warrantyType')">Gwarancja</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('inStock')">Na stanie</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('transaction.description')">Transakcja</th>
+        <th class="header text-right col-md-auto" scope="col" (click)="sort('transaction.demand.company.name')">Firma</th>
         <th class="header text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>
@@ -32,6 +33,7 @@
         <td class="text-right col-md-auto">{{productFromList.warrantyType}}</td>
         <td class="text-right col-md-auto"><input type="checkbox" disabled [checked]="productFromList.inStock"></td>
         <td class="header text-right col-md-auto" (click)="openTransactionDetails(productFromList.transaction)">{{productFromList.transaction.description}}</td>
+        <td class="header text-right col-md-auto" (click)="openCompanyDetails(productFromList.transaction.demand.company)">{{productFromList.transaction.demand.company.name}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditProduct(productFromList)">Edytuj
           </button>
