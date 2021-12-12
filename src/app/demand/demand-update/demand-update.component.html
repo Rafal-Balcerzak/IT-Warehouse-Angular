@@ -10,7 +10,7 @@
   <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
     <div class="modal-body">
       <dl class="text-center">
-        <dt><span>Product Type</span></dt>
+        <dt><span>Typ produktu</span></dt>
         <dd>
           <span><input class="form-control" type="text" name="productType" formControlName="productType"></span>
         </dd>
@@ -18,33 +18,33 @@
         <dd>
           <span><input class="form-control" type="text" name="model" formControlName="model"></span>
         </dd>
-        <dt><span>Issue Date</span></dt>
+        <dt><span>Data wydania</span></dt>
         <dd>
           <span><input class="form-control" type="date" name="issueDate" formControlName="issueDate"></span>
         </dd>
-        <dt><span>Budget</span></dt>
+        <dt><span>Budżet</span></dt>
         <dd>
           <span><input class="form-control" type="text" name="budget" formControlName="budget"></span>
         </dd>
-        <dt><span>Quantity</span></dt>
+        <dt><span>Ilość</span></dt>
         <dd>
           <span><input class="form-control" type="number" name="quantity" formControlName="quantity"></span>
         </dd>
-        <dt><span>Company</span></dt>
+        <dt><span>Firma</span></dt>
         <dd>
         <span>
           <select class="form-control custom-select w-75" name="company" formControlName="company">
             <option
               [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
               *ngFor="let companyFromList of allCompanies">
-                      {{companyFromList.name}}
+                      {{companyFromList.name}}:
                       {{companyFromList.nip}}
             </option>
           </select>
           <button type="button" class="btn btn-secondary w-25" (click)="openAddCompany()">Dodaj firmę</button>
         </span>
         </dd>
-        <dt><span>Is Done</span></dt>
+        <dt><span>Zakończono</span></dt>
         <dd>
           <span><input class="form-control" type="checkbox" name="done" formControlName="done"></span>
         </dd>

@@ -10,40 +10,43 @@
   <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
     <div class="modal-body">
       <dl class="text-center">
-        <dt><span>Description</span></dt>
+        <dt><span>Opis</span></dt>
         <dd>
           <span><input class="form-control" type="text" name="description" formControlName="description"></span>
         </dd>
-        <dt><span>Price</span></dt>
+        <dt><span>Cena</span></dt>
         <dd>
           <span><input class="form-control" type="text" name="price" formControlName="price"></span>
         </dd>
-        <dt><span>Transaction Date</span></dt>
+        <dt><span>Data transakcji</span></dt>
         <dd>
           <span><input class="form-control" type="date" name="transactionDate" formControlName="transactionDate"></span>
         </dd>
-        <dt><span>Demand</span></dt>
+        <dt><span>Zapotrzebowanie</span></dt>
         <dd>
         <span>
           <select class="form-control custom-select w-50" name="demand" formControlName="demand">
             <option
               [ngValue]="demandFromList.idDemand === editForm.get('demand')!.value?.idDemand ? editForm.get('demand')!.value : demandFromList"
               *ngFor="let demandFromList of allDemands">
-                      {{demandFromList.productType}}
-                      {{demandFromList.model}}
+              {{demandFromList.idDemand}}
+              {{demandFromList.productType}}
+              {{demandFromList.model}}
+              {{demandFromList.company.name}}
             </option>
           </select>
           <button type="button" class="btn btn-secondary w-50" (click)="openAddDemand()">Dodaj zapotrzebowanie</button>
         </span>
         </dd>
-        <dt><span>Distributor</span></dt>
+        <dt><span>Dostawca</span></dt>
         <dd>
         <span>
           <select class="form-control custom-select w-50" name="distributor" formControlName="distributor">
             <option
               [ngValue]="distributorFromList.idDistributor === editForm.get('distributor')!.value?.idDistributor ? editForm.get('distributor')!.value : distributorFromList"
               *ngFor="let distributorFromList of allDistributors">
-                      {{distributorFromList.company.name}}
+                      {{distributorFromList.company.name}}:
+                      {{distributorFromList.company.nip}}
             </option>
           </select>
           <button type="button" class="btn btn-secondary w-50" (click)="openAddDistributor()">Dodaj dostawcę</button>

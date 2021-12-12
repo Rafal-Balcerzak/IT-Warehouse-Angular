@@ -10,7 +10,7 @@
   <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
     <div class="modal-body">
       <dl class="text-center">
-        <dt><span>Phone number</span></dt>
+        <dt><span>Numer telefonu</span></dt>
         <dd>
           <span><input class="form-control" type="text" name="phoneNumber" formControlName="phoneNumber"></span>
         </dd>
@@ -18,14 +18,15 @@
         <dd>
           <span><input class="form-control" type="text" name="email" formControlName="email"></span>
         </dd>
-        <dt><span>Company</span></dt>
+        <dt><span>Firma</span></dt>
         <dd>
         <span>
           <select class="form-control custom-select w-75" name="company" formControlName="company">
             <option
               [ngValue]="companyFromList.idCompany === editForm.get('company')!.value?.idCompany ? editForm.get('company')!.value : companyFromList"
               *ngFor="let companyFromList of allCompanies">
-                      {{companyFromList.name}}
+              {{companyFromList.name}}:
+              {{companyFromList.nip}}
             </option>
           </select>
           <button type="button" class="btn btn-secondary w-25" (click)="openAddCompany()">Dodaj firmę</button>
