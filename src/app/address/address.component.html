@@ -16,7 +16,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let addressFromList of addressesToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let addressFromList of addressesToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{addressFromList.idAddress}}</th>
         <td class="text-right col-md-auto">{{addressFromList.country}}</td>
         <td class="text-right col-md-auto">{{addressFromList.region}}</td>

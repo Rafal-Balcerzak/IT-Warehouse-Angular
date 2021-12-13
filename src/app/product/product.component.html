@@ -21,7 +21,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let productFromList of productsToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let productFromList of productsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{productFromList.idProduct}}</th>
         <td class="text-right col-md-auto">{{productFromList.producer}}</td>
         <td class="text-right col-md-auto">{{productFromList.productType}}</td>

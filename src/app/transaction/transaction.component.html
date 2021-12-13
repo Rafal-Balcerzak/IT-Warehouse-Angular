@@ -15,7 +15,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let transactionFromList of transactionsToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let transactionFromList of transactionsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{transactionFromList.idTransaction}}</th>
         <td class="header text-right col-md-auto" (click)="openDemandDetails(transactionFromList.demand)">{{transactionFromList.demand.idDemand}}</td>
         <td class="header text-right col-md-auto" (click)="openDistributorDetails(transactionFromList.distributor)" >{{transactionFromList.distributor.company.name}}</td>

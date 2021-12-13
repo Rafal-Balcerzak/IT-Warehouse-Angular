@@ -17,7 +17,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let employeeFromList of employeesToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let employeeFromList of employeesToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{employeeFromList.idEmployee}}</th>
         <td class="text-right col-md-auto">{{employeeFromList.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.lastName}}</td>

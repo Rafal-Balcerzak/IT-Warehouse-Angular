@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let distributorFromList of distributorsToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let distributorFromList of distributorsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{distributorFromList.idDistributor}}</th>
         <td class="header text-right col-md-auto" (click)="openCompanyDetails(distributorFromList.company)">{{distributorFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{distributorFromList.phoneNumber}}</td>

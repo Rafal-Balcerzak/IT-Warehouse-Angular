@@ -16,7 +16,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let handoverFromList of handoversToShow | slice: (page-1) * pageSize : page * pageSize">
+      <tr *ngFor="let handoverFromList of handoversToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{handoverFromList.idHandover}}</th>
         <td class="text-right col-md-auto">{{handoverFromList.product.productType}}</td>
         <td class="text-right col-md-auto">{{handoverFromList.product.model}}</td>
