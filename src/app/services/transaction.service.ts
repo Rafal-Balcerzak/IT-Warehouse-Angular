@@ -15,6 +15,11 @@ export class TransactionService {
     return this.http.get<Array<ITransaction>>('http://localhost:8080/api/transaction');
   }
 
+  /*** Pobranie transakcji po ID ***/
+  getTransactionById(id: number): Observable<ITransaction>{
+    return this.http.get<ITransaction>('http://localhost:8080/api/transaction/' + id);
+  }
+
   /*** Dodanie nowej transakcji ***/
   addTransaction(transaction: ITransaction): Observable<ITransaction>{
     return this.http.post<ITransaction>('http://localhost:8080/api/transaction/', transaction);

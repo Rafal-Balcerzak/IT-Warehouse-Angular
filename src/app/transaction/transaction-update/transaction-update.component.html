@@ -72,6 +72,10 @@
             formControlName="attachmentContentType"
           />
           </span>
+          <div *ngIf="editForm.get('attachment')!.value && editForm.get('idTransaction')!.value">
+            <span class="header mr-2" (click)="downloadFile(editForm.get('idTransaction')!.value, editForm.get('attachmentContentType')!.value.substring(16))">{{editForm.get('attachmentContentType')!.value.substring(16)}}</span>
+            <button (click)="deleteAttachment()">Usuń załącznik</button>
+          </div>
         </dd>
       </dl>
     </div>

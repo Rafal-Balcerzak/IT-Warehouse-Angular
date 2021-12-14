@@ -10,7 +10,6 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {DemandUpdateComponent} from "../../demand/demand-update/demand-update.component";
 import {DistributorUpdateComponent} from "../../distributor/distributor-update/distributor-update.component";
 import {formatDate} from "@angular/common";
-import {Observable, ReplaySubject} from "rxjs";
 
 @Component({
   selector: 'app-transaction-update',
@@ -26,6 +25,7 @@ export class TransactionUpdateComponent implements OnInit {
   showDemandUpdate = true;
   showDistributorUpdate = true;
   showTransactionDetails = false;
+  fileUrl;
 
   editForm = this.fb.group({
     idTransaction: [],
@@ -97,6 +97,7 @@ export class TransactionUpdateComponent implements OnInit {
   /*** Uzupełnienie formularza jeśli ktoś edytuje ***/
   protected updateForm(): void {
     this.editForm = this.fb.group({
+      idTransaction: this.transactionToEdit.idTransaction,
       demand: this.transactionToEdit.demand,
       distributor: this.transactionToEdit.distributor,
       transactionDate: [formatDate(this.transactionToEdit.transactionDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -201,21 +202,47 @@ export class TransactionUpdateComponent implements OnInit {
   handleUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
-      if(file.type.match('application/pdf')) {
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          const base64Header: string = (reader.result.toString().substring(5, 20));
-          const base64Data: string = (reader.result.toString().substring(28));
-          console.log("Typ: " + base64Header);
-          console.log("Data: " + base64Data);
-          this.editForm.patchValue({
-            ['attachment']: base64Data,
-            ['attachmentContentType']: base64Header
-          })
-        }
-      }else {
-        window.alert("Można przesyłać jedynie pliki PDF, ten plik nie zostanie zapisany!");
-        return false;
+    if (file.type.match('application/pdf')) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64Header: string = (reader.result.toString().substring(5, 20));
+        const base64Data: string = (reader.result.toString().substring(28));
+        console.log("Typ: " + base64Header + ',' + file.name);
+        console.log("Data: " + base64Data);
+        console.log("Nazwa pliku: " + file.name)
+        this.editForm.patchValue({
+          ['attachment']: base64Data,
+          ['attachmentContentType']: base64Header + ',' + file.name
+        })
       }
+    } else {
+      window.alert("Można przesyłać jedynie pliki PDF, ten plik nie zostanie zapisany!");
+      return false;
+    }
+  }
+
+  downloadFile(id: number, name: string) {
+    this.transactionService.getTransactionById(id).subscribe(transaction => {
+      if (transaction.attachment !== null && transaction.attachmentContentType === this.editForm.get('attachmentContentType')!.value) {
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', 'http://localhost:8080/api/transaction/download/' + id);
+        link.setAttribute('download', name);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      } else {
+        window.alert("Zapisz, aby pobrać nowy załącznik")
+        console.log("Nie zapisano jeszcze załącznika dla tej transakcji")
+      }
+    })
+  }
+
+
+  deleteAttachment() {
+    this.editForm.patchValue({
+      attachmentContentType: null,
+      attachment: null
+    })
   }
 }

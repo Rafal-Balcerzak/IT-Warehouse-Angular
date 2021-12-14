@@ -169,4 +169,14 @@ export class TransactionComponent implements OnInit {
       }
     })
   }
+
+  downloadFile(id: number, name: string){
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', 'http://localhost:8080/api/transaction/download/'+ id);
+    link.setAttribute('download', name);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
 }
