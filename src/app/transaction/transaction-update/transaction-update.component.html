@@ -46,7 +46,7 @@
               [ngValue]="distributorFromList.idDistributor === editForm.get('distributor')!.value?.idDistributor ? editForm.get('distributor')!.value : distributorFromList"
               *ngFor="let distributorFromList of allDistributors">
                       {{distributorFromList.company.name}}:
-                      {{distributorFromList.company.nip}}
+              {{distributorFromList.company.nip}}
             </option>
           </select>
           <button type="button" class="btn btn-secondary w-50" (click)="openAddDistributor()">Dodaj dostawcę</button>
@@ -55,7 +55,8 @@
         <dt><span>Załącznik</span></dt>
         <dd>
           <span>
-            <input id="file" type="file" data-cy="attachment" (change)="handleUpload($event)" />
+            <input *ngIf="!showTransactionDetails" id="file" type="file" data-cy="attachment"
+                   (change)="handleUpload($event)"/>
             <input
               type="hidden"
               class="form-control"
@@ -72,9 +73,12 @@
             formControlName="attachmentContentType"
           />
           </span>
-          <div *ngIf="editForm.get('attachment')!.value && editForm.get('idTransaction')!.value">
-            <span class="header mr-2" (click)="downloadFile(editForm.get('idTransaction')!.value, editForm.get('attachmentContentType')!.value.substring(16))">{{editForm.get('attachmentContentType')!.value.substring(16)}}</span>
-            <button (click)="deleteAttachment()">Usuń załącznik</button>
+          <div *ngIf="transactionToEdit && transactionToEdit.attachmentContentType">
+            <span class="header mr-2"
+                  (click)="downloadFile(transactionToEdit.idTransaction, transactionToEdit.attachmentContentType.substring(16))">
+              {{transactionToEdit.attachmentContentType.substring(16)}}
+            </span>
+            <button *ngIf="!showTransactionDetails" (click)="deleteAttachment()">Usuń załącznik</button>
           </div>
         </dd>
       </dl>
