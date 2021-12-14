@@ -56,6 +56,7 @@ export class TransactionUpdateComponent implements OnInit {
 
   cancel(): void {
     this.activeModal.dismiss();
+    this.refreshListTransaction();
   }
 
   /*** Otwarcie komponentu do dodawania zapotrzebowania ***/
@@ -243,7 +244,7 @@ export class TransactionUpdateComponent implements OnInit {
 
   /*** wyczyszczenie danych o pliku ***/
   deleteAttachment() {
-    if (this.editForm.get('attachmentContentType')!.value) {
+    if(this.editForm.get('attachmentContentType') && this.transactionToEdit) {
       this.transactionToEdit.attachmentContentType = null;
       this.transactionToEdit.attachment = null;
       this.editForm.patchValue({
