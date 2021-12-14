@@ -66,12 +66,13 @@ export class TransactionComponent implements OnInit {
       if (transaction.idTransaction.toString().toLowerCase().indexOf(searchTerm) !== -1
         || transaction.demand.idDemand.toString().toLowerCase().indexOf(searchTerm) !== -1
         || transaction.distributor.company.name.toLowerCase().indexOf(searchTerm) !== -1
-        || [formatDate(transaction.transactionDate,'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
+        || [formatDate(transaction.transactionDate, 'dd.MM.yyyy', 'en'), [Validators.required]].toLocaleString().toLowerCase().indexOf(searchTerm) !== -1
         || transaction.price.toLowerCase().indexOf(searchTerm) !== -1
         || transaction.description.toLowerCase().indexOf(searchTerm) !== -1
-      ) {
+        || (transaction.attachmentContentType !== null && transaction.attachmentContentType.substring(16).toLowerCase().indexOf(searchTerm) !== -1)
+      )
+
         return transaction;
-      }
     })
   }
 
@@ -116,7 +117,7 @@ export class TransactionComponent implements OnInit {
     }
 
     /*** Sortowanie po liczbach ***/
-    if(colName.startsWith('idTransaction') || colName.startsWith('price')){
+    if (colName.startsWith('idTransaction') || colName.startsWith('price')) {
       if (this.startSort == true) {
         this.transactionsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
       } else {
@@ -125,21 +126,21 @@ export class TransactionComponent implements OnInit {
     }
 
     /*** Sortowanie po zapotrzebowaniu ***/
-    if(colName.startsWith('demand')){
+    if (colName.startsWith('demand')) {
       let demandCol = colName.substring(7);
-      if(this.startSort == true){
+      if (this.startSort == true) {
         this.transactionsToShow.sort((a, b) => Number(a.demand[demandCol]) < Number(b.demand[demandCol]) ? 1 : Number(a.demand[demandCol]) > Number(b.demand[demandCol]) ? -1 : 0)
-      }else {
+      } else {
         this.transactionsToShow.sort((a, b) => Number(a.demand[demandCol]) > Number(b.demand[demandCol]) ? 1 : Number(a.demand[demandCol]) < Number(b.demand[demandCol]) ? -1 : 0)
       }
     }
 
     /*** Sortowanie po firmie dostawcy ***/
-    if(colName.startsWith('distributor.company')){
+    if (colName.startsWith('distributor.company')) {
       let distributorCompanyName = colName.substring(20);
-      if(this.startSort == true){
+      if (this.startSort == true) {
         this.transactionsToShow.sort((a, b) => a.distributor.company[distributorCompanyName] < b.distributor.company[distributorCompanyName] ? 1 : a.distributor.company[distributorCompanyName] > b.distributor.company[distributorCompanyName] ? -1 : 0)
-      }else {
+      } else {
         this.transactionsToShow.sort((a, b) => a.distributor.company[distributorCompanyName] > b.distributor.company[distributorCompanyName] ? 1 : a.distributor.company[distributorCompanyName] < b.distributor.company[distributorCompanyName] ? -1 : 0)
       }
     }
@@ -170,10 +171,10 @@ export class TransactionComponent implements OnInit {
     })
   }
 
-  downloadFile(id: number, name: string){
+  downloadFile(id: number, name: string) {
     const link = document.createElement('a');
     link.setAttribute('target', '_blank');
-    link.setAttribute('href', 'http://localhost:8080/api/transaction/download/'+ id);
+    link.setAttribute('href', 'http://localhost:8080/api/transaction/download/' + id);
     link.setAttribute('download', name);
     document.body.appendChild(link);
     link.click();
