@@ -199,6 +199,7 @@ export class TransactionUpdateComponent implements OnInit {
     return true;
   }
 
+  /*** Przekazanie pliku ***/
   handleUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -219,30 +220,36 @@ export class TransactionUpdateComponent implements OnInit {
       window.alert("Można przesyłać jedynie pliki PDF, ten plik nie zostanie zapisany!");
       return false;
     }
+    this.deleteAttachment();
   }
 
+
+  /*** Poranie pliku ***/
   downloadFile(id: number, name: string) {
-    this.transactionService.getTransactionById(id).subscribe(transaction => {
-      if (transaction.attachment !== null && transaction.attachmentContentType === this.editForm.get('attachmentContentType')!.value) {
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', 'http://localhost:8080/api/transaction/download/' + id);
-        link.setAttribute('download', name);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      } else {
-        window.alert("Zapisz, aby pobrać nowy załącznik")
-        console.log("Nie zapisano jeszcze załącznika dla tej transakcji")
-      }
-    })
+    if (this.transactionToEdit.attachment !== null && this.transactionToEdit.attachmentContentType === this.editForm.get('attachmentContentType')!.value) {
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', 'http://localhost:8080/api/transaction/download/' + id);
+      link.setAttribute('download', name);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } else {
+      window.alert("Zapisz, aby pobrać nowy załącznik")
+      console.log("Nie zapisano jeszcze załącznika dla tej transakcji")
+    }
   }
 
 
+  /*** wyczyszczenie danych o pliku ***/
   deleteAttachment() {
-    this.editForm.patchValue({
-      attachmentContentType: null,
-      attachment: null
-    })
+    if (this.editForm.get('attachmentContentType')!.value) {
+      this.transactionToEdit.attachmentContentType = null;
+      this.transactionToEdit.attachment = null;
+      this.editForm.patchValue({
+        attachmentContentType: null,
+        attachment: null
+      })
+    }
   }
 }
