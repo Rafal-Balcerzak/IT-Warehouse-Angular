@@ -8,6 +8,8 @@ export interface ITransaction {
   transactionDate?: Date| null;
   price?: string| null;
   description?: string| null;
+  attachmentContentType?: string | null;
+  attachment?: string | null;
 }
 
 export class Transaction implements ITransaction {
@@ -17,7 +19,9 @@ export class Transaction implements ITransaction {
     public distributor?: IDistributor | null,
     public transactionDate?: Date | null,
     public price?: string | null,
-    public description?: string | null
+    public description?: string | null,
+    public attachmentContentType?: string | null,
+    public attachment?: string | null
   ) {
   }
 }

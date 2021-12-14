@@ -52,6 +52,27 @@
           <button type="button" class="btn btn-secondary w-50" (click)="openAddDistributor()">Dodaj dostawcę</button>
         </span>
         </dd>
+        <dt><span>Załącznik</span></dt>
+        <dd>
+          <span>
+            <input id="file" type="file" data-cy="attachment" (change)="handleUpload($event)" />
+            <input
+              type="hidden"
+              class="form-control"
+              name="attachment"
+              id="field_attachment"
+              data-cy="attachment"
+              formControlName="attachment"
+            />
+          <input
+            type="hidden"
+            class="form-control"
+            name="attachmentContentType"
+            id="field_attachmentContentType"
+            formControlName="attachmentContentType"
+          />
+          </span>
+        </dd>
       </dl>
     </div>
     <div class="modal-footer">

@@ -10,6 +10,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {DemandUpdateComponent} from "../../demand/demand-update/demand-update.component";
 import {DistributorUpdateComponent} from "../../distributor/distributor-update/distributor-update.component";
 import {formatDate} from "@angular/common";
+import {Observable, ReplaySubject} from "rxjs";
 
 @Component({
   selector: 'app-transaction-update',
@@ -32,7 +33,9 @@ export class TransactionUpdateComponent implements OnInit {
     distributor: [],
     transactionDate: [],
     price: [],
-    description: []
+    description: [],
+    attachment: [],
+    attachmentContentType: []
   })
 
   constructor(private transactionService: TransactionService,
@@ -85,7 +88,9 @@ export class TransactionUpdateComponent implements OnInit {
       distributor: this.editForm.get('distributor')!.value,
       transactionDate: this.editForm.get('transactionDate')!.value,
       price: this.editForm.get('price')!.value,
-      description: this.editForm.get('description')!.value
+      description: this.editForm.get('description')!.value,
+      attachmentContentType: this.editForm.get('attachmentContentType')!.value,
+      attachment: this.editForm.get('attachment')!.value
     }
   }
 
@@ -96,7 +101,9 @@ export class TransactionUpdateComponent implements OnInit {
       distributor: this.transactionToEdit.distributor,
       transactionDate: [formatDate(this.transactionToEdit.transactionDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       price: this.transactionToEdit.price,
-      description: this.transactionToEdit.description
+      description: this.transactionToEdit.description,
+      attachmentContentType: this.transactionToEdit.attachmentContentType,
+      attachment: this.transactionToEdit.attachment
     })
   }
 
@@ -108,17 +115,20 @@ export class TransactionUpdateComponent implements OnInit {
       distributor: null,
       transactionDate: null,
       price: null,
-      description: null
+      description: null,
+      attachmentContentType: null,
+      attachment: null
     })
   }
 
   /*** Zapisauje lub edytuje transakcje, w zależności od tego czy transakcja do edycji została przekazana ***/
   save(): void {
     const transaction = this.createFromForm();
+    console.log(transaction);
     if (this.validateInput(transaction)) {
       if (this.transactionToEdit === null || this.transactionToEdit === undefined) {
         this.transactionService.addTransaction(transaction).subscribe(transaction => {
-          console.log("Dodano nową transakcje: " + transaction.description);
+          console.log("Dodano nową transakcje: " + transaction.attachment);
           this.refreshListTransaction();
           this.cancel();
           this.clearForm();
@@ -188,4 +198,24 @@ export class TransactionUpdateComponent implements OnInit {
     return true;
   }
 
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+      if(file.type.match('application/pdf')) {
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          const base64Header: string = (reader.result.toString().substring(5, 20));
+          const base64Data: string = (reader.result.toString().substring(28));
+          console.log("Typ: " + base64Header);
+          console.log("Data: " + base64Data);
+          this.editForm.patchValue({
+            ['attachment']: base64Data,
+            ['attachmentContentType']: base64Header
+          })
+        }
+      }else {
+        window.alert("Można przesyłać jedynie pliki PDF, ten plik nie zostanie zapisany!");
+        return false;
+      }
+  }
 }
