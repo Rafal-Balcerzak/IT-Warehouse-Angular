@@ -99,6 +99,7 @@ export class ProductComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania zaopatrzenia: " + error);
+      window.alert("Nie można usunąć powiązango produktu");
     })
   }
 

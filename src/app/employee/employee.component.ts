@@ -92,6 +92,7 @@ export class EmployeeComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania pracownika: " + error);
+      window.alert("Nie można usunąć powiązanego pracownika");
     })
   }
 

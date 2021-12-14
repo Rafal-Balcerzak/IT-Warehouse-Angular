@@ -93,6 +93,7 @@ export class HandoverComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania przekazania: " + error);
+      window.alert("Nie można usunąć powiązanego przekazania");
     })
   }
 

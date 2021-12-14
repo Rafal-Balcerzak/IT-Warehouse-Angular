@@ -93,6 +93,7 @@ export class CompanyComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania firmy: " + error);
+      window.alert("Nie można usunąć powiązanej firmy");
     })
   }
 

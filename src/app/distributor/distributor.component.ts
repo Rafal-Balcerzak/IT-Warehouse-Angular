@@ -87,6 +87,7 @@ export class DistributorComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania dostawcy: " + error);
+      window.alert("Nie można usunąć powiązanego dostawcy");
     })
   }
 

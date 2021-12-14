@@ -95,6 +95,7 @@ export class TransactionComponent implements OnInit {
       this.refreshList();
     }, error => {
       console.log("Błąd podczas usuwania transakcji " + error);
+      window.alert("Nie można usunąć powiązanej transakcji");
     })
   }
 
