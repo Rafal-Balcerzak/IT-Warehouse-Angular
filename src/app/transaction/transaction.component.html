@@ -18,12 +18,12 @@
       <tbody>
       <tr *ngFor="let transactionFromList of transactionsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{transactionFromList.idTransaction}}</th>
-        <td class="details text-right col-md-auto" (click)="openDemandDetails(transactionFromList.demand)">{{transactionFromList.demand.idDemand}}</td>
-        <td class="details text-right col-md-auto" (click)="openDistributorDetails(transactionFromList.distributor)" >{{transactionFromList.distributor.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openDemandDetails(transactionFromList.demand)"><span class="detailsText">Pokaż szczegóły</span>{{transactionFromList.demand.idDemand}}</td>
+        <td class="details text-right col-md-auto" (click)="openDistributorDetails(transactionFromList.distributor)"><span class="detailsText">Pokaż szczegóły</span>{{transactionFromList.distributor.company.name}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.transactionDate | date: 'dd.MM.yyy'}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.price}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.description}}</td>
-        <td class="details text-right col-md-auto" (click)="downloadFile(transactionFromList.idTransaction, transactionFromList.attachmentContentType.substring(16))" >{{transactionFromList.attachmentContentType | slice: 16}}</td>
+        <td class="details text-right col-md-auto" (click)="downloadFile(transactionFromList.idTransaction, transactionFromList.attachmentContentType.substring(16))"><span class="detailsText">Pobierz załącznik</span>{{transactionFromList.attachmentContentType | slice: 16}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditTransaction(transactionFromList)">Edytuj
           </button>

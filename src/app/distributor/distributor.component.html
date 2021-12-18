@@ -15,7 +15,7 @@
       <tbody>
       <tr *ngFor="let distributorFromList of distributorsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{distributorFromList.idDistributor}}</th>
-        <td class="details text-right col-md-auto" (click)="openCompanyDetails(distributorFromList.company)">{{distributorFromList.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openCompanyDetails(distributorFromList.company)"><span class="detailsText">Pokaż szczegóły</span>{{distributorFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{distributorFromList.phoneNumber}}</td>
         <td class="details text-right col-md-auto"><a href="mailto: {{distributorFromList.email}}">{{distributorFromList.email}}</a></td>
         <td class="text-right col-md-auto">

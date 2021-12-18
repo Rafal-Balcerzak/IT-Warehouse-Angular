@@ -22,8 +22,8 @@
         <td class="text-right col-md-auto">{{handoverFromList.product.model}}</td>
         <td class="text-right col-md-auto">{{handoverFromList.product.inventoryNumber}}</td>
         <td class="text-right col-md-auto">{{handoverFromList.handoverDate | date: 'dd.MM.yyy'}}</td>
-        <td class="details text-right col-md-auto" (click)="openEmployeeDetails(handoverFromList.employee)">{{handoverFromList.employee.name}} {{handoverFromList.employee.lastName}}</td>
-        <td class="details text-right col-md-auto" (click)="openCompanyDetails(handoverFromList.employee.company)">{{handoverFromList.employee.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openEmployeeDetails(handoverFromList.employee)"><span class="detailsText">Pokaż szczegóły</span>{{handoverFromList.employee.name}} {{handoverFromList.employee.lastName}}</td>
+        <td class="details text-right col-md-auto" (click)="openCompanyDetails(handoverFromList.employee.company)"><span class="detailsText">Pokaż szczegóły</span>{{handoverFromList.employee.company.name}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditHandover(handoverFromList)">Edytuj
           </button>

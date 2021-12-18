@@ -17,6 +17,7 @@
         <th class="text-right col-md-auto">{{companyFromList.idCompany}}</th>
         <td class="text-right col-md-auto">{{companyFromList.name}}</td>
         <td class="details text-right col-md-auto" (click)="openAddressDetails(companyFromList.address)">
+          <span class="detailsText">Pokaż szczegóły</span>
           {{companyFromList.address.street}}
           {{companyFromList.address.localnumber}}
           <a>,</a>

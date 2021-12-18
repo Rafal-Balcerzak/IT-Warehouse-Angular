@@ -24,7 +24,7 @@
         <td class="text-right col-md-auto">{{demandFromList.issueDate | date: 'dd.MM.yyy'}}</td>
         <td class="text-right col-md-auto">{{demandFromList.budget}}</td>
         <td class="text-right col-md-auto">{{demandFromList.quantity}}</td>
-        <td class="details text-right col-md-auto" (click)="openCompanyDetails(demandFromList.company)">{{demandFromList.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openCompanyDetails(demandFromList.company)"><span class="detailsText">Pokaż szczegóły</span>{{demandFromList.company.name}}</td>
         <td class="text-right col-md-auto"><input type="checkbox" disabled [checked]="demandFromList.done"></td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditDemand(demandFromList)">Edytuj
