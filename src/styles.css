@@ -7,7 +7,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   cursor: pointer;
 }
 
-.header:hover{
+.details{
+  cursor: pointer;
+}
+.details:hover{
   font-weight: bold;
 }
 

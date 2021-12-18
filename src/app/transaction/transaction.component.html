@@ -5,25 +5,25 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr>
-        <th class="header text-right col-md-auto" scope="col" (click)="sort('idTransaction')">ID</th>
+        <th class="header text-right col-md-auto ml-1" scope="col" (click)="sort('idTransaction')">ID<img src="../../assets/arrows12px.png" alt="test"></th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('demand.idDemand')">ID zapotrzebowania</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('distributor.company.name')">Dostawca</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('transactionDate')">Data transakcji</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('price')">Cena</th>
         <th class="header text-right col-md-auto" scope="col" (click)="sort('description')">Opis</th>
         <th class="text-right col-md-auto" scope="col">Załącznik</th>
-        <th class="header text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
+        <th class="text-right col-md-auto" scope="col"><input placeholder="Szukaj..." type="text" #textInput (input)="search(textInput.value)"></th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let transactionFromList of transactionsToShow.reverse() | slice: (page-1) * pageSize : page * pageSize">
         <th class="text-right col-md-auto">{{transactionFromList.idTransaction}}</th>
-        <td class="header text-right col-md-auto" (click)="openDemandDetails(transactionFromList.demand)">{{transactionFromList.demand.idDemand}}</td>
-        <td class="header text-right col-md-auto" (click)="openDistributorDetails(transactionFromList.distributor)" >{{transactionFromList.distributor.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openDemandDetails(transactionFromList.demand)">{{transactionFromList.demand.idDemand}}</td>
+        <td class="details text-right col-md-auto" (click)="openDistributorDetails(transactionFromList.distributor)" >{{transactionFromList.distributor.company.name}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.transactionDate | date: 'dd.MM.yyy'}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.price}}</td>
         <td class="text-right col-md-auto">{{transactionFromList.description}}</td>
-        <td class="header text-right col-md-auto" (click)="downloadFile(transactionFromList.idTransaction, transactionFromList.attachmentContentType.substring(16))" >{{transactionFromList.attachmentContentType | slice: 16}}</td>
+        <td class="details text-right col-md-auto" (click)="downloadFile(transactionFromList.idTransaction, transactionFromList.attachmentContentType.substring(16))" >{{transactionFromList.attachmentContentType | slice: 16}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditTransaction(transactionFromList)">Edytuj
           </button>

@@ -21,10 +21,10 @@
         <th class="text-right col-md-auto">{{employeeFromList.idEmployee}}</th>
         <td class="text-right col-md-auto">{{employeeFromList.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.lastName}}</td>
-        <td class="header text-right col-md-auto" (click)="openCompanyDetails(employeeFromList.company)">{{employeeFromList.company.name}}</td>
+        <td class="details text-right col-md-auto" (click)="openCompanyDetails(employeeFromList.company)">{{employeeFromList.company.name}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.department}}</td>
         <td class="text-right col-md-auto">{{employeeFromList.position}}</td>
-        <td class="header text-right col-md-auto"><a href="mailto: {{employeeFromList.email}}">{{employeeFromList.email}}</a></td>
+        <td class="details text-right col-md-auto"><a href="mailto: {{employeeFromList.email}}">{{employeeFromList.email}}</a></td>
         <td class="text-right col-md-auto">{{employeeFromList.phoneNumber}}</td>
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditEmployee(employeeFromList)">Edytuj
