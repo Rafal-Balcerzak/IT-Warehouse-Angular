@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {DemandService} from "../../services/demand.service";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  notDoneDemands?: number;
+
+  constructor(private demandService: DemandService) {
+  }
 
   ngOnInit(): void {
+    this.demandService.countByIsDoneFalse().subscribe(count => {
+      this.notDoneDemands = count;
+    })
   }
 
 }

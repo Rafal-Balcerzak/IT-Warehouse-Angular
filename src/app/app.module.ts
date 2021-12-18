@@ -27,6 +27,7 @@ import { ProductUpdateComponent } from './product/product-update/product-update.
 import { HandoverComponent } from './handover/handover.component';
 import { HandoverUpdateComponent } from './handover/handover-update/handover-update.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 
 @NgModule({
@@ -51,20 +52,21 @@ import { NavbarComponent } from './home/navbar/navbar.component';
     HandoverUpdateComponent,
     NavbarComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    NgbModule,
-    NgbPaginationModule,
-    NgbAlertModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatSelectModule,
-    ReactiveFormsModule
-  ],
-  providers: [NgbActiveModal],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        NgbModule,
+        NgbPaginationModule,
+        NgbAlertModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatBadgeModule
+    ],
+  providers: [NgbActiveModal, NavbarComponent],
   bootstrap: [AppComponent],
   entryComponents: [
     AddressComponent,

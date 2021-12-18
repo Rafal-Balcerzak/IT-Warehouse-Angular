@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {IDemand} from "../models/demand";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {DemandService} from "../services/demand.service";
@@ -23,6 +23,7 @@ export class DemandComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   demandsToShow: Array<IDemand> = [];
   startSort: boolean = false;
+  notDoneDemandsCount?: number;
 
   constructor(private demandService: DemandService,
               private modalService: NgbModal,
@@ -105,6 +106,7 @@ export class DemandComponent implements OnInit {
 
   refreshList() {
     this.getAllDemands();
+    this.getNotDoneDemandsCount();
   }
 
   /*** Sortowanie ***/
@@ -116,7 +118,7 @@ export class DemandComponent implements OnInit {
     }
 
     /*** Sortowanie po liczbach ***/
-    if(colName.startsWith('idDemand') || colName.startsWith('budget') || colName.startsWith('quantity')){
+    if (colName.startsWith('idDemand') || colName.startsWith('budget') || colName.startsWith('quantity')) {
       if (this.startSort == true) {
         this.demandsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
       } else {
@@ -125,11 +127,11 @@ export class DemandComponent implements OnInit {
     }
 
     /*** Sortowanie po firmie ***/
-    if(colName.startsWith('company')){
+    if (colName.startsWith('company')) {
       let companyName = colName.substring(8);
-      if(this.startSort == true){
+      if (this.startSort == true) {
         this.demandsToShow.sort((a, b) => a.company[companyName] < b.company[companyName] ? 1 : a.company[companyName] > b.company[companyName] ? -1 : 0)
-      }else {
+      } else {
         this.demandsToShow.sort((a, b) => a.company[companyName] > b.company[companyName] ? 1 : a.company[companyName] < b.company[companyName] ? -1 : 0)
       }
     }
@@ -145,6 +147,12 @@ export class DemandComponent implements OnInit {
       if (reason === 'save') {
         this.refreshList();
       }
+    })
+  }
+
+  getNotDoneDemandsCount() {
+    this.demandService.countByIsDoneFalse().subscribe(count => {
+      this.notDoneDemandsCount = count;
     })
   }
 }

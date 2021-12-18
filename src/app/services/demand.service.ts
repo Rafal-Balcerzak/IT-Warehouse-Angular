@@ -29,4 +29,9 @@ export class DemandService {
   editDemand(demand: IDemand): Observable<IDemand>{
     return this.http.patch<IDemand>('http://localhost:8080/api/demand/' , demand);
   }
+
+  /*** Pobranie ilości nie zrealizowanych zapotrzebowań ***/
+  countByIsDoneFalse(){
+    return this.http.get<number>('http://localhost:8080/api/demand/notDoneCount');
+  }
 }
