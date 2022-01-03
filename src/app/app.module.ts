@@ -28,6 +28,7 @@ import { HandoverComponent } from './handover/handover.component';
 import { HandoverUpdateComponent } from './handover/handover-update/handover-update.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import {MatBadgeModule} from "@angular/material/badge";
+import { AddressDeleteComponent } from './address/address-delete/address-delete.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {MatBadgeModule} from "@angular/material/badge";
     ProductUpdateComponent,
     HandoverComponent,
     HandoverUpdateComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddressDeleteComponent
   ],
     imports: [
         BrowserModule,

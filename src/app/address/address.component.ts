@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {IAddress} from "../models/address";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {AddressUpdateComponent} from "./address-update/address-update.component";
+import {AddressDeleteComponent} from "./address-delete/address-delete.component";
 
 @Component({
   selector: 'app-address',
@@ -20,6 +21,11 @@ export class AddressComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   addressesToShow: Array<IAddress> = [];
   startSort: boolean = false;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idAddress?: number;
 
   constructor(private addressService: AddressService,
               private modalService: NgbModal,
@@ -31,12 +37,20 @@ export class AddressComponent implements OnInit {
     this.getAllAddresses();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddAddress() {
     const modalRef = this.modalService.open(AddressUpdateComponent);
     modalRef.componentInstance.showAddressUpdate = this.showAddressUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
       }
     })
   }
@@ -48,8 +62,26 @@ export class AddressComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idAddress = addressToEdit.idAddress;
+        this.closeAlert()
+        this.showEditNotification = true;
       }
     })
+  }
+
+  openDeleteAddress(idToDelete: number) {
+    const modalRef = this.modalService.open(AddressDeleteComponent);
+    modalRef.componentInstance.showAddressDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idAddress = idToDelete;
+        this.closeAlert()
+        this.showDeleteNotification = true;
+      }
+    })
+
   }
 
   /*** Wyszukiwanie po wpisanej frazie ***/
@@ -106,17 +138,16 @@ export class AddressComponent implements OnInit {
 
   /*** Sortowanie ***/
   sort(colName: string) {
-    if (this.startSort == true){
+    if (this.startSort == true) {
       this.addressesToShow.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
       this.startSort = !this.startSort
-    }
-    else{
+    } else {
       this.addressesToShow.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
       this.startSort = !this.startSort
     }
 
     /*** Sortowanie po liczbach ***/
-    if(colName.startsWith('idAddress')){
+    if (colName.startsWith('idAddress')) {
       if (this.startSort == true) {
         this.addressesToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
       } else {
