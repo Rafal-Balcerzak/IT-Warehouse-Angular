@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CompanyService} from "../services/company.service";
 import {ICompany} from "../models/company";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {IAddress} from "../models/address";
 import {CompanyUpdateComponent} from "./company-update/company-update.component";
 import {AddressUpdateComponent} from "../address/address-update/address-update.component";
+import {CompanyDeleteComponent} from "./company-delete/company-delete.component";
 
 @Component({
   selector: 'app-company',
@@ -22,8 +23,12 @@ export class CompanyComponent implements OnInit {
   pageSize = 5;
   pageSizeList = [5, 10, 25, 50];
   companiesToShow: Array<ICompany> = [];
-
   startSort: boolean = false;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idCompany?: number;
 
   constructor(private companyService: CompanyService,
               private modalService: NgbModal,
@@ -35,12 +40,34 @@ export class CompanyComponent implements OnInit {
     this.getAllCompanies();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddCompany() {
     const modalRef = this.modalService.open(CompanyUpdateComponent);
     modalRef.componentInstance.showCompanyUpdate = this.showCompanyUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
+      }
+    })
+  }
+
+  openDeleteCompany(idToDelete: number){
+    const modalRef = this.modalService.open(CompanyDeleteComponent);
+    modalRef.componentInstance.showCompanyDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idCompany = idToDelete;
+        this.closeAlert()
+        this.showDeleteNotification = true;
       }
     })
   }
@@ -104,6 +131,9 @@ export class CompanyComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idCompany = companyToEdit.idCompany;
+        this.closeAlert();
+        this.showEditNotification = true;
       }
     })
   }
