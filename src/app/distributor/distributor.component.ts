@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IDistributor} from "../models/distributor";
 import {DistributorService} from "../services/distributor.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {DistributorUpdateComponent} from "./distributor-update/distributor-update.component";
 import {ICompany} from "../models/company";
 import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
+import {DistributorDeleteComponent} from "./distributor-delete/distributor-delete.component";
 
 @Component({
   selector: 'app-distributor',
@@ -21,6 +22,11 @@ export class DistributorComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   distributorsToShow: Array<IDistributor> = [];
   startSort: boolean = false;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idDistributor?: number;
 
   constructor(private distributorService: DistributorService,
               private modalService: NgbModal,
@@ -32,12 +38,20 @@ export class DistributorComponent implements OnInit {
     this.getAllDistributors();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddDistributor() {
     const modalRef = this.modalService.open(DistributorUpdateComponent);
     modalRef.componentInstance.showDistributorUpdate = this.showDistributorUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
       }
     })
   }
@@ -49,6 +63,23 @@ export class DistributorComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idDistributor = distributorToEdit.idDistributor;
+        this.closeAlert();
+        this.showEditNotification = true;
+      }
+    })
+  }
+
+  openDistributorDelete(idToDelete: number){
+    const modalRef = this.modalService.open(DistributorDeleteComponent);
+    modalRef.componentInstance.showDistributorDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idDistributor = idToDelete;
+        this.closeAlert()
+        this.showDeleteNotification = true;
       }
     })
   }

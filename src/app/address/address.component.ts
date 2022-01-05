@@ -63,7 +63,7 @@ export class AddressComponent implements OnInit {
       if (reason === 'save') {
         this.refreshList();
         this.idAddress = addressToEdit.idAddress;
-        this.closeAlert()
+        this.closeAlert();
         this.showEditNotification = true;
       }
     })

@@ -1,17 +1,17 @@
-<ng-template [ngIf]="showCompanyDelete">
+<ng-template [ngIf]="showDemandDelete">
   <div class="modal-header">
-    <h4>Usuń firmę o ID {{idToDelete}}</h4>
+    <h4>Usuń zapotrzebowanie o ID {{idToDelete}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="cancel()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <dl class="text-center">
-      <dt><span>Czy na pewno chcesz usunąć tę firmę?</span></dt>
+      <dt><span>Czy na pewno chcesz usunąć to zapotrzebowanie?</span></dt>
     </dl>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="cancel()">Nie</button>
-    <button type="button" class="btn btn-outline-dark" (click)="deleteCompanyById()">Tak</button>
+    <button type="button" class="btn btn-outline-dark" (click)="deleteDemandById()">Tak</button>
   </div>
 </ng-template>

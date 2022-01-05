@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IProduct} from "../models/product";
 import {ProductService} from "../services/product.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
@@ -9,6 +9,7 @@ import {ITransaction} from "../models/transaction";
 import {TransactionUpdateComponent} from "../transaction/transaction-update/transaction-update.component";
 import {ICompany} from "../models/company";
 import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
+import {ProductDeleteComponent} from "./product-delete/product-delete.component";
 
 @Component({
   selector: 'app-product',
@@ -25,6 +26,11 @@ export class ProductComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   productsToShow: Array<IProduct> = [];
   startSort: boolean = false;
+  @ViewChild('alert', {static: true}) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idProduct?: number;
 
   constructor(private productService: ProductService,
               private modalService: NgbModal,
@@ -36,12 +42,20 @@ export class ProductComponent implements OnInit {
     this.getAllProducts();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddProduct() {
     const modalRef = this.modalService.open(ProductUpdateComponent);
     modalRef.componentInstance.showProductUpdate = this.showProductUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
       }
     })
   }
@@ -53,6 +67,23 @@ export class ProductComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idProduct = productToEdit.idProduct;
+        this.closeAlert();
+        this.showEditNotification = true;
+      }
+    })
+  }
+
+  openDeleteProduct(idToDelete: number) {
+    const modalRef = this.modalService.open(ProductDeleteComponent);
+    modalRef.componentInstance.showProductDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idProduct = idToDelete;
+        this.closeAlert();
+        this.showDeleteNotification = true;
       }
     })
   }
@@ -122,7 +153,7 @@ export class ProductComponent implements OnInit {
     }
 
     /*** Sortowanie po liczbach ***/
-    if(colName.startsWith('idProduct') || colName.startsWith('price')){
+    if (colName.startsWith('idProduct') || colName.startsWith('price')) {
       if (this.startSort == true) {
         this.productsToShow.sort((a, b) => Number(a[colName]) < Number(b[colName]) ? 1 : Number(a[colName]) > Number(b[colName]) ? -1 : 0)
       } else {
@@ -131,20 +162,20 @@ export class ProductComponent implements OnInit {
     }
 
     /*** Sortowanie po transakcji ***/
-    if(colName.startsWith('transaction')){
+    if (colName.startsWith('transaction')) {
       let transactionCol = colName.substring(12);
-      if(this.startSort == true){
+      if (this.startSort == true) {
         this.productsToShow.sort((a, b) => a.transaction[transactionCol] < b.transaction[transactionCol] ? 1 : a.transaction[transactionCol] > b.transaction[transactionCol] ? -1 : 0)
-      }else {
+      } else {
         this.productsToShow.sort((a, b) => a.transaction[transactionCol] > b.transaction[transactionCol] ? 1 : a.transaction[transactionCol] < b.transaction[transactionCol] ? -1 : 0)
       }
 
       /*** Sortowanie po firmie ***/
-      if(colName.startsWith('transaction.demand.company')){
+      if (colName.startsWith('transaction.demand.company')) {
         let companyName = colName.substring(27);
-        if(this.startSort == true){
+        if (this.startSort == true) {
           this.productsToShow.sort((a, b) => a.transaction.demand.company[companyName] < b.transaction.demand.company[companyName] ? 1 : a.transaction.demand.company[companyName] > b.transaction.demand.company[companyName] ? -1 : 0)
-        }else {
+        } else {
           this.productsToShow.sort((a, b) => a.transaction.demand.company[companyName] > b.transaction.demand.company[companyName] ? 1 : a.transaction.demand.company[companyName] < b.transaction.demand.company[companyName] ? -1 : 0)
         }
       }

@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IEmployee} from "../models/employee";
 import {EmployeeService} from "../services/employee.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
 import {ICompany} from "../models/company";
 import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
+import {CompanyDeleteComponent} from "../company/company-delete/company-delete.component";
+import {EmployeeDeleteComponent} from "./employee-delete/employee-delete.component";
 
 @Component({
   selector: 'app-employee',
@@ -21,6 +23,11 @@ export class EmployeeComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   employeesToShow: Array<IEmployee> = [];
   startSort: boolean = false;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idEmployee?: number;
 
   constructor(private employeeService: EmployeeService,
               private modalService: NgbModal,
@@ -32,12 +39,20 @@ export class EmployeeComponent implements OnInit {
     this.getAllEmployees();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddEmployee() {
     const modalRef = this.modalService.open(EmployeeUpdateComponent);
     modalRef.componentInstance.showEmployeeUpdate = this.showEmployeeUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
       }
     })
   }
@@ -49,6 +64,23 @@ export class EmployeeComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idEmployee = employeeToEdit.idEmployee;
+        this.closeAlert();
+        this.showEditNotification = true;
+      }
+    })
+  }
+
+  openDeleteEmployee(idToDelete: number){
+    const modalRef = this.modalService.open(EmployeeDeleteComponent);
+    modalRef.componentInstance.showEmployeeDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idEmployee = idToDelete;
+        this.closeAlert()
+        this.showDeleteNotification = true;
       }
     })
   }

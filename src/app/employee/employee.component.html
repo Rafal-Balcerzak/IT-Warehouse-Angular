@@ -1,5 +1,32 @@
 <app-navbar></app-navbar>
 
+<ng-template [ngIf]="showAddNotification">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Nowy pracownik został dodany.</strong>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="showEditNotification">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Pracownik o ID {{idEmployee}} został edytowany.</strong>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="showDeleteNotification">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Pracownik o ID {{idEmployee}} został usunięty.</strong>
+  </div>
+</ng-template>
+
 <ng-template [ngIf]="showEmployeeList">
   <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -29,7 +56,7 @@
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditEmployee(employeeFromList)">Edytuj
           </button>
-          <button class="btn btn-outline-secondary btn-sm" (click)="deleteEmployeeById(employeeFromList.idEmployee)">Usuń
+          <button class="btn btn-outline-secondary btn-sm" (click)="openDeleteEmployee(employeeFromList.idEmployee)">Usuń
           </button>
         </td>
       </tr>

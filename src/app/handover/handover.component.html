@@ -1,5 +1,32 @@
 <app-navbar></app-navbar>
 
+<ng-template [ngIf]="showAddNotification">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Nowe wydanie sprzętu zostało dodane.</strong>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="showEditNotification">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Wydanie o ID {{idHandover}} zostało edytowane.</strong>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="showDeleteNotification">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Wydanie o ID {{idHandover}} zostało usunięte.</strong>
+  </div>
+</ng-template>
+
 <ng-template [ngIf]="showHandoverList">
   <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -27,7 +54,7 @@
         <td class="text-right col-md-auto">
           <button class="btn mr-1 btn-outline-secondary btn-sm" (click)="openEditHandover(handoverFromList)">Edytuj
           </button>
-          <button class="btn btn-outline-secondary btn-sm" (click)="deleteHandoverById(handoverFromList.idHandover)">Usuń
+          <button class="btn btn-outline-secondary btn-sm" (click)="openDeleteHandover(handoverFromList.idHandover)">Usuń
           </button>
         </td>
       </tr>

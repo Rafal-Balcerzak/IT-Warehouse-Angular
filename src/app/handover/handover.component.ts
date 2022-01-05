@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IHandover} from "../models/handover";
 import {HandoverService} from "../services/handover.service";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
@@ -9,6 +9,8 @@ import {ICompany} from "../models/company";
 import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
 import {IEmployee} from "../models/employee";
 import {EmployeeUpdateComponent} from "../employee/employee-update/employee-update.component";
+import {DemandDeleteComponent} from "../demand/demand-delete/demand-delete.component";
+import {HandoverDeleteComponent} from "./handover-delete/handover-delete.component";
 
 @Component({
   selector: 'app-handover',
@@ -24,6 +26,11 @@ export class HandoverComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   handoversToShow: Array<IHandover> = [];
   startSort: boolean = false;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idHandover?: number;
 
   constructor(private handoverService: HandoverService,
               private modalService: NgbModal,
@@ -35,11 +42,33 @@ export class HandoverComponent implements OnInit {
     this.getAllHandovers();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddHandover() {
     const modalRef = this.modalService.open(HandoverUpdateComponent);
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
+      }
+    })
+  }
+
+  openDeleteHandover(idToDelete: number){
+    const modalRef = this.modalService.open(HandoverDeleteComponent);
+    modalRef.componentInstance.showHandoverDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idHandover = idToDelete;
+        this.closeAlert();
+        this.showDeleteNotification = true;
       }
     })
   }
@@ -50,6 +79,9 @@ export class HandoverComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idHandover = handoverToEdit.idHandover;
+        this.closeAlert();
+        this.showEditNotification = true;
       }
     })
   }

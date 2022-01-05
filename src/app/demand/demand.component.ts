@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, ViewChild} from '@angular/core';
 import {IDemand} from "../models/demand";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {DemandService} from "../services/demand.service";
@@ -7,6 +7,7 @@ import {formatDate} from "@angular/common";
 import {Validators} from "@angular/forms";
 import {ICompany} from "../models/company";
 import {CompanyUpdateComponent} from "../company/company-update/company-update.component";
+import {DemandDeleteComponent} from "./demand-delete/demand-delete.component";
 
 @Component({
   selector: 'app-demand',
@@ -24,6 +25,11 @@ export class DemandComponent implements OnInit {
   demandsToShow: Array<IDemand> = [];
   startSort: boolean = false;
   notDoneDemandsCount?: number;
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idDemand?: number;
 
   constructor(private demandService: DemandService,
               private modalService: NgbModal,
@@ -35,12 +41,34 @@ export class DemandComponent implements OnInit {
     this.getAllDemands();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddDemand() {
     const modalRef = this.modalService.open(DemandUpdateComponent);
     modalRef.componentInstance.showDemandUpdate = this.showDemandUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
+      }
+    })
+  }
+
+  openDeleteDemand(idToDelete: number){
+    const modalRef = this.modalService.open(DemandDeleteComponent);
+    modalRef.componentInstance.showDemandDelete = true;
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'delete') {
+        this.refreshList();
+        this.idDemand = idToDelete;
+        this.closeAlert();
+        this.showDeleteNotification = true;
       }
     })
   }
@@ -94,6 +122,9 @@ export class DemandComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idDemand = demandToEdit.idDemand;
+        this.closeAlert();
+        this.showEditNotification = true;
       }
     })
   }

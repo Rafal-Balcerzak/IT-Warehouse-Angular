@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ITransaction} from "../models/transaction";
 import {NgbModal, NgbPaginationConfig} from "@ng-bootstrap/ng-bootstrap";
 import {TransactionService} from "../services/transaction.service";
@@ -9,6 +9,7 @@ import {IDemand} from "../models/demand";
 import {DemandUpdateComponent} from "../demand/demand-update/demand-update.component";
 import {IDistributor} from "../models/distributor";
 import {DistributorUpdateComponent} from "../distributor/distributor-update/distributor-update.component";
+import {TransactionDeleteComponent} from "./transaction-delete/transaction-delete.component";
 
 @Component({
   selector: 'app-transaction',
@@ -25,6 +26,11 @@ export class TransactionComponent implements OnInit {
   pageSizeList = [5, 10, 25, 50];
   transactionsToShow: Array<ITransaction> = [];
   startSort: boolean = false;
+  @ViewChild('alert', {static: true}) alert: ElementRef;
+  showDeleteNotification?: boolean;
+  showAddNotification?: boolean;
+  showEditNotification?: boolean;
+  idTransaction?: number;
 
   constructor(private transactionService: TransactionService,
               private modalService: NgbModal,
@@ -36,12 +42,20 @@ export class TransactionComponent implements OnInit {
     this.getAllTransactions();
   }
 
+  closeAlert() {
+    this.showAddNotification = false;
+    this.showEditNotification = false;
+    this.showDeleteNotification = false;
+  }
+
   openAddTransaction() {
     const modalRef = this.modalService.open(TransactionUpdateComponent);
     modalRef.componentInstance.showTransactionUpdate = this.showTransactionUpdate;
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.closeAlert()
+        this.showAddNotification = true;
       }
     })
   }
@@ -53,6 +67,23 @@ export class TransactionComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'save') {
         this.refreshList();
+        this.idTransaction = transactionToEdit.idTransaction;
+        this.closeAlert();
+        this.showEditNotification = true;
+      }
+    })
+  }
+
+  openDeleteTransaction(idToDelete: number){
+    const modalRef = this.modalService.open(TransactionDeleteComponent);
+    modalRef.componentInstance.idToDelete = idToDelete;
+    modalRef.componentInstance.showTransactionDelete = true;
+    modalRef.closed.subscribe(reason =>{
+      if(reason === 'delete'){
+        this.refreshList();
+        this.idTransaction = idToDelete;
+        this.closeAlert();
+        this.showDeleteNotification = true;
       }
     })
   }

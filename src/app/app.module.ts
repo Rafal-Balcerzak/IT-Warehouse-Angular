@@ -30,6 +30,12 @@ import { NavbarComponent } from './home/navbar/navbar.component';
 import {MatBadgeModule} from "@angular/material/badge";
 import { AddressDeleteComponent } from './address/address-delete/address-delete.component';
 import { CompanyDeleteComponent } from './company/company-delete/company-delete.component';
+import { DemandDeleteComponent } from './demand/demand-delete/demand-delete.component';
+import { DistributorDeleteComponent } from './distributor/distributor-delete/distributor-delete.component';
+import { EmployeeDeleteComponent } from './employee/employee-delete/employee-delete.component';
+import { HandoverDeleteComponent } from './handover/handover-delete/handover-delete.component';
+import { ProductDeleteComponent } from './product/product-delete/product-delete.component';
+import { TransactionDeleteComponent } from './transaction/transaction-delete/transaction-delete.component';
 
 
 @NgModule({
@@ -54,7 +60,13 @@ import { CompanyDeleteComponent } from './company/company-delete/company-delete.
     HandoverUpdateComponent,
     NavbarComponent,
     AddressDeleteComponent,
-    CompanyDeleteComponent
+    CompanyDeleteComponent,
+    DemandDeleteComponent,
+    DistributorDeleteComponent,
+    EmployeeDeleteComponent,
+    HandoverDeleteComponent,
+    ProductDeleteComponent,
+    TransactionDeleteComponent
   ],
     imports: [
         BrowserModule,
