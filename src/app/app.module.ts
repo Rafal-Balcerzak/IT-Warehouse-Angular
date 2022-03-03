@@ -22,21 +22,20 @@ import {EmployeeComponent} from './employee/employee.component';
 import {EmployeeUpdateComponent} from './employee/employee-update/employee-update.component';
 import {TransactionComponent} from './transaction/transaction.component';
 import {TransactionUpdateComponent} from './transaction/transaction-update/transaction-update.component';
-import { ProductComponent } from './product/product.component';
-import { ProductUpdateComponent } from './product/product-update/product-update.component';
-import { HandoverComponent } from './handover/handover.component';
-import { HandoverUpdateComponent } from './handover/handover-update/handover-update.component';
-import { NavbarComponent } from './home/navbar/navbar.component';
+import {ProductComponent} from './product/product.component';
+import {ProductUpdateComponent} from './product/product-update/product-update.component';
+import {HandoverComponent} from './handover/handover.component';
+import {HandoverUpdateComponent} from './handover/handover-update/handover-update.component';
+import {NavbarComponent} from './home/navbar/navbar.component';
 import {MatBadgeModule} from "@angular/material/badge";
-import { AddressDeleteComponent } from './address/address-delete/address-delete.component';
-import { CompanyDeleteComponent } from './company/company-delete/company-delete.component';
-import { DemandDeleteComponent } from './demand/demand-delete/demand-delete.component';
-import { DistributorDeleteComponent } from './distributor/distributor-delete/distributor-delete.component';
-import { EmployeeDeleteComponent } from './employee/employee-delete/employee-delete.component';
-import { HandoverDeleteComponent } from './handover/handover-delete/handover-delete.component';
-import { ProductDeleteComponent } from './product/product-delete/product-delete.component';
-import { TransactionDeleteComponent } from './transaction/transaction-delete/transaction-delete.component';
-
+import {AddressDeleteComponent} from './address/address-delete/address-delete.component';
+import {CompanyDeleteComponent} from './company/company-delete/company-delete.component';
+import {DemandDeleteComponent} from './demand/demand-delete/demand-delete.component';
+import {DistributorDeleteComponent} from './distributor/distributor-delete/distributor-delete.component';
+import {EmployeeDeleteComponent} from './employee/employee-delete/employee-delete.component';
+import {HandoverDeleteComponent} from './handover/handover-delete/handover-delete.component';
+import {ProductDeleteComponent} from './product/product-delete/product-delete.component';
+import {TransactionDeleteComponent} from './transaction/transaction-delete/transaction-delete.component';
 
 @NgModule({
   declarations: [
@@ -68,20 +67,20 @@ import { TransactionDeleteComponent } from './transaction/transaction-delete/tra
     ProductDeleteComponent,
     TransactionDeleteComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        NgbModule,
-        NgbPaginationModule,
-        NgbAlertModule,
-        BrowserAnimationsModule,
-        MatSliderModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatBadgeModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatBadgeModule
+  ],
   providers: [NgbActiveModal, NavbarComponent],
   bootstrap: [AppComponent],
   entryComponents: [
